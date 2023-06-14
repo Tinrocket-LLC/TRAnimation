@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<block type="Module" ID="1556461567">
+ <ObjName>TRAffineTransform</ObjName>
+ <ObjContainerID>1277589503</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>Memoryblock</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility>(TargetConsole and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target64Bit)) or  (TargetIOS and (Target64Bit))</Compatibility>
+ <Method>
+  <ItemName>MakeTranslation</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>58202111</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function MakeTranslation(tx As Double, ty As Double) As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim t As TRAffineTransform = New TRAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>t.Translate(tx, ty)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return t</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>tx As Double, ty As Double</ItemParams>
+  <ItemResult>TRAffineTransform</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>858484735</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Matrix.a = 1.0</SourceLine>
+   <SourceLine>Matrix.d = 1.0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DebugLog</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>910870527</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DebugLog()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s As String = EndOfLine</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = s + Matrix.a.ToString("0.0") + "   " + Matrix.b.ToString("0.0") + EndOfLine</SourceLine>
+   <SourceLine>s = s + Matrix.c.ToString("0.0") + "   " + Matrix.d.ToString("0.0") + EndOfLine</SourceLine>
+   <SourceLine>s = s + Matrix.tx.ToString("0.0") + "   " + Matrix.ty.ToString("0.0") + EndOfLine</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>System.DebugLog(s)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Translate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>975325183</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Translate(tx As Double, ty As Double)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformTranslate Lib CoreGraphics (t As CGAffineTransform, tx As Double, ty As Double) As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Matrix = CGAffineTransformTranslate(Matrix, tx, ty)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>tx As Double, ty As Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>134076415</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Scale(sx As Double, sy As Double)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformScale Lib CoreGraphics (t As CGAffineTransform, sx As Double, sy As Double) As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Matrix = CGAffineTransformScale(Matrix, sx, sy)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sx As Double, sy As Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Rotate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>266547199</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Rotate(angle as Double)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformRotate Lib CoreGraphics (t As CGAffineTransform, angle As Double) As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Matrix = CGAffineTransformRotate(Matrix, angle)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>angle as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MakeRotation</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1205151743</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function MakeRotation(angle as Double) As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim t As TRAffineTransform = New TRAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>t.Rotate(angle)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return t</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>angle as Double</ItemParams>
+  <ItemResult>TRAffineTransform</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MakeScale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1002274815</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function MakeScale(sx As Double, sy As Double) As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim t As TRAffineTransform = New TRAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>t.Scale(sx, sy)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return t</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>sx As Double, sy As Double</ItemParams>
+  <ItemResult>TRAffineTransform</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Make</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>922468351</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function Make(a As Double, b As Double, c As Double, d As Double, tx As Double, ty As Double) As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim t As TRAffineTransform = New TRAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformMake Lib CoreGraphics (a As Double, b As Double, c As Double, d As Double, tx As Double, ty As Double) As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>t.Matrix = CGAffineTransformMake(a, b, c, d, tx, ty)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return t</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>a As Double, b As Double, c As Double, d As Double, tx As Double, ty As Double</ItemParams>
+  <ItemResult>TRAffineTransform</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Invert</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>758417407</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Invert()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformInvert Lib CoreGraphics (t As CGAffineTransform) As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Matrix = CGAffineTransformInvert(Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Concat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1211990015</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function Concat(t1 As TRAffineTransform, t2 As TRAffineTransform) As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformConcat Lib CoreGraphics (t1 As CGAffineTransform, t2 As CGAffineTransform) As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRAffineTransform(CGAffineTransformConcat(t1.Matrix, t2.Matrix))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>t1 As TRAffineTransform, t2 As TRAffineTransform</ItemParams>
+  <ItemResult>TRAffineTransform</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsIdentity</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>573657087</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsIdentity() As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformIsIdentity Lib CoreGraphics (t As CGAffineTransform) As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return CGAffineTransformIsIdentity(Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>EqualToTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1374085119</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function EqualToTransform(t As CGAffineTransform) As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformEqualToTransform Lib CoreGraphics (t1 As CGAffineTransform, t2 As CGAffineTransform) As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return CGAffineTransformEqualToTransform(Matrix, t)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>t As CGAffineTransform</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1333612543</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(point as CGPoint) As CGPoint</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGPointApplyAffineTransform Lib CoreGraphics (point As CGPoint, t As CGAffineTransform) As CGPoint</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return CGPointApplyAffineTransform(point, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>point as CGPoint</ItemParams>
+  <ItemResult>CGPoint</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>654338047</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(size as CGSize) As CGSize</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGSizeApplyAffineTransform Lib CoreGraphics (size As CGSize, t As CGAffineTransform) As CGSize</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return CGSizeApplyAffineTransform(size, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>size as CGSize</ItemParams>
+  <ItemResult>CGSize</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>989063167</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(point as TRVector2D) As TRVector2D</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim pointCG As CGPoint</SourceLine>
+   <SourceLine>pointCG.x = point.X</SourceLine>
+   <SourceLine>pointCG.y = point.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGPointApplyAffineTransform Lib CoreGraphics (pointCG As CGPoint, t As CGAffineTransform) As CGPoint</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>pointCG = CGPointApplyAffineTransform(pointCG, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(pointCG.x, pointCG.y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>point as TRVector2D</ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1305524223</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(rect as CGRect) As CGRect</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGRectApplyAffineTransform Lib CoreGraphics (rect As CGRect, t As CGAffineTransform) As CGRect</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return CGRectApplyAffineTransform(rect, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>rect as CGRect</ItemParams>
+  <ItemResult>CGRect</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Reset</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>978151423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Reset()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim t As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>t.a = 1.0</SourceLine>
+   <SourceLine>t.d = 1.0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Matrix = t</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Copy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>803690495</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Copy() As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ct As TRAffineTransform = New TRAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ct.Matrix = Matrix</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return ct</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAffineTransform</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1014038527</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(m as CGAffineTransform)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Matrix = m</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>m as CGAffineTransform</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Inverse</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>232124415</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Inverse() As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGAffineTransformInvert Lib CoreGraphics (t As CGAffineTransform) As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRAffineTransform(CGAffineTransformInvert(Matrix))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAffineTransform</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1134102527</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(size as Size) As Size</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGSizeApplyAffineTransform Lib CoreGraphics (size As CGSize, t As CGAffineTransform) As CGSize</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s As CGSize</SourceLine>
+   <SourceLine>s.width = size.Width</SourceLine>
+   <SourceLine>s.height = size.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = CGSizeApplyAffineTransform(s, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New Size(s.width, s.height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>size as Size</ItemParams>
+  <ItemResult>Size</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>703860735</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(rect as Rect) As Rect</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGRectApplyAffineTransform Lib CoreGraphics (rect As CGRect, t As CGAffineTransform) As CGRect</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim r As CGRect</SourceLine>
+   <SourceLine>r.theOrigin.x = rect.Left</SourceLine>
+   <SourceLine>r.theOrigin.y = rect.Top</SourceLine>
+   <SourceLine>r.theSize.width = rect.Width</SourceLine>
+   <SourceLine>r.theSize.height = rect.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>r = CGRectApplyAffineTransform(r, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New Rect(r.theOrigin.x, r.theOrigin.y, r.theSize.width, r.theSize.height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>rect as Rect</ItemParams>
+  <ItemResult>Rect</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsAxisAligned</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>422930431</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsAxisAligned() As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Const kPrecision = 1000</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim a, b, c, d As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>a = Matrix.a * kPrecision</SourceLine>
+   <SourceLine>b = Matrix.b * kPrecision</SourceLine>
+   <SourceLine>c = Matrix.c * kPrecision</SourceLine>
+   <SourceLine>d = Matrix.d * kPrecision</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return a &lt;&gt; 0 And b = 0 And c = 0 And d &lt;&gt; 0 _</SourceLine>
+   <SourceLine>Or a = 0 And b &lt;&gt; 0 And c &lt;&gt; 0 And d = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>643338239</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(v as Double) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGSizeApplyAffineTransform Lib CoreGraphics (size As CGSize, t As CGAffineTransform) As CGSize</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s As CGSize</SourceLine>
+   <SourceLine>s.width = v</SourceLine>
+   <SourceLine>s.height = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = CGSizeApplyAffineTransform(s, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Sqrt(s.width * s.width + s.height * s.height) * Sign(v)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransformAsVector</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1375475711</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransformAsVector(vector as TRVector2D) As TRVector2D</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGSizeApplyAffineTransform Lib CoreGraphics (size As CGSize, t As CGAffineTransform) As CGSize</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s As CGSize</SourceLine>
+   <SourceLine>s.width = vector.X</SourceLine>
+   <SourceLine>s.height = vector.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = CGSizeApplyAffineTransform(s, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(s.width, s.height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>vector as TRVector2D</ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Property>
+  <ItemName>Matrix</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1704130559</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Matrix As CGAffineTransform</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Matrix As CGAffineTransform</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>VectorX</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>219394047</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>VectorX As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>VectorX As TRVector2D</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>// Use this vector to find the scale or angle</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(Matrix.a, Matrix.b)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>VectorY</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1497159679</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>VectorY As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>VectorY As TRVector2D</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>// Use this vector to find the scale or angle</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(Matrix.c, Matrix.d)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1251698687</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Scale As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Scale As TRVector2D</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(Me.VectorX.Length, Me.VectorY.Length)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>Position</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1682374655</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Position As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Position As TRVector2D</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(Me.Matrix.tx, Me.Matrix.ty)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LittleEndian</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Size</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>CoreGraphics</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>628701183</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef>CoreGraphics</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kSafeMode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>965631999</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>3</ItemType>
+  <ItemDef>False</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+</block>
+</RBProject>

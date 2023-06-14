@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2022r3" FormatVersion="2" MinIDEVersion="20190300">
+<block type="Module" ID="835772415">
+ <ObjName>TRGeometry</ObjName>
+ <ObjContainerID>1365530623</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Copy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1203763199</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Copy(Extends r as Rect) As Rect</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New Rect(r.Left, r.Top, r.Width, r.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends r as Rect</ItemParams>
+  <ItemResult>Rect</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Copy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>364425215</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Copy(Extends p as Point) As Point</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New Point(p.X, p.Y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends p as Point</ItemParams>
+  <ItemResult>Point</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Inset</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>761298943</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Inset(Extends r as Rect, xInset as Double, yInset as Double)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>r.Left = r.Left + xInset</SourceLine>
+   <SourceLine>r.Top = r.Top + yInset</SourceLine>
+   <SourceLine>r.Width = r.Width - xInset * 2</SourceLine>
+   <SourceLine>r.Height = r.Height - yInset * 2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends r as Rect, xInset as Double, yInset as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DebugLog</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>9199615</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DebugLog(Extends r as Rect, s as String = "")</SourceLine>
+   <SourceLine>Dim prefix As String = "Rect: "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If s &lt;&gt; "" Then</SourceLine>
+   <SourceLine>prefix = s + ": "</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>System.DebugLog(prefix + r.Left.ToString + " (left), " + r.Top.ToString + " (top), " + r.Right.ToString + " (right), " + r.Bottom.ToString + " (bottom)")</SourceLine>
+   <SourceLine>System.DebugLog(prefix + r.Center.X.ToString + " (x), " + r.Center.Y.ToString + " (y), " + r.Width.ToString + " (width), " + r.Height.ToString + " (height)")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends r as Rect, s as String = ""</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Enumeration>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>Direction</ItemName>
+  <ItemFlags>1</ItemFlags>
+  <ItemType>Integer</ItemType>
+  <BinaryEnum>0</BinaryEnum>
+  <ItemName>Direction</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>166195199</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>None</SourceLine>
+   <SourceLine>Top</SourceLine>
+   <SourceLine>TopRight</SourceLine>
+   <SourceLine>Right</SourceLine>
+   <SourceLine>BottomRight</SourceLine>
+   <SourceLine>Bottom</SourceLine>
+   <SourceLine>BottomLeft</SourceLine>
+   <SourceLine>Left</SourceLine>
+   <SourceLine>TopLeft</SourceLine>
+  </ItemSource>
+ </Enumeration>
+</block>
+</RBProject>

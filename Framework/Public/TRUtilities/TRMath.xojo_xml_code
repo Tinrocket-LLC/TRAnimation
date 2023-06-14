@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2022r3" FormatVersion="2" MinIDEVersion="20190300">
+<block type="Module" ID="1610956799">
+ <ObjName>TRMath</ObjName>
+ <ObjContainerID>1365530623</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>IsEqual</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>877152255</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsEqual(v1 as Double, v2 as Double, precision as Integer = 0) As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim factor As Double = Pow(10, precision)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Round(v1 * factor) = Round(v2 * factor)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v1 as Double, v2 as Double, precision as Integer = 0</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Mean</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>873037823</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Mean(values() As Double) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine>Dim result As Double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i = 0 To values.LastIndex</SourceLine>
+   <SourceLine>result = result + values(i)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return result / values.Count</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>values() As Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsEqual</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2063323135</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsEqual(r1 as Rect, r2 as Rect, precision as Integer = 0) As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If r1 = Nil And r2 = Nil Then Return True</SourceLine>
+   <SourceLine>If r1 = Nil Or r2 = Nil Then Return False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return IsEqual(r1.Left, r2.Left, precision) And IsEqual(r1.Top, r2.Top, precision) And IsEqual(r1.Width, r2.Width, precision) And IsEqual(r1.Height, r2.Height, precision)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>r1 as Rect, r2 as Rect, precision as Integer = 0</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>InRangeFloat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>547307519</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function InRangeFloat(Extends r as Random, minR as Double, maxR as Double) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return minR + (maxR - minR) * r.Number</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends r as Random, minR as Double, maxR as Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1796130815</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Scale(sourceRect as Rect, destinationRect as Rect, scaleMode as TRMath.Scale) As Rect</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim scale As Double = 1</SourceLine>
+   <SourceLine>Dim r As Rect = sourceRect.Copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If scaleMode = TRMath.Scale.AspectFill Then</SourceLine>
+   <SourceLine>scale = Max(destinationRect.Width / sourceRect.Width, destinationRect.Height / sourceRect.Height)</SourceLine>
+   <SourceLine>ElseIf scaleMode = TRMath.Scale.AspectFit Then</SourceLine>
+   <SourceLine>scale = Min(destinationRect.Width / sourceRect.Width, destinationRect.Height / sourceRect.Height)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// No scale; center</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Center</SourceLine>
+   <SourceLine>r.Width = r.Width * scale</SourceLine>
+   <SourceLine>r.Height = r.Height * scale</SourceLine>
+   <SourceLine>r.Left = -r.Width / 2</SourceLine>
+   <SourceLine>r.Top = -r.Height / 2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return r</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sourceRect as Rect, destinationRect as Rect, scaleMode as TRMath.Scale</ItemParams>
+  <ItemResult>Rect</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PixelBilinear</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>857264127</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PixelBilinear(Extends rgbS as RGBSurface, x as Double, y as Double, widthUbound as Integer, heightUbound as Integer) As Color</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim xx, yy As Integer</SourceLine>
+   <SourceLine>Dim xF, yF, xFInv, yFInv, rr0, gg0, bb0, rr1, gg1, bb1 As Double</SourceLine>
+   <SourceLine>Dim UL, UR, LL, LR As Color</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Truncate</SourceLine>
+   <SourceLine>xx = x</SourceLine>
+   <SourceLine>yy = y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>UL = rgbS.Pixel(xx, yy)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>UR = rgbS.Pixel(Min(xx+1, widthUbound), yy)</SourceLine>
+   <SourceLine>LL = rgbS.Pixel(xx, Min(yy+1, heightUbound))</SourceLine>
+   <SourceLine>LR = rgbS.Pixel(Min(xx+1, widthUbound), Min(yy+1, heightUbound))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'If yy+1 &gt;= heightUbound Then</SourceLine>
+   <SourceLine>'Break</SourceLine>
+   <SourceLine>'End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xF = x - xx</SourceLine>
+   <SourceLine>yF = y - yy</SourceLine>
+   <SourceLine>xFInv = 1.0 - xF</SourceLine>
+   <SourceLine>yFInv = 1.0 - yF</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rr0 = UL.Red * yF + LL.Red * yFInv</SourceLine>
+   <SourceLine>gg0 = UL.Green * yF + LL.Green * yFInv</SourceLine>
+   <SourceLine>bb0 = UL.Blue * yF + LL.Blue * yFInv</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rr1 = UR.Red * yF + LR.Red * yFInv</SourceLine>
+   <SourceLine>gg1 = UR.Green * yF + LR.Green * yFInv</SourceLine>
+   <SourceLine>bb1 = UR.Blue * yF + LR.Blue * yFInv</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'rr0 = rr0 * xF + rr1 * xFInv</SourceLine>
+   <SourceLine>'gg0 = gg0 * xF + gg1 * xFInv</SourceLine>
+   <SourceLine>'bb0 = bb0 * xF + bb1 * xFInv</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'If UL = Color.White And rr0 = 0 Then</SourceLine>
+   <SourceLine>'Break</SourceLine>
+   <SourceLine>'End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Color.RGB(rr0 * xF + rr1 * xFInv, gg0 * xF + gg1 * xFInv, bb0 * xF + bb1 * xFInv)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends rgbS as RGBSurface, x as Double, y as Double, widthUbound as Integer, heightUbound as Integer</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StandardDeviation</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>383420415</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StandardDeviation(values() As Double) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim v As Double = TRMath.Variance(values)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Sqrt(v)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>values() As Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Variance</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2037927935</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Variance(values() As Double) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine>Dim i, u As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>u = values.LastIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim m As Double = TRMath.Mean(values)</SourceLine>
+   <SourceLine>Dim v As Double</SourceLine>
+   <SourceLine>For i = 0 To u</SourceLine>
+   <SourceLine>v = v + Pow(values(i) - m, 2)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>v = v / (u + 1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return v</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>values() As Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Clamp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>925689855</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Clamp(v as Double, clampMin as Double = 0.0, clampMax as Double = 1.0) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Max(Min(v, clampMax), clampMin)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as Double, clampMin as Double = 0.0, clampMax as Double = 1.0</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsEqual</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>421138431</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsEqual(s1 as Size, s2 as Size, precision as Integer = 0) As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If s1 = Nil And s2 = Nil Then Return True</SourceLine>
+   <SourceLine>If s1 = Nil Or s2 = Nil Then Return False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return IsEqual(s1.Width, s2.Width, precision) And IsEqual(s1.Height, s2.Height, precision)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s1 as Size, s2 as Size, precision as Integer = 0</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>kMillion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1390944255</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>1000000</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kBillion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>748972031</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>1000000000</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kRadian</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>468215807</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>0.01745329251</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Enumeration>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>Scale</ItemName>
+  <ItemFlags>1</ItemFlags>
+  <ItemType>Integer</ItemType>
+  <BinaryEnum>0</BinaryEnum>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1971703807</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>AspectFill</SourceLine>
+   <SourceLine>AspectFit</SourceLine>
+   <SourceLine>Other</SourceLine>
+  </ItemSource>
+ </Enumeration>
+</block>
+</RBProject>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20190300">
+<block type="Module" ID="388300799">
+ <ObjName>TRCoreGraphics</ObjName>
+ <ObjContainerID>1365530623</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>DropShadow</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>145680383</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DropShadow(g As Graphics, shadowColor As Color, x As Double, y As Double, blur As Double)</SourceLine>
+   <SourceLine>// https://forum.xojo.com/t/dropshadow-revisited/45814/4</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Sub CGContextSetShadow Lib "CoreGraphics" (context As Ptr, offset As CGSize, blur As CGFloat)</SourceLine>
+   <SourceLine>Declare Sub CGContextSetShadowWithColor Lib "CoreGraphics" (context As Ptr, offset As CGSize, blur As CGFloat, CGColorRef As Ptr)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGColorSpaceCreateWithName Lib "CoreGraphics" (name As CFStringRef) As Ptr</SourceLine>
+   <SourceLine>Declare Function CGColorCreate Lib "CoreGraphics" (space As Ptr, components As Ptr) As Ptr</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim context As Ptr = g.Handle(Graphics.HandleTypes.CGContextRef)</SourceLine>
+   <SourceLine>Dim s As CGSize</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s.Width = x</SourceLine>
+   <SourceLine>s.Height = y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim cspace, colorref As Ptr</SourceLine>
+   <SourceLine>Dim components As New MemoryBlock(4 * If(Target64Bit, 8, 4))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>components.DoubleValue(0 * 8) = shadowColor.Red / 255</SourceLine>
+   <SourceLine>components.DoubleValue(1 * 8) = shadowColor.Green / 255</SourceLine>
+   <SourceLine>components.DoubleValue(2 * 8) = shadowColor.Blue / 255</SourceLine>
+   <SourceLine>components.DoubleValue(3 * 8) = 100 / 100</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>cspace = CGColorSpaceCreateWithName("kCGColorSpaceGenericRGB")</SourceLine>
+   <SourceLine>colorref = CGColorCreate(cspace, components)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>CGContextSetShadowWithColor(context, s, blur, colorref)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>g As Graphics, shadowColor As Color, x As Double, y As Double, blur As Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ClearDropShadow</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1937100799</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ClearDropShadow(g as Graphics)</SourceLine>
+   <SourceLine>// https://forum.xojo.com/t/dropshadow-revisited/45814/7</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Sub CGContextSetShadowWithColor Lib "CoreGraphics" (context As Ptr, offset As CGSize, blur As CGFloat, CGColorRef As Ptr)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s As CGSize</SourceLine>
+   <SourceLine>Dim context As Ptr = g.Handle(Graphics.HandleTypes.CGContextRef)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>CGContextSetShadowWithColor(context, s, 0, Nil)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>g as Graphics</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Structure>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>CGAffineTransform</ItemName>
+  <ItemFlags>0</ItemFlags>
+  <ItemName>CGAffineTransform</ItemName>
+  <Compatibility>(TargetConsole and (Target64Bit)) or  (TargetWeb and (Target64Bit)) or  (TargetDesktop and (Target64Bit)) or  (TargetIOS and (Target64Bit))</Compatibility>
+  <Attributes></Attributes>
+  <Visible>1</Visible>
+  <PartID>1913776127</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>a as Double</SourceLine>
+   <SourceLine>b as Double</SourceLine>
+   <SourceLine>c as Double</SourceLine>
+   <SourceLine>d as Double</SourceLine>
+   <SourceLine>tx as Double</SourceLine>
+   <SourceLine>ty as Double</SourceLine>
+  </ItemSource>
+ </Structure>
+ <Structure>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>CGPoint</ItemName>
+  <ItemFlags>0</ItemFlags>
+  <ItemName>CGPoint</ItemName>
+  <Compatibility>(TargetConsole and (Target64Bit)) or  (TargetWeb and (Target64Bit)) or  (TargetDesktop and (Target64Bit)) or  (TargetIOS and (Target64Bit))</Compatibility>
+  <Visible>1</Visible>
+  <PartID>1268002815</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>x as Double</SourceLine>
+   <SourceLine>y as Double</SourceLine>
+  </ItemSource>
+ </Structure>
+ <Structure>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>CGSize</ItemName>
+  <ItemFlags>0</ItemFlags>
+  <ItemName>CGSize</ItemName>
+  <Compatibility>(TargetConsole and (Target64Bit)) or  (TargetWeb and (Target64Bit)) or  (TargetDesktop and (Target64Bit)) or  (TargetIOS and (Target64Bit))</Compatibility>
+  <Visible>1</Visible>
+  <PartID>1654589439</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>width as Double</SourceLine>
+   <SourceLine>height as Double</SourceLine>
+  </ItemSource>
+ </Structure>
+ <Structure>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>CGRect</ItemName>
+  <ItemFlags>0</ItemFlags>
+  <ItemName>CGRect</ItemName>
+  <Compatibility>(TargetConsole and (Target64Bit)) or  (TargetWeb and (Target64Bit)) or  (TargetDesktop and (Target64Bit)) or  (TargetIOS and (Target64Bit))</Compatibility>
+  <Visible>1</Visible>
+  <PartID>399558655</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>theOrigin as CGPoint</SourceLine>
+   <SourceLine>theSize as CGSize</SourceLine>
+  </ItemSource>
+ </Structure>
+</block>
+</RBProject>

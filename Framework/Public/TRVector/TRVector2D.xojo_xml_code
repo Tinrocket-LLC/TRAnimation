@@ -1,0 +1,1334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<block type="Module" ID="1116047359">
+ <ObjName>TRVector2D</ObjName>
+ <ObjContainerID>216453119</ObjContainerID>
+ <IsClass>1</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Add</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>45434879</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Add(vx as Double, vy as Double)</SourceLine>
+   <SourceLine>//d Adds the parameters to the current TRVector2D object.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>x = x + vx</SourceLine>
+   <SourceLine>y = y + vy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>vx as Double, vy as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Add</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1885665279</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Add(v as TRVector2D)</SourceLine>
+   <SourceLine>//d Adds the parameter to the current TRVector2D object.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>x = x + v.x</SourceLine>
+   <SourceLine>y = y + v.y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Add</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>366057471</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Add(v1 as TRVector2D, v2 as TRVector2D)</SourceLine>
+   <SourceLine>//d Sets the current TRVector2D to the sum of the two parameters.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = v1.X + v2.X</SourceLine>
+   <SourceLine>Y = v1.Y + v2.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v1 as TRVector2D, v2 as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>AngleAsDegrees</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>57135103</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function AngleAsDegrees() As Double</SourceLine>
+   <SourceLine>// d Returns the angle of the current TRVector2D in degrees. Slower than the method, AngleAsRadians.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Returns the angle of the vector (does not have to be normalized)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If y &gt;= 0.0 Then</SourceLine>
+   <SourceLine>Return ATan2(y,x) / Me.Radian</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return (ATan2(y,x) / Me.Radian) + 360</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>AngleAsRadians</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>147306495</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function AngleAsRadians() As Double</SourceLine>
+   <SourceLine>//d Returns the angle of the current TRVector2D in radians. Faster than the method, AngleAsDegrees.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//returns the angle of the vector (does not have to be normalized)</SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If y &gt;= 0.0 Then</SourceLine>
+   <SourceLine>Return ATan2(y,x)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return ATan2(y,x) + Me.Pi2</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>690243583</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>//d Constructor.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//provide the option for no constructor</SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>133736447</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(vx as Double, vy as Double)</SourceLine>
+   <SourceLine>//d Constructor.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = vx</SourceLine>
+   <SourceLine>Y = vy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>vx as Double, vy as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2081417215</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(vx as String, vy as String)</SourceLine>
+   <SourceLine>//d Constructor.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>me.X = vx.Val</SourceLine>
+   <SourceLine>me.Y = vy.Val</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>vx as String, vy as String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1964584959</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(v as TRVector2D)</SourceLine>
+   <SourceLine>//d Constructor.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = v.X</SourceLine>
+   <SourceLine>Y = v.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DotProduct</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1699807231</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function DotProduct(v as TRVector2D) As Double</SourceLine>
+   <SourceLine>//d Returns the dot product of the current object and the parameter.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return (x * v.x) + (y * v.y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DotProduct</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1543802879</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function DotProduct(v1 as TRVector2D, v2 as TRVector2D) As Double</SourceLine>
+   <SourceLine>//d Returns the dot product of the two vectors formed from (me to v1) and (me to v2).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.x * v1.y - Me.y * v1.x + Me.y * v2.x - Me.x * v2.y + v1.x * v2.y - v2.x * v1.y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v1 as TRVector2D, v2 as TRVector2D</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Length</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>536897535</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Length() As Double</SourceLine>
+   <SourceLine>//d Returns the length of the current TRVector2D.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return sqrt((x*x) + (y*y))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Length</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>45484031</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Length(Assigns l as Double)</SourceLine>
+   <SourceLine>//d Sets the length of the current TRVector2D to the passed value.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine>dim lngth, scale as double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>lngth = me.Length</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if lngth = 0.0 then Return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>scale = l / lngth</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>me.Scale(scale)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Assigns l as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LengthSquared</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>564279295</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LengthSquared() As Double</SourceLine>
+   <SourceLine>//d Returns the length of the current TRVector2D. LengthSquared is faster then Length.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//vector function -- returns length squared</SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return (x*x) + (y*y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Negate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1668485119</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Negate()</SourceLine>
+   <SourceLine>//d Negates the current X and Y properties.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = -X</SourceLine>
+   <SourceLine>Y = -Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Normalize</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>216244223</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Normalize()</SourceLine>
+   <SourceLine>//d Sets the length of the current TRVector2D to 1.0.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine>dim l as Double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>l = sqrt((x * x) + (y * y))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if l = 0.0 then</SourceLine>
+   <SourceLine>x = 0.0</SourceLine>
+   <SourceLine>y = 0.0</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//normalize the vector</SourceLine>
+   <SourceLine>x = x / l</SourceLine>
+   <SourceLine>y = y / l</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Perp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1764685823</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Perp() As TRVector2D</SourceLine>
+   <SourceLine>//d Returns as TRVector2D object that is perpendicular to the current TRVector2D.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return new TRVector2D(y,-x)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PerpLeft</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1209143295</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PerpLeft() As TRVector2D</SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return new TRVector2D(y,-x)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PerpRight</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>242731007</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PerpRight() As TRVector2D</SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return new TRVector2D(-y,x)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RotateByDegrees</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1197469695</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RotateByDegrees(degrees as double)</SourceLine>
+   <SourceLine>//d Rotates the current TRVector2D by the number of degrees passed. Slower than the method, RotateByRadians.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//rotation is clockwise</SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine>dim r, rx, ry, cr, sr as double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>r = -me.Radian * degrees</SourceLine>
+   <SourceLine>cr = cos(r)</SourceLine>
+   <SourceLine>sr = sin(r)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rx = cr * x + sr * y</SourceLine>
+   <SourceLine>ry = cr * y - sr * x</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>x = rx</SourceLine>
+   <SourceLine>y = ry</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>degrees as double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RotateByRadians</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>143263743</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RotateByRadians(radians as double)</SourceLine>
+   <SourceLine>//d Rotates the current TRVector2D by the number of radians passed. Faster than the method, RotateByDegrees.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//rotation is clockwise</SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine>dim rx, ry, cr, sr as double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>cr = cos(-radians)</SourceLine>
+   <SourceLine>sr = sin(-radians)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rx = cr * x + sr * y</SourceLine>
+   <SourceLine>ry = cr * y - sr * x</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>x = rx</SourceLine>
+   <SourceLine>y = ry</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>radians as double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1012486143</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Scale(s as Double)</SourceLine>
+   <SourceLine>//d Multiples the X and Y properties by the value passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if s &gt; 0 or s &lt; 0 or s = 0 then</SourceLine>
+   <SourceLine>//Is a number</SourceLine>
+   <SourceLine>X = X * s</SourceLine>
+   <SourceLine>Y = Y * s</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//NAN</SourceLine>
+   <SourceLine>X = 0.0</SourceLine>
+   <SourceLine>Y = 0.0</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>708208639</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Scale(sx as Double, sy as Double)</SourceLine>
+   <SourceLine>//d Multiples the X and Y properties by the values passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>me.X = me.X * sx</SourceLine>
+   <SourceLine>me.Y = me.Y * sy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sx as Double, sy as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1541408767</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Scale(s as TRVector2D)</SourceLine>
+   <SourceLine>//d Multiples the X and Y properties by the TRVector2D object passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = X * s.X</SourceLine>
+   <SourceLine>Y = Y * s.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Set</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>936798207</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Set(vx as Double, vy as Double)</SourceLine>
+   <SourceLine>//d Sets the X and Y properties by the values passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = vx</SourceLine>
+   <SourceLine>Y = vy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>vx as Double, vy as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Set</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>581713919</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Set(vx as String, vy as String)</SourceLine>
+   <SourceLine>//d Sets the X and Y properties by the values passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>me.X = vx.Val</SourceLine>
+   <SourceLine>me.Y = vy.Val</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>vx as String, vy as String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Set</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1895882751</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Set(v as TRVector2D)</SourceLine>
+   <SourceLine>//d Sets the X and Y properties to the X and Y properties of the passed TRVector2D object.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = v.X</SourceLine>
+   <SourceLine>Y = v.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Subtract</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1855395839</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Subtract(vx as double, vy as double)</SourceLine>
+   <SourceLine>//d Subtracts the passed scalar values from the current TRVector2D object.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = X - vx</SourceLine>
+   <SourceLine>Y = Y - vy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>vx as double, vy as double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Subtract</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1438982143</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Subtract(v as TRVector2D)</SourceLine>
+   <SourceLine>//d Subtracts the passed TRVector2D object from the current TRVector2D object.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = X - v.X</SourceLine>
+   <SourceLine>Y = Y - v.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Subtract</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>996933631</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Subtract(v1 as TRVector2D, v2 as TRVector2D)</SourceLine>
+   <SourceLine>//d Sets the current vector to v1 - v2.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = v1.X - v2.X</SourceLine>
+   <SourceLine>Y = v1.Y - v2.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v1 as TRVector2D, v2 as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Copy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1329248255</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Copy() As TRVector2D</SourceLine>
+   <SourceLine>#Pragma DisableBackgroundTasks</SourceLine>
+   <SourceLine>#Pragma DisableBoundsChecking</SourceLine>
+   <SourceLine>#Pragma DisableAutoWaitCursor</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(Me.X, Me.Y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Randomize</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1588887551</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Randomize(mn as Double = 0.0, mx as Double = 1.0)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.x = mn + (mx - mn) * Rnd</SourceLine>
+   <SourceLine>Me.y = mn + (mx - mn) * Rnd</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>mn as Double = 0.0, mx as Double = 1.0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Set</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1341945855</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Set(v as Double)</SourceLine>
+   <SourceLine>//d Sets the X and Y properties by the values passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = v</SourceLine>
+   <SourceLine>Y = v</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DebugLog</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1151498239</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DebugLog(description as String = "")</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim formattedDescription As String = ": "</SourceLine>
+   <SourceLine>If description = "" Then </SourceLine>
+   <SourceLine>formattedDescription = ""</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'System.DebugLog(description + formattedDescription + Me.X.ToString() + ", " + Me.Y.ToString())</SourceLine>
+   <SourceLine>System.DebugLog(description + formattedDescription + Me.X.ToString("0.0####") + ", " + Me.Y.ToString("0.0####"))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>description as String = ""</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Multiply</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1333028863</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Multiply(s as Double)</SourceLine>
+   <SourceLine>//d Multiples the X and Y properties by the value passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if s &gt; 0 or s &lt; 0 or s = 0 then</SourceLine>
+   <SourceLine>//Is a number</SourceLine>
+   <SourceLine>X = X * s</SourceLine>
+   <SourceLine>Y = Y * s</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//NAN</SourceLine>
+   <SourceLine>X = 0.0</SourceLine>
+   <SourceLine>Y = 0.0</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Multiply</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>364914687</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Multiply(s as TRVector2D)</SourceLine>
+   <SourceLine>//d Multiples the X and Y properties by the TRVector2D object passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = X * s.X</SourceLine>
+   <SourceLine>Y = Y * s.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Multiply</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1287548927</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Multiply(sx as Double, sy as Double)</SourceLine>
+   <SourceLine>//d Multiples the X and Y properties by the values passed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>me.X = me.X * sx</SourceLine>
+   <SourceLine>me.Y = me.Y * sy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sx as Double, sy as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Distance</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1669148671</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function Distance(v1 as TRVector2D, v2 as TRVector2D) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Sqrt((v1.X - v2.X) * (v1.X - v2.X) + (v1.Y - v2.Y) * (v1.Y - v2.Y))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>v1 as TRVector2D, v2 as TRVector2D</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DistanceSquared</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1507508223</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function DistanceSquared(v1 as TRVector2D, v2 as TRVector2D) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return (v1.X - v2.X) * (v1.X - v2.X) + (v1.Y - v2.Y) * (v1.Y - v2.Y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>v1 as TRVector2D, v2 as TRVector2D</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>62734335</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(p as Point)</SourceLine>
+   <SourceLine>//d Constructor.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>X = p.X</SourceLine>
+   <SourceLine>Y = p.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>p as Point</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Note>
+  <ItemName>Description</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2011430911</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Description</NoteLine>
+   <NoteLine>2D vector class. This class is used in the SuperSpriteSurface framework for various 2D vector &amp; point duties.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Notes</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>65533951</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Notes</NoteLine>
+   <NoteLine>This class is part of the general Tinrocketgraphics library; designated as such by the Tinrocketnamespace. This is the only class from the Tinrocketgraphics library that has been released to date.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>P X</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>428062719</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>P X</NoteLine>
+   <NoteLine>The scalar value for the X dimension.</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>P Y</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>913072127</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>P Y</NoteLine>
+   <NoteLine>The scalar value for the Y dimension.</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Version</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2056169471</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Version</NoteLine>
+   <NoteLine>1.0, November 14, 2003</NoteLine>
+   <NoteLine>1.0.1, March 22, 2004</NoteLine>
+   <NoteLine>1.0.2, December 5, 2005</NoteLine>
+   <NoteLine>1.0.3, April 16, 2006</NoteLine>
+   <NoteLine>1.0.4, April 17, 2007</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Property>
+  <ItemName>X</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>376039423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>X As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>X As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Y</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1135605759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Y As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Y As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>X</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Y</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>kXMLAttribute_x</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1220554751</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef>x</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kXMLAttribute_y</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1084104703</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef>y</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kXMLElement_vector2D</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>746741759</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef>vector2D</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>Pi</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1973145599</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>3.141592654</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>Pi2</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1849870335</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>6.2831853071795862</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>Radian</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1014179839</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>0.0174532925199432954743716805978692719</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+</block>
+</RBProject>

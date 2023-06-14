@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<block type="Module" ID="70309887">
+ <ObjName>TRGraphics</ObjName>
+ <ObjContainerID>2010060799</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Blend</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>602318847</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Blend(p0 as Picture, p1 as Picture, p1Weight as Double) As Picture</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine>Dim x, y, xu, yu As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>p1Weight = Clamp(p1Weight)</SourceLine>
+   <SourceLine>Dim invWeight As Double = 1.0 - p1Weight</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xu = Min(p0.Width, p1.Width) - 1</SourceLine>
+   <SourceLine>yu = Min(p0.Height, p1.Height) - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p2 As New Picture(xu + 1, yu + 1)</SourceLine>
+   <SourceLine>Dim rgb0, rgb1, rgb2 As RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rgb0 = p0.RGBSurface</SourceLine>
+   <SourceLine>rgb1 = p1.RGBSurface</SourceLine>
+   <SourceLine>rgb2 = p2.RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim c0, c1 As Color</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For y = 0 To yu</SourceLine>
+   <SourceLine>For x = 0 To xu</SourceLine>
+   <SourceLine>c0 = rgb0.Pixel(x, y)</SourceLine>
+   <SourceLine>c1 = rgb1.Pixel(x, y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rgb2.Pixel(x, y) = Color.RGB(c0.Red * invWeight + c1.Red * p1Weight, c0.Green * invWeight + c1.Green * p1Weight, c0.Blue * invWeight + c1.Blue * p1Weight)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return p2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>p0 as Picture, p1 as Picture, p1Weight as Double</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ResizeTo</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1358745599</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ResizeTo(Extends p as Picture, maxSide as Integer) As Picture</SourceLine>
+   <SourceLine>Dim s As Double = Min(maxSide / p.Width, maxSide / p.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim pp As New Picture(Round(p.Width * s), Round(p.Height * s))</SourceLine>
+   <SourceLine>pp.Graphics.DrawPicture(p, 0, 0, pp.Width, pp.Height, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return pp</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends p as Picture, maxSide as Integer</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Copy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>254529535</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Copy(Extends p as Picture) As Picture</SourceLine>
+   <SourceLine>Dim pc As New Picture(p.Width, p.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>pc.Graphics.DrawPicture(p, 0, 0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return pc</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends p as Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>
