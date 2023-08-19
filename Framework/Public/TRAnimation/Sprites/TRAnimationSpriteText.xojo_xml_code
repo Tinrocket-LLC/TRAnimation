@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="892450815">
  <ObjName>TRAnimationSpriteText</ObjName>
- <ObjContainerID>1987000319</ObjContainerID>
+ <ObjContainerID>616923135</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -28,6 +28,8 @@
    <SourceLine>g.Font = me.FontObject</SourceLine>
    <SourceLine>#ElseIf TargetDesktop</SourceLine>
    <SourceLine>g.FontName = Me.TextFontName</SourceLine>
+   <SourceLine>g.Bold = (Me.TextFontName = "SystemBold")</SourceLine>
+   <SourceLine>g.FontSize = Me.TextFontSize</SourceLine>
    <SourceLine>#EndIf</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim offsetX As Double = 0</SourceLine>
@@ -101,6 +103,8 @@
    <SourceLine>Else</SourceLine>
    <SourceLine>Me.FontObject = New Font(Me.mTextFontName, Me.mTextFontSize)</SourceLine>
    <SourceLine>End</SourceLine>
+   <SourceLine>#ElseIf TargetDesktop</SourceLine>
+   <SourceLine>// Font objects not supported on desktop; handled in NextFrameOverride method</SourceLine>
    <SourceLine>#EndIf</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
