@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="729042943">
  <ObjName>TRAnimationCanvasCore</ObjName>
- <ObjContainerID>1120428031</ObjContainerID>
+ <ObjContainerID>1887897599</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationTimerDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -306,6 +306,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.DragStartPointWorld = worldPosition.Copy</SourceLine>
    <SourceLine>Me.DragDistanceMax = 0</SourceLine>
+   <SourceLine>Me.DragInProgress = False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.HitSprite = Me.SceneRoot.HitTest(screenPosition, worldPosition, New TRAffineTransform)</SourceLine>
    <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
@@ -340,12 +341,16 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = True</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
    <SourceLine>Me.DragDistanceMax = TRVector2D.Distance(worldPosition, Me.DragStartPointWorld)</SourceLine>
+   <SourceLine>Me.DragInProgress = downDurationSeconds &gt;= Me.DragDelaySecondsThreshold And Me.DragDistanceMax &gt; Me.DragDistanceThreshold</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.DragDistanceMax &gt; Me.DragDistanceThreshold Then</SourceLine>
+   <SourceLine>If Me.DragInProgress Then</SourceLine>
    <SourceLine>If Me.HitSprite &lt;&gt; Nil And Me.HitSprite.Item.CanDrag Then</SourceLine>
    <SourceLine>Me.HitSprite.UpdateDragPoint(worldPosition)</SourceLine>
    <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'System.DebugLog("Drag")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>RaiseEvent PointerDrag(screenPosition, worldPosition)</SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition, worldPosition)</SourceLine>
@@ -373,21 +378,25 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
    <SourceLine>Me.PointerDownBeginMicroseconds = -1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.DragDistanceMax &gt; Me.DragDistanceThreshold Then</SourceLine>
+   <SourceLine>If Me.DragInProgress And Me.DragDistanceMax &gt; Me.DragDistanceThreshold Then</SourceLine>
    <SourceLine>'System.DebugLog("Drag " + Me.DragDistanceMax.ToString)</SourceLine>
+   <SourceLine>'System.DebugLog("Up")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition)</SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition)</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>'System.DebugLog("Tap " + Me.DragDistanceMax.ToString)</SourceLine>
+   <SourceLine>'System.DebugLog("Tap")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>RaiseEvent PointerTap(screenPosition, worldPosition)</SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerTap(screenPosition, worldPosition)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = False</SourceLine>
+   <SourceLine>Me.DragInProgress = False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Start</SourceLine>
    <SourceLine></SourceLine>
@@ -587,6 +596,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>DragDistanceMax As Double = 0</SourceLine>
+   <SourceLine>Make &gt;1 To prevent False drag events from firing</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -790,6 +800,37 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>DragInProgress</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1292337151</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DragInProgress As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DragInProgress As Boolean</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>DragDelaySecondsThreshold</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1496909823</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DragDelaySecondsThreshold As Double = 0.1</SourceLine>
+   <SourceLine>Make &gt;0.0 To prevent False drag events from firing</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DragDelaySecondsThreshold As Double = 0.1</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -843,6 +884,12 @@
   <ViewProperty>
    <ObjName>PointerDownDuration</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DragDelaySecondsThreshold</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0.0</PropertyValue>
    <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>
