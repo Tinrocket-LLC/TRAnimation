@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="895811583">
  <ObjName>TRAnimationImageSprite</ObjName>
- <ObjContainerID>1987000319</ObjContainerID>
+ <ObjContainerID>598892543</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>

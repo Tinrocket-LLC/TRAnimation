@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="208971775">
  <ObjName>TRAnimationSprite</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1876813823</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -591,13 +591,13 @@
   <ItemResult>Boolean</ItemResult>
  </Method>
  <Method>
-  <ItemName>BehaviorNextFrame</ItemName>
+  <ItemName>TRAnimationBehaviorDelegate_BehaviorNextFrame</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>927477759</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub BehaviorNextFrame(behavior as TRAnimationBehavior, tween as TRTween)</SourceLine>
+   <SourceLine>Sub TRAnimationBehaviorDelegate_BehaviorNextFrame(behavior as TRAnimationBehavior, tween as TRTween)</SourceLine>
    <SourceLine>// Part of the TRAnimationBehaviorDelegate interface.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Abstract</SourceLine>
@@ -660,12 +660,17 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function TransformRelativeTo(s as TRAnimationSprite) As TRAffineTransform</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Dim rt, st As TRAffineTransform</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>rt =  Me.CurrentWorldTransform.Copy</SourceLine>
-   <SourceLine>st = s.CurrentWorldTransform</SourceLine>
+   <SourceLine>rt =  Me.CurrentWorldTransform</SourceLine>
+   <SourceLine>st = s.CurrentWorldTransform.Inverse</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Return TRAffineTransform.Concat(st.Inverse, rt)</SourceLine>
+   <SourceLine>Return TRAffineTransform.Concat(st, rt)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -818,6 +823,36 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>child as TRAnimationSprite</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TransformAroundWorldPoint</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>312045567</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TransformAroundWorldPoint(translation as TRVector2D, rotationWorldPosition as TRVector2D, rotationAsDegrees as Double, scale as TRVector2D)</SourceLine>
+   <SourceLine>'Dim myWorldPosition As TRVector2D = Me.Parent.CurrentWorldTransform.ApplyAffineTransform(Me.Position)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'// Compute world space vector from drag sprite to drag sprite bounds</SourceLine>
+   <SourceLine>'Dim dragSpriteWorldPosition As TRVector2D = Me.DragSprite.Parent.CurrentWorldTransform.ApplyAffineTransform(Me.DragSprite.Position)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Dim vectorToBounds As New TRVector2D(rotationWorldPosition)</SourceLine>
+   <SourceLine>'vectorToBounds.Subtract(myWorldPosition)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'vectorToBounds.RotateByDegrees(rotationAsDegrees)</SourceLine>
+   <SourceLine>'vectorToBounds.Add(myWorldPosition) // Now rotated bounds position</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>translation as TRVector2D, rotationWorldPosition as TRVector2D, rotationAsDegrees as Double, scale as TRVector2D</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Hook>

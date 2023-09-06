@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r3" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="1254506495">
  <ObjName>TRAnimationBehavior</ObjName>
- <ObjContainerID>1088684031</ObjContainerID>
+ <ObjContainerID>450928639</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -35,7 +35,7 @@
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.NextFrameDelegate &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>Me.NextFrameDelegate.BehaviorNextFrame(Me, Me.Tween)</SourceLine>
+   <SourceLine>Me.NextFrameDelegate.TRAnimationBehaviorDelegate_BehaviorNextFrame(Me, Me.Tween)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>

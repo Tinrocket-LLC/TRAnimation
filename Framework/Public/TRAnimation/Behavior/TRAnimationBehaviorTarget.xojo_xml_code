@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="2037446655">
  <ObjName>TRAnimationBehaviorTarget</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>450928639</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationBehavior</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -138,7 +138,17 @@
    <SourceLine>Me.SourceSprite.Scale.Add(v)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.SourceSprite.RotationAsDegrees = Me.StartRotationAsDegrees + (Me.TargetRotationAsDegrees - Me.StartRotationAsDegrees) * t</SourceLine>
+   <SourceLine>Dim startR As Double = Me.StartRotationAsDegrees - (Me.StartRotationAsDegrees \ 360.0) * 360.0</SourceLine>
+   <SourceLine>Dim targetR As Double = Me.TargetRotationAsDegrees - (Me.TargetRotationAsDegrees \ 360.0) * 360.0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim directDifference As Double = targetR - startR</SourceLine>
+   <SourceLine>If directDifference &lt; -180 Then</SourceLine>
+   <SourceLine>directDifference = directDifference + 360</SourceLine>
+   <SourceLine>ElseIf directDifference &gt;= 180 Then</SourceLine>
+   <SourceLine>directDifference = directDifference - 360</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SourceSprite.RotationAsDegrees = startR + directDifference * t</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.Tween.Progress &gt;= 1.0 Or Me.Tween.Duration &lt;= 0 Then</SourceLine>
    <SourceLine>Me.isComplete = True</SourceLine>
@@ -149,7 +159,7 @@
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.NextFrameDelegate &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>Me.NextFrameDelegate.BehaviorNextFrame(Me, Me.Tween)</SourceLine>
+   <SourceLine>Me.NextFrameDelegate.TRAnimationBehaviorDelegate_BehaviorNextFrame(Me, Me.Tween)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>

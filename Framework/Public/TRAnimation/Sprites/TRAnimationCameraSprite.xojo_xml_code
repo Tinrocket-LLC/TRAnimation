@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r3.2" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="1753274367">
  <ObjName>TRAnimationCameraSprite</ObjName>
- <ObjContainerID>524056575</ObjContainerID>
+ <ObjContainerID>1876813823</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -122,13 +122,15 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>BehaviorNextFrame</ItemName>
+  <ItemName>TRAnimationBehaviorDelegate_BehaviorNextFrame</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>141938687</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub BehaviorNextFrame(behavior as TRAnimationBehavior, tween as TRTween)</SourceLine>
+   <SourceLine>Sub TRAnimationBehaviorDelegate_BehaviorNextFrame(behavior as TRAnimationBehavior, tween as TRTween)</SourceLine>
+   <SourceLine>// Calling the overridden superclass method.</SourceLine>
+   <SourceLine>Super.TRAnimationBehaviorDelegate_BehaviorNextFrame(behavior, tween)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
