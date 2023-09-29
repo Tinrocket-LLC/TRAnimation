@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1556461567">
  <ObjName>TRAffineTransform</ObjName>
- <ObjContainerID>1277589503</ObjContainerID>
+ <ObjContainerID>1578756095</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>Memoryblock</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -76,9 +76,13 @@
    <SourceLine></SourceLine>
    <SourceLine>Dim s As String = EndOfLine</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>s = s + Matrix.a.ToString("0.0") + "   " + Matrix.b.ToString("0.0") + EndOfLine</SourceLine>
-   <SourceLine>s = s + Matrix.c.ToString("0.0") + "   " + Matrix.d.ToString("0.0") + EndOfLine</SourceLine>
-   <SourceLine>s = s + Matrix.tx.ToString("0.0") + "   " + Matrix.ty.ToString("0.0") + EndOfLine</SourceLine>
+   <SourceLine>'s = s + Matrix.a.ToString("0.0") + "   " + Matrix.b.ToString("0.0") + EndOfLine</SourceLine>
+   <SourceLine>'s = s + Matrix.c.ToString("0.0") + "   " + Matrix.d.ToString("0.0") + EndOfLine</SourceLine>
+   <SourceLine>'s = s + Matrix.tx.ToString("0.0") + "   " + Matrix.ty.ToString("0.0") + EndOfLine</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = s + "Position: " + Str(Me.Position.X) + "," + Str(Me.Position.Y) + EndOfLine</SourceLine>
+   <SourceLine>s = s + "Scale: " + Str(Me.Scale.X) + "," + Str(Me.Scale.Y) + EndOfLine</SourceLine>
+   <SourceLine>s = s + "Rotation: " + Str(Me.RotationAsDegrees) + EndOfLine</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>System.DebugLog(s)</SourceLine>
    <SourceLine></SourceLine>
@@ -893,6 +897,79 @@
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
+ <Property>
+  <ItemName>RotationAsDegrees</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2146709503</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RotationAsDegrees As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RotationAsDegrees As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>// Assume orthonormal matrix; Grab vector X</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim theta As Double = ATan2(Me.Matrix.b, Me.Matrix.a)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Convert to degrees if needed</SourceLine>
+   <SourceLine>Return theta * (180.0 / TRVector2D.Pi)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>RotationAsRadians</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>51290111</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RotationAsRadians As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RotationAsRadians As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>// Assume orthonormal matrix; Grab vector X</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return ATan2(Me.Matrix.b, Me.Matrix.a)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Index</ObjName>
@@ -938,6 +1015,16 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RotationAsDegrees</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RotationAsRadians</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>
  <Constant>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="388300799">
  <ObjName>TRCoreGraphics</ObjName>
- <ObjContainerID>1365530623</ObjContainerID>
+ <ObjContainerID>1100496895</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -15,6 +15,10 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DropShadow(g As Graphics, shadowColor As Color, x As Double, y As Double, blur As Double)</SourceLine>
+   <SourceLine>#If TargetMacOS</SourceLine>
+   <SourceLine>Return</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// https://forum.xojo.com/t/dropshadow-revisited/45814/4</SourceLine>
    <SourceLine>#Pragma BackgroundTasks False</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
@@ -63,6 +67,10 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub ClearDropShadow(g as Graphics)</SourceLine>
+   <SourceLine>#If TargetMacOS</SourceLine>
+   <SourceLine>Return</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// https://forum.xojo.com/t/dropshadow-revisited/45814/7</SourceLine>
    <SourceLine>#Pragma BackgroundTasks False</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking False</SourceLine>

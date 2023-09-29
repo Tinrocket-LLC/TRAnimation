@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r3" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1581613055">
  <ObjName>TRCounter</ObjName>
- <ObjContainerID>1365530623</ObjContainerID>
+ <ObjContainerID>1100496895</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -57,16 +57,16 @@
   <PartID>817780735</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function UniqueID(id0 as Integer, id1 as Integer) As String</SourceLine>
+   <SourceLine>Function UniqueID(id0 as Integer, id1 as Integer, separator as String = "-") As String</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
    <SourceLine>#Pragma NilObjectChecking False</SourceLine>
    <SourceLine>#Pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If id0 &lt; id1 Then</SourceLine>
-   <SourceLine>Return id0.ToString + "-" + id1.ToString</SourceLine>
+   <SourceLine>Return id0.ToString + separator + id1.ToString</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>Return id1.ToString + "-" + id0.ToString</SourceLine>
+   <SourceLine>Return id1.ToString + separator + id0.ToString</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -75,7 +75,35 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>id0 as Integer, id1 as Integer</ItemParams>
+  <ItemParams>id0 as Integer, id1 as Integer, separator as String = "-"</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>UniqueID</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1875902463</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function UniqueID(id0 as String, id1 as String, separator as String = "-") As String</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If id0 &lt; id1 Then</SourceLine>
+   <SourceLine>Return id0 + separator + id1</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return id1 + separator + id0</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>id0 as String, id1 as String, separator as String = "-"</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
  <Note>

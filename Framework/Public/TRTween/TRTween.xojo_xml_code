@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="-1068780495">
  <ObjName>TRTween</ObjName>
- <ObjContainerID>539650047</ObjContainerID>
+ <ObjContainerID>2055487487</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -50,16 +50,20 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function EaseIn(t as Double) As Double</SourceLine>
-   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
    <SourceLine>#pragma StackOverflowChecking False</SourceLine>
    <SourceLine>#pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>if me.TF = nil then Return 0.0</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if me.ReverseRange then</SourceLine>
-   <SourceLine>Return me.StartValue + (me.TF.EaseIn((me.Duration - t) / me.Duration) * (me.EndValue - me.StartValue))</SourceLine>
-   <SourceLine>else</SourceLine>
+   <SourceLine>If Me.ReverseRange Then</SourceLine>
+   <SourceLine>If Me.Duration = 0 Then Return Me.StartValue</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.StartValue + (Me.TF.EaseIn((Me.Duration - t) / Me.Duration) * (Me.EndValue - Me.StartValue))</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If Me.Duration = 0 Then Return Me.EndValue</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return me.StartValue + (me.TF.EaseIn(t / me.Duration) * (me.EndValue - me.StartValue))</SourceLine>
    <SourceLine>end</SourceLine>
    <SourceLine></SourceLine>
@@ -87,9 +91,13 @@
    <SourceLine></SourceLine>
    <SourceLine>if me.TF = nil then Return 0.0</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if me.ReverseRange then</SourceLine>
-   <SourceLine>Return me.StartValue + (me.TF.EaseOut((me.Duration - t) / me.Duration) * (me.EndValue - me.StartValue))</SourceLine>
+   <SourceLine>If Me.ReverseRange Then</SourceLine>
+   <SourceLine>If Me.Duration = 0 Then Return Me.StartValue</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.StartValue + (Me.TF.EaseOut((Me.Duration - t) / Me.Duration) * (Me.EndValue - Me.StartValue))</SourceLine>
    <SourceLine>Else</SourceLine>
+   <SourceLine>If Me.Duration = 0 Then Return Me.EndValue</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return me.StartValue + (me.TF.EaseOut(t / me.Duration) * (me.EndValue - me.StartValue))</SourceLine>
    <SourceLine>end</SourceLine>
    <SourceLine></SourceLine>
@@ -115,11 +123,15 @@
    <SourceLine>#pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if me.TF = nil then Return 0.0</SourceLine>
+   <SourceLine>If Me.TF = Nil Then Return 0.0</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if me.ReverseRange then</SourceLine>
-   <SourceLine>Return me.StartValue + (me.TF.EaseInOut((me.Duration - t) / me.Duration) * (me.EndValue - me.StartValue))</SourceLine>
-   <SourceLine>else</SourceLine>
+   <SourceLine>If Me.ReverseRange Then</SourceLine>
+   <SourceLine>If Me.Duration = 0 Then Return Me.StartValue</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.StartValue + (Me.TF.EaseInOut((Me.Duration - t) / Me.Duration) * (Me.EndValue - Me.StartValue))</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If Me.Duration = 0 Then Return Me.EndValue</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return me.StartValue + (me.TF.EaseInOut(t / me.Duration) * (me.EndValue - me.StartValue))</SourceLine>
    <SourceLine>end</SourceLine>
    <SourceLine></SourceLine>

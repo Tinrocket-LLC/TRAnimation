@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<block type="Module" ID="2040664063">
+ <ObjName>TRSort</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>SortRange</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>89690111</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Sub SortRange(list() as Variant, rangeStart as Integer = 0, rangeEnd as Integer = 0)</SourceLine>
+   <SourceLine>// USAGE: rangeEnd:</SourceLine>
+   <SourceLine>// if positive, then it's the count from the start</SourceLine>
+   <SourceLine>// if negative, then it's the count from the end</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim before(-1), after(-1), v As Variant</SourceLine>
+   <SourceLine>Dim i, u, fromEnd As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If rangeEnd &lt; 0 Then</SourceLine>
+   <SourceLine>fromEnd = rangeEnd * -1</SourceLine>
+   <SourceLine>ElseIf rangeEnd &gt; 0 Then</SourceLine>
+   <SourceLine>fromEnd = list.LastIndex - rangeEnd</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Remove start</SourceLine>
+   <SourceLine>For i = 0 To rangeStart-1</SourceLine>
+   <SourceLine>before.AddAt(0, list(0))</SourceLine>
+   <SourceLine>list.RemoveAt(0)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Remove end</SourceLine>
+   <SourceLine>u = list.LastIndex</SourceLine>
+   <SourceLine>For i = 0 To fromEnd-1</SourceLine>
+   <SourceLine>after.AddAt(0, list(u-i))</SourceLine>
+   <SourceLine>list.RemoveAt(u-i)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>list.Sort(AddressOf CompareVariants)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each v In before</SourceLine>
+   <SourceLine>list.AddAt(0, v)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each v In after</SourceLine>
+   <SourceLine>list.Add(v)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>list() as Variant, rangeStart as Integer = 0, rangeEnd as Integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>CompareVariants</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1436293119</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function CompareVariants(LL As Variant, RR As Variant) As Integer</SourceLine>
+   <SourceLine>// Generic method; should be default XOJO functionality, but it isn't</SourceLine>
+   <SourceLine>// Method will compare variants and any objects that implement Operator_Compare</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If LL &gt; RR Then Return 1</SourceLine>
+   <SourceLine>If LL = RR Then Return 0</SourceLine>
+   <SourceLine>If LL &lt; RR Then Return -1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams>LL As Variant, RR As Variant</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

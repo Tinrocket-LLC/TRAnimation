@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r2" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="253384703">
  <ObjName>TRAnimationBehaviorCamera</ObjName>
- <ObjContainerID>1088684031</ObjContainerID>
+ <ObjContainerID>1643909119</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationBehavior</Superclass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>isCompleteSignal</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>WaitForSignal</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
