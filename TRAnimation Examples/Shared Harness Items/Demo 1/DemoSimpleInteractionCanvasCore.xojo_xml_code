@@ -5,6 +5,7 @@
  <ObjContainerID>1725169663</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
+ <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
@@ -18,6 +19,9 @@
    <SourceLine>Sub Initialize()</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'Me.FPS = 60</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Camera.ViewportPadding = 50</SourceLine>
+   <SourceLine>Me.Camera.TweenFunction.EaseMode = TRTween.Ease.ModeInOut</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.CircleGroup = New TRAnimationGroupSprite</SourceLine>
    <SourceLine>Me.SceneRoot.AddChild(Me.CircleGroup)</SourceLine>
@@ -40,9 +44,12 @@
    <SourceLine>Me.ClickCounterText = New TRAnimationSpriteTextNumber</SourceLine>
    <SourceLine>Me.ClickCounterText.TextFontSize = 20</SourceLine>
    <SourceLine>Me.ClickCounterText.TextColor = Color.White</SourceLine>
-   <SourceLine>Me.ClickCounterText.TextBefore = "Clicks (×10): "</SourceLine>
+   <SourceLine>Me.ClickCounterText.TextBefore = "Clicks: "</SourceLine>
+   <SourceLine>Me.ClickCounterText.TextFormat = "0.0"</SourceLine>
    <SourceLine>screenSpaceGroup.AddChild(Me.ClickCounterText)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.DebugDrawBounds = True</SourceLine>
+   <SourceLine>Me.DebugDrawBoundsColor = Color.HSV(0.0, 0.0, 1.0, 127)</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
@@ -76,10 +83,11 @@
    <SourceLine></SourceLine>
    <SourceLine>Dim b As New TRAnimationBehaviorTarget(Me.CircleSprite, 0.25, f)</SourceLine>
    <SourceLine>b.TargetPoint = worldPosition</SourceLine>
+   <SourceLine>b.NextFrameDelegate = Me // So we can be notified when the animation ends and update our camera</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.CircleSprite.TargetBehavior = b</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim clicks As Integer = Me.ClickCounterText.CurrentNumber + 10</SourceLine>
+   <SourceLine>Dim clicks As Integer = Me.ClickCounterText.CurrentNumber + 1</SourceLine>
    <SourceLine>Me.ClickCounterText.SetTargetNumber(clicks, 0.25)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -131,10 +139,11 @@
    <SourceLine>Sub UpdateLayout()</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Center the sprite coordinate system</SourceLine>
-   <SourceLine>Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
-   <SourceLine>'Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.25, 0.0, Me.CircleGroup)</SourceLine>
+   <SourceLine>'Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.CircleGroup)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
@@ -147,11 +156,36 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.25, 0.0, Me.CircleGroup)</SourceLine>
+   <SourceLine>If Me.DragInProgress Then</SourceLine>
+   <SourceLine>Me.UpdateLayout</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
+ <Method>
+  <ItemName>TRAnimationBehaviorDelegate_BehaviorNextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>413173759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationBehaviorDelegate_BehaviorNextFrame(behavior as TRAnimationBehavior, tween as TRTween)</SourceLine>
+   <SourceLine>// Part of the TRAnimationBehaviorDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If behavior.isComplete Then</SourceLine>
+   <SourceLine>Me.UpdateLayout</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>behavior as TRAnimationBehavior, tween as TRTween</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Property>
   <ItemName>CircleSprite</ItemName>
   <Compatibility></Compatibility>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1337696255">
  <ObjName>DemoSimpleCircleSprite</ObjName>
- <ObjContainerID>794435583</ObjContainerID>
+ <ObjContainerID>1725169663</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -52,6 +52,26 @@
   <IsShared>0</IsShared>
   <ItemParams>g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LocalBoundsOverride</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>688427007</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LocalBoundsOverride() As TRAnimationBounds</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRAnimationBounds(New TRVector2D, Me.Radius) // Provide local position (0,0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAnimationBounds</ItemResult>
  </Method>
  <Property>
   <ItemName>FillColor</ItemName>

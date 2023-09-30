@@ -175,7 +175,10 @@
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_NextFrame(g, elapsedTime)</SourceLine>
    <SourceLine>g.RestoreState</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>'Self.DebugDrawBounds(g)</SourceLine>
+   <SourceLine>If Me.DebugDrawBounds Then</SourceLine>
+   <SourceLine>Me.HandleEvent_Paint_DebugDrawBounds(g)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -186,26 +189,30 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>DebugDrawBounds</ItemName>
+  <ItemName>HandleEvent_Paint_DebugDrawBounds</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1239156735</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub DebugDrawBounds(g as Graphics)</SourceLine>
+   <SourceLine>Sub HandleEvent_Paint_DebugDrawBounds(g as Graphics)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Dim inverseScale As Double = Me.InverseScreenScale(me.SceneRoot).X</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Dim results(-1) As TRAnimationSprite</SourceLine>
    <SourceLine>Me.SceneRoot.Flatten(results)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.DrawingColor = DebugDrawBoundsColor</SourceLine>
+   <SourceLine>g.PenSize = 1.0 * inverseScale</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each child As TRAnimationSprite In results</SourceLine>
    <SourceLine>Dim bounds As TRAnimationBounds = child.WorldBounds</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If bounds &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>g.DrawingColor = Color.Blue</SourceLine>
    <SourceLine>g.FillOval(-3 + bounds.Position.X, -3 + bounds.Position.Y, 5, 5)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>g.DrawOval(bounds.Position.X - bounds.Radius, bounds.Position.Y - bounds.Radius, bounds.Radius * 2, bounds.Radius * 2)</SourceLine>
@@ -220,7 +227,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
+  <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>g as Graphics</ItemParams>
   <ItemResult></ItemResult>
@@ -306,7 +313,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.DragStartPointWorld = worldPosition.Copy</SourceLine>
    <SourceLine>Me.DragDistanceMax = 0</SourceLine>
-   <SourceLine>Me.DragInProgress = False</SourceLine>
+   <SourceLine>Me.mDragInProgress = False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.HitSprite = Me.SceneRoot.HitTest(screenPosition, worldPosition, New TRAffineTransform)</SourceLine>
    <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
@@ -343,7 +350,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
    <SourceLine>Me.DragDistanceMax = Max(Me.DragDistanceMax, TRVector2D.Distance(worldPosition, Me.DragStartPointWorld))</SourceLine>
-   <SourceLine>Me.DragInProgress = downDurationSeconds &gt;= Me.DragDelaySecondsThreshold And Me.DragDistanceMax &gt; Me.DragDistanceThreshold</SourceLine>
+   <SourceLine>Me.mDragInProgress = downDurationSeconds &gt;= Me.DragDelaySecondsThreshold And Me.DragDistanceMax &gt; Me.DragDistanceThreshold</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.DragInProgress Then</SourceLine>
    <SourceLine>If Me.HitSprite &lt;&gt; Nil And Me.HitSprite.Item.CanDrag Then</SourceLine>
@@ -396,7 +403,7 @@
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = False</SourceLine>
-   <SourceLine>Me.DragInProgress = False</SourceLine>
+   <SourceLine>Me.mDragInProgress = False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Start</SourceLine>
    <SourceLine></SourceLine>
@@ -833,17 +840,17 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>DragInProgress</ItemName>
+  <ItemName>mDragInProgress</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1292337151</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>DragInProgress As Boolean</SourceLine>
+   <SourceLine>mDragInProgress As Boolean</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>DragInProgress As Boolean</ItemDeclaration>
+  <ItemDeclaration>mDragInProgress As Boolean</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -877,6 +884,65 @@
   <ItemDeclaration>TapDurationThreshold As Double = 0.5</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>DebugDrawBounds</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>465352703</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DebugDrawBounds As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DebugDrawBounds As Boolean = False</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>DebugDrawBoundsColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>492795903</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DebugDrawBoundsColor As Color = Color.Black</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DebugDrawBoundsColor As Color = Color.Black</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>DragInProgress</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1129191423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property DragInProgress As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DragInProgress As Boolean</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.mDragInProgress</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
  </Property>
  <ViewBehavior>
   <ViewProperty>
@@ -944,6 +1010,18 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>0.5</PropertyValue>
    <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DebugDrawBounds</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DebugDrawBoundsColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;c000000</PropertyValue>
+   <ItemType>Color</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>
