@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="729042943">
  <ObjName>TRAnimationCanvasCore</ObjName>
- <ObjContainerID>1887897599</ObjContainerID>
+ <ObjContainerID>1455699967</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationTimerDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -342,7 +342,7 @@
    <SourceLine>Me.IsAnimatingOverride = True</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
-   <SourceLine>Me.DragDistanceMax = TRVector2D.Distance(worldPosition, Me.DragStartPointWorld)</SourceLine>
+   <SourceLine>Me.DragDistanceMax = Max(Me.DragDistanceMax, TRVector2D.Distance(worldPosition, Me.DragStartPointWorld))</SourceLine>
    <SourceLine>Me.DragInProgress = downDurationSeconds &gt;= Me.DragDelaySecondsThreshold And Me.DragDistanceMax &gt; Me.DragDistanceThreshold</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.DragInProgress Then</SourceLine>
@@ -381,19 +381,19 @@
    <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
    <SourceLine>Me.PointerDownBeginMicroseconds = -1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.DragInProgress And Me.DragDistanceMax &gt; Me.DragDistanceThreshold Then</SourceLine>
-   <SourceLine>'System.DebugLog("Drag " + Me.DragDistanceMax.ToString)</SourceLine>
-   <SourceLine>'System.DebugLog("Up")</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition)</SourceLine>
-   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition)</SourceLine>
-   <SourceLine>Else</SourceLine>
+   <SourceLine>If Not Me.DragInProgress And downDurationSeconds &lt; Me.TapDurationThreshold Then</SourceLine>
    <SourceLine>'System.DebugLog("Tap " + Me.DragDistanceMax.ToString)</SourceLine>
    <SourceLine>'System.DebugLog("Tap")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>RaiseEvent PointerTap(screenPosition, worldPosition)</SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerTap(screenPosition, worldPosition)</SourceLine>
    <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'System.DebugLog("Drag " + Me.DragDistanceMax.ToString)</SourceLine>
+   <SourceLine>'System.DebugLog("Up")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition)</SourceLine>
+   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = False</SourceLine>
    <SourceLine>Me.DragInProgress = False</SourceLine>
@@ -480,6 +480,30 @@
   <ItemParams></ItemParams>
   <ItemResult>Double</ItemResult>
  </Method>
+ <Method>
+  <ItemName>UpdateLayout</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>285702143</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub UpdateLayout()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent UpdateLayout</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Hook>
   <ItemName>NextFrame</ItemName>
   <TextEncoding>134217984</TextEncoding>
@@ -522,6 +546,14 @@
  </Hook>
  <Hook>
   <ItemName>Initialize</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>UpdateLayout</ItemName>
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
@@ -831,6 +863,21 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>TapDurationThreshold</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>119805951</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>TapDurationThreshold As Double = 0.5</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>TapDurationThreshold As Double = 0.5</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -890,6 +937,12 @@
    <ObjName>DragDelaySecondsThreshold</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>0.0</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TapDurationThreshold</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0.5</PropertyValue>
    <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>

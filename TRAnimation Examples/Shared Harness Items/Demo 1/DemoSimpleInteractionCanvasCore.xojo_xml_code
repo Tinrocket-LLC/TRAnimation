@@ -17,13 +17,22 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Initialize()</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>'Me.FPS = 60</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.CircleGroup = New TRAnimationGroupSprite</SourceLine>
+   <SourceLine>Me.SceneRoot.AddChild(Me.CircleGroup)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.CircleSprite = New DemoSimpleCircleSprite</SourceLine>
    <SourceLine>Me.CircleSprite.Radius = 40</SourceLine>
    <SourceLine>Me.CircleSprite.FillColor = Color.White</SourceLine>
+   <SourceLine>Me.CircleGroup.AddChild(Me.CircleSprite)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.SceneRoot.AddChild(Me.CircleSprite)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>'Me.FPS = 60</SourceLine>
+   <SourceLine>Dim anotherCircle As New DemoSimpleCircleSprite</SourceLine>
+   <SourceLine>anotherCircle.Radius = 60</SourceLine>
+   <SourceLine>anotherCircle.FillColor = Color.White</SourceLine>
+   <SourceLine>anotherCircle.Alpha = 0.5</SourceLine>
+   <SourceLine>anotherCircle.Position.Set(100, 50)</SourceLine>
+   <SourceLine>Me.CircleGroup.AddChild(anotherCircle)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim screenSpaceGroup As New TRAnimationGroupScreenSprite</SourceLine>
    <SourceLine>Me.SceneRoot.AddChild(screenSpaceGroup)</SourceLine>
@@ -112,6 +121,37 @@
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
+ <HookInstance>
+  <ItemName>UpdateLayout</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>63457279</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub UpdateLayout()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Center the sprite coordinate system</SourceLine>
+   <SourceLine>Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine>'Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.25, 0.0, Me.CircleGroup)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>PointerUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>786946047</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.25, 0.0, Me.CircleGroup)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Property>
   <ItemName>CircleSprite</ItemName>
   <Compatibility></Compatibility>
@@ -139,6 +179,21 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>ClickCounterText As TRAnimationSpriteTextNumber</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>CircleGroup</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1850316799</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>CircleGroup As TRAnimationGroupSprite</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>CircleGroup As TRAnimationGroupSprite</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -201,6 +256,11 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CircleGroup</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>

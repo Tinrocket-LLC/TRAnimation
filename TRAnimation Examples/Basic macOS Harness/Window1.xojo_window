@@ -66,12 +66,8 @@ End
 	#tag Method, Flags = &h0
 		Sub UpdateLayout()
 		  
-		  Dim demo As DemoSimpleInteractionCanvasCore = DemoSimpleInteractionCanvasCore(TRAnimationCanvasDesktop1.Core)
+		  TRAnimationCanvasDesktop1.Core.UpdateLayout
 		  
-		  // Center the sprite coordinate system
-		  demo.Camera.Position.Set(Me.Width / 2, Me.Height / 2)
-		  
-		  demo.ClickCounterText.Position.Set(10,Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates
 		End Sub
 	#tag EndMethod
 
