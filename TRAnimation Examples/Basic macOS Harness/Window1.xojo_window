@@ -78,7 +78,7 @@ End
 	#tag Event
 		Sub Opening()
 		  
-		  Me.Core = New DemoSimpleInteractionCanvasCore(Me)
+		  Me.Core = New DemoGravityCanvasCore(Me)
 		  
 		  Self.UpdateLayout
 		  

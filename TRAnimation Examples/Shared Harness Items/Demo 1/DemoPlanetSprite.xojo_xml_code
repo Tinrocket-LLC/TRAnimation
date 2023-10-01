@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1337696255">
- <ObjName>DemoSimpleCircleSprite</ObjName>
+ <ObjName>DemoPlanetSprite</ObjName>
  <ObjContainerID>1725169663</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
@@ -73,6 +73,32 @@
   <ItemParams></ItemParams>
   <ItemResult>TRAnimationBounds</ItemResult>
  </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1841807359</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>Super.Constructor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Random velocity</SourceLine>
+   <SourceLine>Me.Velocity = New TRVector2D</SourceLine>
+   <SourceLine>Me.Velocity.Randomize(-1.0, 1.0)</SourceLine>
+   <SourceLine>Me.Velocity.Scale(Rnd() * 500)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Mass = Rnd * 100 + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Property>
   <ItemName>FillColor</ItemName>
   <Compatibility></Compatibility>
@@ -80,11 +106,11 @@
   <PartID>136198143</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>FillColor As Color</SourceLine>
+   <SourceLine>FillColor As Color = Color.White</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>FillColor As Color</ItemDeclaration>
+  <ItemDeclaration>FillColor As Color = Color.White</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -100,6 +126,81 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Radius As Double = 20</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Velocity</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1863716863</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Velocity As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Velocity As TRVector2D</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>mMass</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2070099967</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mMass As Double = 1</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mMass As Double = 1</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Mass</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>374951935</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Mass As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Mass As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>mMass = value</SourceLine>
+   <SourceLine>me.Radius = Pow(mMass, 0.75) // Non linear scaling so both planets and sun are visible</SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return mMass</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>OutsideOfSolarSystem</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1647067135</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>OutsideOfSolarSystem As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>OutsideOfSolarSystem As Boolean</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -196,6 +297,11 @@
    <ObjName>Radius</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>20</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Mass</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2008657919">
- <ObjName>DemoSimpleInteractionCanvasCore</ObjName>
+ <ObjName>DemoGravityCanvasCore</ObjName>
  <ObjContainerID>1725169663</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
@@ -18,38 +18,55 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Initialize()</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Const kPlanetCount = 50</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>'Me.FPS = 60</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Camera.ViewportPadding = 50</SourceLine>
    <SourceLine>Me.Camera.TweenFunction.EaseMode = TRTween.Ease.ModeInOut</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.CircleGroup = New TRAnimationGroupSprite</SourceLine>
-   <SourceLine>Me.SceneRoot.AddChild(Me.CircleGroup)</SourceLine>
+   <SourceLine>Me.SolarSystem = New DemoSolarSystemSprite</SourceLine>
+   <SourceLine>Me.SceneRoot.AddChild(Me.SolarSystem)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.CircleSprite = New DemoSimpleCircleSprite</SourceLine>
-   <SourceLine>Me.CircleSprite.Radius = 40</SourceLine>
-   <SourceLine>Me.CircleSprite.FillColor = Color.White</SourceLine>
-   <SourceLine>Me.CircleGroup.AddChild(Me.CircleSprite)</SourceLine>
+   <SourceLine>Dim colors(-1) As Color = Array(Color.Green, Color.Blue, Color.Gray, Color.Cyan, Color.Brown)</SourceLine>
+   <SourceLine>For i As Integer = 1 To kPlanetCount</SourceLine>
+   <SourceLine>Dim planet As New DemoPlanetSprite</SourceLine>
+   <SourceLine>Dim v As New TRVector2D</SourceLine>
+   <SourceLine>v.Randomize(-1000, 1000)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim anotherCircle As New DemoSimpleCircleSprite</SourceLine>
-   <SourceLine>anotherCircle.Radius = 60</SourceLine>
-   <SourceLine>anotherCircle.FillColor = Color.White</SourceLine>
-   <SourceLine>anotherCircle.Alpha = 0.5</SourceLine>
-   <SourceLine>anotherCircle.Position.Set(100, 50)</SourceLine>
-   <SourceLine>Me.CircleGroup.AddChild(anotherCircle)</SourceLine>
+   <SourceLine>v.Length = 1000 + v.Length // Min length 1000; Max length 2000</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>planet.Position.Set(v)</SourceLine>
+   <SourceLine>planet.FillColor = colors(Rnd * colors.Count)</SourceLine>
+   <SourceLine>planet.FillColor = Color.Cyan</SourceLine>
+   <SourceLine>planet.Alpha = 0.75</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SolarSystem.AddChild(planet)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim sun As New DemoPlanetSprite</SourceLine>
+   <SourceLine>sun.Mass = 1000</SourceLine>
+   <SourceLine>sun.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine>sun.Velocity.Set(0)</SourceLine>
+   <SourceLine>Me.SolarSystem.Sun = sun</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SolarSystem.AddChild(sun)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim screenSpaceGroup As New TRAnimationGroupScreenSprite</SourceLine>
    <SourceLine>Me.SceneRoot.AddChild(screenSpaceGroup)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.ClickCounterText = New TRAnimationSpriteTextNumber</SourceLine>
-   <SourceLine>Me.ClickCounterText.TextFontSize = 20</SourceLine>
-   <SourceLine>Me.ClickCounterText.TextColor = Color.White</SourceLine>
-   <SourceLine>Me.ClickCounterText.TextBefore = "Clicks: "</SourceLine>
-   <SourceLine>Me.ClickCounterText.TextFormat = "0.0"</SourceLine>
-   <SourceLine>screenSpaceGroup.AddChild(Me.ClickCounterText)</SourceLine>
+   <SourceLine>'Me.ClickCounterText = New TRAnimationSpriteTextNumber</SourceLine>
+   <SourceLine>'Me.ClickCounterText.TextFontSize = 20</SourceLine>
+   <SourceLine>'Me.ClickCounterText.TextColor = Color.White</SourceLine>
+   <SourceLine>'Me.ClickCounterText.TextBefore = "Clicks: "</SourceLine>
+   <SourceLine>'Me.ClickCounterText.TextFormat = "0.0"</SourceLine>
+   <SourceLine>'screenSpaceGroup.AddChild(Me.ClickCounterText)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.DebugDrawBounds = True</SourceLine>
-   <SourceLine>Me.DebugDrawBoundsColor = Color.HSV(0.0, 0.0, 1.0, 127)</SourceLine>
+   <SourceLine>'Me.DebugDrawBounds = True</SourceLine>
+   <SourceLine>'Me.DebugDrawBoundsColor = Color.HSV(0.0, 0.0, 1.0, 127)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Start</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
@@ -74,22 +91,22 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.HitSprite = Nil Then</SourceLine>
-   <SourceLine>// Nothing was tapped; move the circle to the touch position</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Set postion animated</SourceLine>
-   <SourceLine>Dim f As New TRTweenFunctionCubic</SourceLine>
-   <SourceLine>f.EaseMode = TRTween.Ease.ModeOut</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim b As New TRAnimationBehaviorTarget(Me.CircleSprite, 0.25, f)</SourceLine>
-   <SourceLine>b.TargetPoint = worldPosition</SourceLine>
-   <SourceLine>b.NextFrameDelegate = Me // So we can be notified when the animation ends and update our camera</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.CircleSprite.TargetBehavior = b</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim clicks As Integer = Me.ClickCounterText.CurrentNumber + 1</SourceLine>
-   <SourceLine>Me.ClickCounterText.SetTargetNumber(clicks, 0.25)</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine>'If Me.HitSprite = Nil Then</SourceLine>
+   <SourceLine>'// Nothing was tapped; move the circle to the touch position</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'// Set postion animated</SourceLine>
+   <SourceLine>'Dim f As New TRTweenFunctionCubic</SourceLine>
+   <SourceLine>'f.EaseMode = TRTween.Ease.ModeOut</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Dim b As New TRAnimationBehaviorTarget(Me.CircleSprite, 0.25, f)</SourceLine>
+   <SourceLine>'b.TargetPoint = worldPosition</SourceLine>
+   <SourceLine>'b.NextFrameDelegate = Me // So we can be notified when the animation ends and update our camera</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Me.CircleSprite.TargetBehavior = b</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Dim clicks As Integer = Me.ClickCounterText.CurrentNumber + 1</SourceLine>
+   <SourceLine>'Me.ClickCounterText.SetTargetNumber(clicks, 0.25)</SourceLine>
+   <SourceLine>'End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -102,13 +119,13 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>// Drag the sprite around</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Set position directly</SourceLine>
-   <SourceLine>Me.HitSprite.Item.Position = worldPosition</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>'// Drag the sprite around</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'// Set position directly</SourceLine>
+   <SourceLine>'Me.HitSprite.Item.Position = worldPosition</SourceLine>
+   <SourceLine>'End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -121,10 +138,12 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerTap(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>'MessageBox("Tapped")</SourceLine>
+   <SourceLine>'End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>MessageBox("Tapped")</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine>Me.UpdateLayout</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -140,9 +159,9 @@
    <SourceLine></SourceLine>
    <SourceLine>// Center the sprite coordinate system</SourceLine>
    <SourceLine>'Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
-   <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.CircleGroup)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
+   <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.SolarSystem)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -155,10 +174,10 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If Me.DragInProgress Then</SourceLine>
-   <SourceLine>Me.UpdateLayout</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'If Me.DragInProgress Then</SourceLine>
+   <SourceLine>'Me.UpdateLayout</SourceLine>
+   <SourceLine>'End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -171,11 +190,11 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub TRAnimationBehaviorDelegate_BehaviorNextFrame(behavior as TRAnimationBehavior, tween as TRTween)</SourceLine>
-   <SourceLine>// Part of the TRAnimationBehaviorDelegate interface.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If behavior.isComplete Then</SourceLine>
-   <SourceLine>Me.UpdateLayout</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine>'// Part of the TRAnimationBehaviorDelegate interface.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'If behavior.isComplete Then</SourceLine>
+   <SourceLine>'Me.UpdateLayout</SourceLine>
+   <SourceLine>'End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -187,51 +206,44 @@
   <ItemResult></ItemResult>
  </Method>
  <Property>
-  <ItemName>CircleSprite</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1992409087</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>CircleSprite As DemoSimpleCircleSprite</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>CircleSprite As DemoSimpleCircleSprite</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>ClickCounterText</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>691621887</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>ClickCounterText As TRAnimationSpriteTextNumber</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>ClickCounterText As TRAnimationSpriteTextNumber</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>CircleGroup</ItemName>
+  <ItemName>SolarSystem</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1850316799</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>CircleGroup As TRAnimationGroupSprite</SourceLine>
+   <SourceLine>SolarSystem As DemoSolarSystemSprite</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>CircleGroup As TRAnimationGroupSprite</ItemDeclaration>
+  <ItemDeclaration>SolarSystem As DemoSolarSystemSprite</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>TapDurationThreshold</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0.5</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DebugDrawBounds</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DebugDrawBoundsColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;c000000</PropertyValue>
+   <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DragInProgress</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>DragDelaySecondsThreshold</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
@@ -290,11 +302,6 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>CircleGroup</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<block type="Module" ID="1656168447">
+ <ObjName>DemoSolarSystemSprite</ObjName>
+ <ObjContainerID>1725169663</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>TRAnimationGroupSprite</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility>(TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit)) or  (TargetIOS and (Target64Bit)) or  (TargetAndroid and (Target64Bit))</Compatibility>
+ <Method>
+  <ItemName>NextFrameOverride</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1181016063</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub NextFrameOverride(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Const kGravity = 100.0</SourceLine>
+   <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim planet As DemoPlanetSprite</SourceLine>
+   <SourceLine>Dim d As New TRVector2D</SourceLine>
+   <SourceLine>Dim v As New TRVector2D</SourceLine>
+   <SourceLine>Dim a As New TRVector2D</SourceLine>
+   <SourceLine>Dim i, j, u As Integer</SourceLine>
+   <SourceLine>Dim scaledGravity As Double = kGravity</SourceLine>
+   <SourceLine>Dim distance, force As Double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>u = Me.Planets.LastIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i = 0 To u</SourceLine>
+   <SourceLine>For j = i + 1 To u</SourceLine>
+   <SourceLine>// Calculate the distance between the two planets</SourceLine>
+   <SourceLine>d.Subtract(Me.Planets(j).Position, Me.Planets(i).Position)</SourceLine>
+   <SourceLine>distance = d.Length</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Calculate the gravitational force</SourceLine>
+   <SourceLine>force = kGravity * Me.Planets(i).mass * Me.Planets(j).mass / (distance * distance)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Calculate the acceleration for each planet</SourceLine>
+   <SourceLine>a.Set(force * d.X / (distance * Me.Planets(i).mass), force * d.Y / (distance * Me.Planets(i).mass))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Update the velocity of the first planet</SourceLine>
+   <SourceLine>Me.Planets(i).Velocity.Add(a)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Calculate the acceleration for the second planet (opposite direction)</SourceLine>
+   <SourceLine>a.Set(-force * d.X / (distance * Me.Planets(j).mass), -force * d.Y / (distance * Me.Planets(j).mass))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Update the velocity of the second planet</SourceLine>
+   <SourceLine>Me.Planets(j).Velocity.Add(a)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Update the positions based on the new velocities and elapsed time</SourceLine>
+   <SourceLine>Dim scaledVelocity As New TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p0 As TRVector2D = Me.Sun.Position</SourceLine>
+   <SourceLine>For i = 0 To u</SourceLine>
+   <SourceLine>scaledVelocity.Set(Me.Planets(i).Velocity.X * elapsedTime, Me.Planets(i).Velocity.Y * elapsedTime)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Planets(i).Position.Add(scaledVelocity)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If TRVector2D.Distance(p0, Me.Planets(i).Position) &gt; kMaxDistance Then</SourceLine>
+   <SourceLine>Me.Planets(i).OutsideOfSolarSystem = True</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Remove plants outside of solar system</SourceLine>
+   <SourceLine>For i = u DownTo 0</SourceLine>
+   <SourceLine>If Me.Planets(i).OutsideOfSolarSystem Then</SourceLine>
+   <SourceLine>Me.RemoveChild(Me.Planets(i))</SourceLine>
+   <SourceLine>Me.Planets.RemoveAt(i)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsAnimating</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1251880959</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsAnimating() As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>AddChild</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1929717759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub AddChild(child as TRAnimationSprite, index as Integer = -1)</SourceLine>
+   <SourceLine>// Calling the overridden superclass method.</SourceLine>
+   <SourceLine>Super.AddChild(child, index)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If child IsA DemoPlanetSprite Then</SourceLine>
+   <SourceLine>Me.Planets.Add(DemoPlanetSprite(child))</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>child as TRAnimationSprite, index as Integer = -1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Property>
+  <ItemName>Planets(-1)</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>409419775</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Planets(-1) As DemoPlanetSprite</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Planets(-1) As DemoPlanetSprite</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Sun</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1623298047</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sun As DemoPlanetSprite</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Sun As DemoPlanetSprite</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>IsAnimatingOverride</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IgnoreHitTests</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DrawChildrenFirst</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Hidden</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ID</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Alpha</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>1</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CanDrag</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RotationAsDegrees</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AntiAlias</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>
