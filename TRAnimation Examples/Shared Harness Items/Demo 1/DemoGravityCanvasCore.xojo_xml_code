@@ -18,7 +18,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Initialize()</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Const kPlanetCount = 50</SourceLine>
+   <SourceLine>Const kPlanetCount = 500</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'Me.FPS = 60</SourceLine>
    <SourceLine></SourceLine>
@@ -63,6 +63,10 @@
    <SourceLine>'Me.DebugDrawBoundsColor = Color.HSV(0.0, 0.0, 1.0, 127)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Start</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Solver = New DemoGravitySolverThread</SourceLine>
+   <SourceLine>Me.Solver.SolarSystem = Me.SolarSystem</SourceLine>
+   <SourceLine>Me.Solver.Start</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -214,6 +218,21 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>SolarSystem As DemoSolarSystemSprite</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Solver</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>843632639</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Solver As DemoGravitySolverThread</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Solver As DemoGravitySolverThread</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

@@ -17,6 +17,71 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub NextFrameOverride(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>'Me.SolveGravity(elapsedTime)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsAnimating</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1251880959</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsAnimating() As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>AddChild</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1929717759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub AddChild(child as TRAnimationSprite, index as Integer = -1)</SourceLine>
+   <SourceLine>// Calling the overridden superclass method.</SourceLine>
+   <SourceLine>Super.AddChild(child, index)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If child IsA DemoPlanetSprite Then</SourceLine>
+   <SourceLine>Me.Planets.Add(DemoPlanetSprite(child))</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>child as TRAnimationSprite, index as Integer = -1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SolveGravity</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1539041279</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub SolveGravity(elapsedTime as Double)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Const kGravity = 100.0</SourceLine>
    <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
    <SourceLine>Const kEpsilon = 0.00001</SourceLine>
@@ -84,52 +149,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
-  <ItemName>IsAnimating</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1251880959</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function IsAnimating() As Boolean</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Return True</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
-  <ItemResult>Boolean</ItemResult>
- </Method>
- <Method>
-  <ItemName>AddChild</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1929717759</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub AddChild(child as TRAnimationSprite, index as Integer = -1)</SourceLine>
-   <SourceLine>// Calling the overridden superclass method.</SourceLine>
-   <SourceLine>Super.AddChild(child, index)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If child IsA DemoPlanetSprite Then</SourceLine>
-   <SourceLine>Me.Planets.Add(DemoPlanetSprite(child))</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>child as TRAnimationSprite, index as Integer = -1</ItemParams>
+  <ItemParams>elapsedTime as Double</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Property>

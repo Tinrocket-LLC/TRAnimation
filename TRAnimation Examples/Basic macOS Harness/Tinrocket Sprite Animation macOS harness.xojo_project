@@ -70,6 +70,7 @@ Class=TRAnimationSpriteTextNumber;../../Framework/Public/TRAnimation/Sprites/Tex
 Class=TRAnimationSpriteText;../../Framework/Public/TRAnimation/Sprites/Text/TRAnimationSpriteText.xojo_xml_code;&h00000000441A27FF;&h000000000A0ABFFF;false
 Class=DemoPlanetSprite;../Shared Harness Items/Demo 1/DemoPlanetSprite.xojo_xml_code;&h00000000027847FF;&h0000000066D3FFFF;false
 Class=DemoSolarSystemSprite;../Shared Harness Items/Demo 1/DemoSolarSystemSprite.xojo_xml_code;&h0000000005BB7FFF;&h0000000066D3FFFF;false
+Class=DemoGravitySolverThread;Shared Harness Items/Demo 1/DemoGravitySolverThread.xojo_code;&h000000001E5C3FFF;&h0000000066D3FFFF;false
 DefaultWindow=Window1
 AppMenuBar=MainMenuBar
 MajorVersion=1
