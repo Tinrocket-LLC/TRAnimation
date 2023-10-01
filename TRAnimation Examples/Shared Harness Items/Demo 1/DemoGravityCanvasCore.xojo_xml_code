@@ -28,7 +28,6 @@
    <SourceLine>Me.SolarSystem = New DemoSolarSystemSprite</SourceLine>
    <SourceLine>Me.SceneRoot.AddChild(Me.SolarSystem)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim colors(-1) As Color = Array(Color.Green, Color.Blue, Color.Gray, Color.Cyan, Color.Brown)</SourceLine>
    <SourceLine>For i As Integer = 1 To kPlanetCount</SourceLine>
    <SourceLine>Dim planet As New DemoPlanetSprite</SourceLine>
    <SourceLine>Dim v As New TRVector2D</SourceLine>
@@ -37,8 +36,6 @@
    <SourceLine>v.Length = 1000 + v.Length // Min length 1000; Max length 2000</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>planet.Position.Set(v)</SourceLine>
-   <SourceLine>planet.FillColor = colors(Rnd * colors.Count)</SourceLine>
-   <SourceLine>planet.FillColor = Color.Cyan</SourceLine>
    <SourceLine>planet.Alpha = 0.75</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.SolarSystem.AddChild(planet)</SourceLine>

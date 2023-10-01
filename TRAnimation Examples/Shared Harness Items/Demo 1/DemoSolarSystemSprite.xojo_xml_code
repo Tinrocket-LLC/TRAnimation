@@ -19,6 +19,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Const kGravity = 100.0</SourceLine>
    <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
+   <SourceLine>Const kEpsilon = 0.00001</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim planet As DemoPlanetSprite</SourceLine>
    <SourceLine>Dim d As New TRVector2D</SourceLine>
@@ -26,7 +27,7 @@
    <SourceLine>Dim a As New TRVector2D</SourceLine>
    <SourceLine>Dim i, j, u As Integer</SourceLine>
    <SourceLine>Dim scaledGravity As Double = kGravity</SourceLine>
-   <SourceLine>Dim distance, force As Double</SourceLine>
+   <SourceLine>Dim distance, d2, force As Double</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>u = Me.Planets.LastIndex</SourceLine>
    <SourceLine></SourceLine>
@@ -34,19 +35,21 @@
    <SourceLine>For j = i + 1 To u</SourceLine>
    <SourceLine>// Calculate the distance between the two planets</SourceLine>
    <SourceLine>d.Subtract(Me.Planets(j).Position, Me.Planets(i).Position)</SourceLine>
-   <SourceLine>distance = d.Length</SourceLine>
+   <SourceLine>distance = Max(d.Length, kEpsilon)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Calculate the gravitational force</SourceLine>
    <SourceLine>force = kGravity * Me.Planets(i).mass * Me.Planets(j).mass / (distance * distance)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Calculate the acceleration for each planet</SourceLine>
-   <SourceLine>a.Set(force * d.X / (distance * Me.Planets(i).mass), force * d.Y / (distance * Me.Planets(i).mass))</SourceLine>
+   <SourceLine>d2 = Max(distance * Me.Planets(i).mass, kEpsilon)</SourceLine>
+   <SourceLine>a.Set(force * d.X / d2, force * d.Y / d2)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Update the velocity of the first planet</SourceLine>
    <SourceLine>Me.Planets(i).Velocity.Add(a)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Calculate the acceleration for the second planet (opposite direction)</SourceLine>
-   <SourceLine>a.Set(-force * d.X / (distance * Me.Planets(j).mass), -force * d.Y / (distance * Me.Planets(j).mass))</SourceLine>
+   <SourceLine>d2 = Max(distance * Me.Planets(j).mass, kEpsilon)</SourceLine>
+   <SourceLine>a.Set(-force * d.X / d2, -force * d.Y / d2)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Update the velocity of the second planet</SourceLine>
    <SourceLine>Me.Planets(j).Velocity.Add(a)</SourceLine>
