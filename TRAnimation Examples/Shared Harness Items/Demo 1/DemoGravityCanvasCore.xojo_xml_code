@@ -18,7 +18,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Initialize()</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Const kPlanetCount = 500</SourceLine>
+   <SourceLine>Const kPlanetCount = 100</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'Me.FPS = 60</SourceLine>
    <SourceLine></SourceLine>
@@ -28,22 +28,36 @@
    <SourceLine>Me.SolarSystem = New DemoSolarSystemSprite</SourceLine>
    <SourceLine>Me.SceneRoot.AddChild(Me.SolarSystem)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Dim orbitDirectionBias As Double = Rnd</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>For i As Integer = 1 To kPlanetCount</SourceLine>
    <SourceLine>Dim planet As New DemoPlanetSprite</SourceLine>
    <SourceLine>Dim v As New TRVector2D</SourceLine>
    <SourceLine>v.Randomize(-1, 1)</SourceLine>
    <SourceLine>v.Normalize</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>v.Length = 1000 + Rnd * 1000 // Min length 1000; Max length 2000</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>planet.Position.Set(v)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Compute starting velocity to be tangent to orbit around sun</SourceLine>
+   <SourceLine>If Rnd &gt; orbitDirectionBias Then</SourceLine>
+   <SourceLine>v = v.PerpLeft</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>v = v.PerpRight</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>v.Normalize</SourceLine>
+   <SourceLine>v.Length = 0.5 + 0.5 * Rnd</SourceLine>
+   <SourceLine>v.Scale(6000)</SourceLine>
+   <SourceLine>planet.Velocity = v</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>planet.Alpha = 0.75</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.SolarSystem.AddChild(planet)</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim sun As New DemoPlanetSprite</SourceLine>
-   <SourceLine>sun.Mass = 1000</SourceLine>
+   <SourceLine>sun.Mass = 100000</SourceLine>
+   <SourceLine>sun.Radius = 100</SourceLine>
    <SourceLine>sun.Velocity.Set(0)</SourceLine>
    <SourceLine>Me.SolarSystem.Sun = sun</SourceLine>
    <SourceLine></SourceLine>

@@ -178,7 +178,7 @@
    <SourceLine>Set</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>mMass = value</SourceLine>
-   <SourceLine>me.Radius = Pow(mMass, 0.75) // Non linear scaling so both planets and sun are visible</SourceLine>
+   <SourceLine>me.Radius = Pow(mMass, 0.75) // Non linear scaling</SourceLine>
    <SourceLine>End Set</SourceLine>
   </SetAccessor>
   <GetAccessor>
