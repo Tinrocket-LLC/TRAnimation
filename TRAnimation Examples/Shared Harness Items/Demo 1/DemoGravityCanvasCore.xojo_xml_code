@@ -31,9 +31,10 @@
    <SourceLine>For i As Integer = 1 To kPlanetCount</SourceLine>
    <SourceLine>Dim planet As New DemoPlanetSprite</SourceLine>
    <SourceLine>Dim v As New TRVector2D</SourceLine>
-   <SourceLine>v.Randomize(-1000, 1000)</SourceLine>
+   <SourceLine>v.Randomize(-1, 1)</SourceLine>
+   <SourceLine>v.Normalize</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>v.Length = 1000 + v.Length // Min length 1000; Max length 2000</SourceLine>
+   <SourceLine>v.Length = 1000 + Rnd * 1000 // Min length 1000; Max length 2000</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>planet.Position.Set(v)</SourceLine>
    <SourceLine>planet.Alpha = 0.75</SourceLine>
@@ -43,7 +44,6 @@
    <SourceLine></SourceLine>
    <SourceLine>Dim sun As New DemoPlanetSprite</SourceLine>
    <SourceLine>sun.Mass = 1000</SourceLine>
-   <SourceLine>sun.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
    <SourceLine>sun.Velocity.Set(0)</SourceLine>
    <SourceLine>Me.SolarSystem.Sun = sun</SourceLine>
    <SourceLine></SourceLine>
@@ -61,6 +61,8 @@
    <SourceLine></SourceLine>
    <SourceLine>'Me.DebugDrawBounds = True</SourceLine>
    <SourceLine>'Me.DebugDrawBoundsColor = Color.HSV(0.0, 0.0, 1.0, 127)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Start</SourceLine>
    <SourceLine></SourceLine>

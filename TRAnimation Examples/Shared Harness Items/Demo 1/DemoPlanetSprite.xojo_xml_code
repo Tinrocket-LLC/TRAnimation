@@ -86,7 +86,7 @@
    <SourceLine>// Random velocity</SourceLine>
    <SourceLine>Me.Velocity = New TRVector2D</SourceLine>
    <SourceLine>Me.Velocity.Randomize(-1.0, 1.0)</SourceLine>
-   <SourceLine>Me.Velocity.Scale(Rnd() * 500)</SourceLine>
+   <SourceLine>Me.Velocity.Scale(Rnd() * 100)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Mass = Rnd * 100 + 1</SourceLine>
    <SourceLine></SourceLine>
