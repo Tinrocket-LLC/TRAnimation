@@ -56,8 +56,8 @@
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim sun As New DemoPlanetSprite</SourceLine>
+   <SourceLine>sun.RadiusFactor = 0.001</SourceLine>
    <SourceLine>sun.Mass = 100000</SourceLine>
-   <SourceLine>sun.Radius = 100</SourceLine>
    <SourceLine>sun.Velocity.Set(0)</SourceLine>
    <SourceLine>Me.SolarSystem.Sun = sun</SourceLine>
    <SourceLine></SourceLine>
