@@ -35,7 +35,7 @@
    <SourceLine>activePlanets(i).Position.Add(scaledVelocity)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If TRVector2D.Distance(p0, activePlanets(i).Position) &gt; kMaxDistance Then</SourceLine>
-   <SourceLine>activePlanets(i).OutsideOfSolarSystem = True</SourceLine>
+   <SourceLine>activePlanets(i).Inactive = True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
@@ -112,7 +112,6 @@
    <SourceLine>Dim planet As DemoPlanetSprite</SourceLine>
    <SourceLine>Dim d As New TRVector2D</SourceLine>
    <SourceLine>Dim v As New TRVector2D</SourceLine>
-   <SourceLine>Dim a As New TRVector2D</SourceLine>
    <SourceLine>Dim i, j, u As Integer</SourceLine>
    <SourceLine>Dim scaledGravity As Double = kGravity</SourceLine>
    <SourceLine>Dim distance, d2, force As Double</SourceLine>
@@ -122,7 +121,11 @@
    <SourceLine>u = activePlanets.LastIndex</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i = 0 To u</SourceLine>
+   <SourceLine>'If activePlanets(i).Inactive Then Continue</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>For j = i + 1 To u</SourceLine>
+   <SourceLine>'If activePlanets(j).Inactive Then Continue</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// Calculate the distance between the two planets</SourceLine>
    <SourceLine>d.Subtract(activePlanets(j).Position, activePlanets(i).Position)</SourceLine>
    <SourceLine>distance = Max(d.Length, kEpsilon)</SourceLine>
@@ -137,17 +140,16 @@
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Merge within the double loop. We don't have to be accurate; it's a demo</SourceLine>
-   <SourceLine>Dim newMass As Double = activePlanets(i).Mass + activePlanets(j).Mass</SourceLine>
+   <SourceLine>Dim newMass As Double = planetA.Mass + planetB.Mass</SourceLine>
    <SourceLine>Dim newVelocity As New TRVector2D</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>planetA.Velocity.Set( _</SourceLine>
    <SourceLine>(planetA.Velocity.X * planetA.Mass + planetB.Velocity.X * planetB.Mass) / newMass, _</SourceLine>
    <SourceLine>(planetA.Velocity.Y * planetA.Mass + planetB.Velocity.Y * planetB.Mass) / newMass)</SourceLine>
    <SourceLine>planetA.Mass = newMass</SourceLine>
-   <SourceLine>planetA.RadiusFactor = Min(planetA.RadiusFactor, planetB.RadiusFactor)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Kill the 2nd planet</SourceLine>
-   <SourceLine>planetB.OutsideOfSolarSystem = True</SourceLine>
+   <SourceLine>planetB.Inactive = True</SourceLine>
    <SourceLine>planetB.Radius = 0</SourceLine>
    <SourceLine>planetB.Mass = 0</SourceLine>
    <SourceLine>planetB.Velocity.Set(0)</SourceLine>
@@ -156,18 +158,12 @@
    <SourceLine>force = kGravity * activePlanets(i).mass * activePlanets(j).mass / (distance * distance)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Calculate the acceleration for each planet</SourceLine>
-   <SourceLine>d2 = Max(distance * activePlanets(i).mass, kEpsilon)</SourceLine>
-   <SourceLine>a.Set(force * d.X / d2, force * d.Y / d2)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Update the velocity of the first planet</SourceLine>
-   <SourceLine>activePlanets(i).Velocity.Add(a)</SourceLine>
+   <SourceLine>d2 = 1.0 / Max(distance * activePlanets(i).mass, kEpsilon)</SourceLine>
+   <SourceLine>activePlanets(i).Velocity.Add(force * d.X * d2, force * d.Y * d2)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Calculate the acceleration for the second planet (opposite direction)</SourceLine>
-   <SourceLine>d2 = Max(distance * Me.Planets(j).mass, kEpsilon)</SourceLine>
-   <SourceLine>a.Set(-force * d.X / d2, -force * d.Y / d2)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Update the velocity of the second planet</SourceLine>
-   <SourceLine>activePlanets(j).Velocity.Add(a)</SourceLine>
+   <SourceLine>d2 = 1.0 / Max(distance * activePlanets(j).mass, kEpsilon)</SourceLine>
+   <SourceLine>activePlanets(j).Velocity.Add(-force * d.X * d2, -force * d.Y * d2)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine>Next</SourceLine>
@@ -217,7 +213,7 @@
    <SourceLine>u = Me.Planets.LastIndex</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i = 0 To u</SourceLine>
-   <SourceLine>'If Not Me.Planets(i).OutsideOfSolarSystem Then</SourceLine>
+   <SourceLine>'If Not Me.Planets(i).Inactive Then</SourceLine>
    <SourceLine>results.Add(Me.Planets(i))</SourceLine>
    <SourceLine>'Me.Planets.RemoveAt(i)</SourceLine>
    <SourceLine>'End</SourceLine>

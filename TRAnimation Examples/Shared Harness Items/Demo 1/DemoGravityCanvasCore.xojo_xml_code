@@ -50,13 +50,12 @@
    <SourceLine>v.Scale(6000)</SourceLine>
    <SourceLine>planet.Velocity = v</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>planet.Alpha = 0.75</SourceLine>
+   <SourceLine>planet.Alpha = 0.666</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.SolarSystem.AddChild(planet)</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim sun As New DemoPlanetSprite</SourceLine>
-   <SourceLine>sun.RadiusFactor = 0.001</SourceLine>
    <SourceLine>sun.Mass = 100000</SourceLine>
    <SourceLine>sun.Velocity.Set(0)</SourceLine>
    <SourceLine>Me.SolarSystem.Sun = sun</SourceLine>

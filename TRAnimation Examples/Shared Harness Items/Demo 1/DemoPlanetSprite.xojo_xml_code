@@ -179,7 +179,8 @@
    <SourceLine></SourceLine>
    <SourceLine>mMass = value</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Radius = mMass * Me.RadiusFactor</SourceLine>
+   <SourceLine>'Me.Radius = Sqrt(Sqrt(mMass)) * 10</SourceLine>
+   <SourceLine>Me.Radius = Pow(mMass, 0.25) * 10</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Set</SourceLine>
   </SetAccessor>
@@ -192,66 +193,19 @@
   </GetAccessor>
  </Property>
  <Property>
-  <ItemName>OutsideOfSolarSystem</ItemName>
+  <ItemName>Inactive</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1647067135</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>OutsideOfSolarSystem As Boolean</SourceLine>
+   <SourceLine>Inactive As Boolean</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>OutsideOfSolarSystem As Boolean</ItemDeclaration>
+  <ItemDeclaration>Inactive As Boolean</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>mRadiusFactor</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1057705983</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mRadiusFactor As Double = .1</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mRadiusFactor As Double = .1</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>RadiusFactor</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1921665023</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>RadiusFactor As Double</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>RadiusFactor As Double</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <SetAccessor>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Set</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>mRadiusFactor = value</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.Mass = Me.mMass</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Set</SourceLine>
-  </SetAccessor>
-  <GetAccessor>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Get</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Return mRadiusFactor</SourceLine>
-   <SourceLine>End Get</SourceLine>
-  </GetAccessor>
  </Property>
  <ViewBehavior>
   <ViewProperty>
@@ -354,14 +308,9 @@
    <ItemType>Double</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>OutsideOfSolarSystem</ObjName>
+   <ObjName>Inactive</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>RadiusFactor</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>
