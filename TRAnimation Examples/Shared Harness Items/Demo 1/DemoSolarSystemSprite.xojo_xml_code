@@ -19,7 +19,7 @@
    <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim i, j, u As Integer</SourceLine>
-   <SourceLine>Dim activePlanets(-1) As DemoPlanetSprite = Me.ActivePlanets</SourceLine>
+   <SourceLine>Dim activePlanets(-1) As DemoPlanetSprite = Me.Planets</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>elapsedTime = elapsedTime * 0.1</SourceLine>
    <SourceLine></SourceLine>
@@ -31,6 +31,7 @@
    <SourceLine>Dim p0 As TRVector2D = Me.Sun.Position</SourceLine>
    <SourceLine>For i = 0 To u</SourceLine>
    <SourceLine>scaledVelocity.Set(activePlanets(i).Velocity.X * elapsedTime, activePlanets(i).Velocity.Y * elapsedTime)</SourceLine>
+   <SourceLine>'scaledVelocity.Set(activePlanets(i).Velocity.X, activePlanets(i).Velocity.Y)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>activePlanets(i).Position.Add(scaledVelocity)</SourceLine>
    <SourceLine></SourceLine>
@@ -38,11 +39,6 @@
    <SourceLine>activePlanets(i).Inactive = True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>'Me.Lock.Enter</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>'Me.Lock.Leave</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -106,7 +102,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub SolveGravity(elapsedTime as Double)</SourceLine>
-   <SourceLine>Const kGravity = 1000.0</SourceLine>
+   <SourceLine>Const kGravity = 100.0</SourceLine>
    <SourceLine>Const kEpsilon = 0.00001</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim planet As DemoPlanetSprite</SourceLine>
@@ -115,17 +111,14 @@
    <SourceLine>Dim i, j, u As Integer</SourceLine>
    <SourceLine>Dim scaledGravity As Double = kGravity</SourceLine>
    <SourceLine>Dim distance, d2, force As Double</SourceLine>
-   <SourceLine>Dim activePlanets(-1) As DemoPlanetSprite = Me.ActivePlanets</SourceLine>
+   <SourceLine>Dim activePlanets(-1) As DemoPlanetSprite = Me.Planets</SourceLine>
+   <SourceLine>Dim nextPlanets(-1) As DemoPlanetSprite</SourceLine>
    <SourceLine>Dim planetA, planetB As DemoPlanetSprite</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>u = activePlanets.LastIndex</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i = 0 To u</SourceLine>
-   <SourceLine>'If activePlanets(i).Inactive Then Continue</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>For j = i + 1 To u</SourceLine>
-   <SourceLine>'If activePlanets(j).Inactive Then Continue</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>// Calculate the distance between the two planets</SourceLine>
    <SourceLine>d.Subtract(activePlanets(j).Position, activePlanets(i).Position)</SourceLine>
    <SourceLine>distance = Max(d.Length, kEpsilon)</SourceLine>
@@ -158,15 +151,26 @@
    <SourceLine>force = kGravity * activePlanets(i).mass * activePlanets(j).mass / (distance * distance)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Calculate the acceleration for each planet</SourceLine>
-   <SourceLine>d2 = 1.0 / Max(distance * activePlanets(i).mass, kEpsilon)</SourceLine>
+   <SourceLine>d2 = (1.0 / Max(distance * activePlanets(i).mass, kEpsilon)) * 1'elapsedTime</SourceLine>
    <SourceLine>activePlanets(i).Velocity.Add(force * d.X * d2, force * d.Y * d2)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Calculate the acceleration for the second planet (opposite direction)</SourceLine>
-   <SourceLine>d2 = 1.0 / Max(distance * activePlanets(j).mass, kEpsilon)</SourceLine>
+   <SourceLine>d2 = (1.0 / Max(distance * activePlanets(j).mass, kEpsilon)) * 1'elapsedTime</SourceLine>
    <SourceLine>activePlanets(j).Velocity.Add(-force * d.X * d2, -force * d.Y * d2)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>u = activePlanets.LastIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i = 0 To u</SourceLine>
+   <SourceLine>If Not activePlanets(i).Inactive Then</SourceLine>
+   <SourceLine>nextPlanets.Add(activePlanets(i))</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Planets = Me.PlanetsNextBuffer</SourceLine>
+   <SourceLine>Me.PlanetsNextBuffer = nextPlanets</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -175,28 +179,6 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>elapsedTime as Double</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
-  <ItemName>Constructor</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>470499327</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Constructor()</SourceLine>
-   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
-   <SourceLine>Super.Constructor</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.Lock = New CriticalSection</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -260,17 +242,17 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Lock</ItemName>
+  <ItemName>PlanetsNextBuffer(-1)</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>417533951</PartID>
+  <PartID>450273279</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Lock As CriticalSection</SourceLine>
+   <SourceLine>PlanetsNextBuffer(-1) As DemoPlanetSprite</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Lock As CriticalSection</ItemDeclaration>
+  <ItemDeclaration>PlanetsNextBuffer(-1) As DemoPlanetSprite</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
