@@ -4,21 +4,20 @@ Inherits Thread
 	#tag CompatibilityFlags = (TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit)) or  (TargetIOS and (Target64Bit)) or  (TargetAndroid and (Target64Bit))
 	#tag Event
 		Sub Run()
-		  'Const kMillion = 1000000
-		  '
-		  'If Me.SolarSystem = Nil Then
-		  'Return
-		  'End
-		  '
-		  'Dim lastMicroseconds As Double = System.Microseconds
-		  '
-		  'While True
-		  'Dim ms As Double = System.Microseconds
-		  'Dim elapsedTime As Double = (ms - lastMicroseconds) / kMillion
-		  '
-		  'Me.SolarSystem.SolveGravity(elapsedTime)
-		  'lastMicroseconds = ms
-		  'Wend
+		  Const kMillion = 1000000
+		  
+		  If Me.SolarSystem = Nil Then
+		    Return
+		  End
+		  
+		  Dim lastMicroseconds As Double = System.Microseconds
+		  
+		  While True
+		    Dim ms As Double = System.Microseconds
+		    Dim elapsedTime As Double = (ms - lastMicroseconds) / kMillion
+		    
+		    Me.SolarSystem.SolveGravity(elapsedTime)
+		  Wend
 		  
 		End Sub
 	#tag EndEvent

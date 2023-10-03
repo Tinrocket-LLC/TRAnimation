@@ -17,7 +17,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub NextFrameOverride(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.SolveGravity(elapsedTime)</SourceLine>
+   <SourceLine>'Me.SolveGravity(elapsedTime)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
