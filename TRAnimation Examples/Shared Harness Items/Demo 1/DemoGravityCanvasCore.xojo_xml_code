@@ -47,7 +47,7 @@
    <SourceLine>End</SourceLine>
    <SourceLine>v.Normalize</SourceLine>
    <SourceLine>v.Length = 0.5 + 0.5 * Rnd</SourceLine>
-   <SourceLine>v.Scale(100)</SourceLine>
+   <SourceLine>v.Scale(1000)</SourceLine>
    <SourceLine>planet.Velocity = v</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>planet.Alpha = 0.666</SourceLine>

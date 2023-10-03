@@ -179,7 +179,6 @@
    <SourceLine></SourceLine>
    <SourceLine>mMass = value</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>'Me.Radius = Sqrt(Sqrt(mMass)) * 10</SourceLine>
    <SourceLine>Me.Radius = Pow(mMass, 0.25) * 10</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Set</SourceLine>

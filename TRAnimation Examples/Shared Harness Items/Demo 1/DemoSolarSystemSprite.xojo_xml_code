@@ -16,31 +16,8 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub NextFrameOverride(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.SolveGravity(elapsedTime)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim i, j, u As Integer</SourceLine>
-   <SourceLine>Dim activePlanets(-1) As DemoPlanetSprite = Me.Planets</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>elapsedTime = elapsedTime * 0.1</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>u = activePlanets.LastIndex</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Update the positions based on the new velocities and elapsed time</SourceLine>
-   <SourceLine>Dim scaledVelocity As New TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim p0 As TRVector2D = Me.Sun.Position</SourceLine>
-   <SourceLine>For i = 0 To u</SourceLine>
-   <SourceLine>'scaledVelocity.Set(activePlanets(i).Velocity.X * elapsedTime, activePlanets(i).Velocity.Y * elapsedTime)</SourceLine>
-   <SourceLine>scaledVelocity.Set(activePlanets(i).Velocity.X, activePlanets(i).Velocity.Y)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>activePlanets(i).Position.Add(scaledVelocity)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If TRVector2D.Distance(p0, activePlanets(i).Position) &gt; kMaxDistance Then</SourceLine>
-   <SourceLine>activePlanets(i).Inactive = True</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -86,7 +63,6 @@
    <SourceLine>Me.Planets.Add(DemoPlanetSprite(child))</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -104,10 +80,8 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub SolveGravity(elapsedTime as Double)</SourceLine>
-   <SourceLine>Const kGravity = 50000.0</SourceLine>
+   <SourceLine>Const kGravity = 10000.0</SourceLine>
    <SourceLine>Const kEpsilon = 0.00001</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>elapsedTime = elapsedTime * 0.1</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim planet As DemoPlanetSprite</SourceLine>
    <SourceLine>Dim d As New TRVector2D</SourceLine>
@@ -128,7 +102,7 @@
    <SourceLine>d.Subtract(activePlanets(j).Position, activePlanets(i).Position)</SourceLine>
    <SourceLine>distance = Max(d.Length, kEpsilon)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If distance &lt; activePlanets(i).Radius + activePlanets(j).Radius Then</SourceLine>
+   <SourceLine>If distance &lt; Max(activePlanets(i).Radius, activePlanets(j).Radius) Then</SourceLine>
    <SourceLine>If activePlanets(i) = Me.Sun Then</SourceLine>
    <SourceLine>planetA = activePlanets(i)</SourceLine>
    <SourceLine>planetB = activePlanets(j)</SourceLine>
@@ -170,7 +144,26 @@
    <SourceLine>Next</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>u = activePlanets.LastIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//* Update the positions based on the new velocities and elapsed time *//</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim scaledVelocity As New TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p0 As TRVector2D = Me.Sun.Position</SourceLine>
+   <SourceLine>For i = 0 To u</SourceLine>
+   <SourceLine>scaledVelocity.Set(activePlanets(i).Velocity.X * elapsedTime, activePlanets(i).Velocity.Y * elapsedTime)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>activePlanets(i).Position.Add(scaledVelocity)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If TRVector2D.Distance(p0, activePlanets(i).Position) &gt; kMaxDistance Then</SourceLine>
+   <SourceLine>activePlanets(i).Inactive = True</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//* Clean up *//</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i = 0 To u</SourceLine>
    <SourceLine>If activePlanets(i).Inactive Then</SourceLine>
@@ -180,8 +173,10 @@
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Swap buffers</SourceLine>
    <SourceLine>Me.Planets = Me.PlanetsNextBuffer</SourceLine>
    <SourceLine>Me.PlanetsNextBuffer = nextPlanets</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
