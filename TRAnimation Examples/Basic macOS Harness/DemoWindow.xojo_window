@@ -1,5 +1,5 @@
 #tag DesktopWindow
-Begin DesktopWindow Window1
+Begin DesktopWindow DemoWindow
    Backdrop        =   0
    BackgroundColor =   &cFFFFFF
    Composite       =   False

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoGravityCanvasCore</ObjName>
- <ObjContainerID>1355030527</ObjContainerID>
+ <ObjContainerID>941062143</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
@@ -229,7 +229,7 @@
    <SourceLine>Sub Destructor()</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Make sure we're tearing everything down</SourceLine>
-   <SourceLine>Break</SourceLine>
+   <SourceLine>'Break</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
