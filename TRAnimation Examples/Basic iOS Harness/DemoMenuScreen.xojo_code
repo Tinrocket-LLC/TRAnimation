@@ -24,6 +24,7 @@ Begin MobileScreen DemoMenuScreen
       AutoLayout      =   Table1, 4, BottomLayoutGuide, 4, False, +1.00, 4, 1, 0, , True
       ControlCount    =   0
       EditingEnabled  =   False
+      EditingEnabled  =   False
       Enabled         =   True
       EstimatedRowHeight=   -1
       Format          =   0
@@ -42,21 +43,35 @@ End
 #tag EndMobileScreen
 
 #tag WindowCode
-	#tag Event
-		Sub Opening()
-		  Table1.AddSection("")
-		  
-		  
-		  For i As Integer = 0 To 2
-		    Table1.AddRow(0, "Demo")
-		    
-		  Next
-		End Sub
-	#tag EndEvent
-
-
 #tag EndWindowCode
 
+#tag Events Table1
+	#tag Event
+		Sub Opening()
+		  Dim demos(-1) As String = DemoManager.Demos
+		  
+		  Me.AddSection("")
+		  
+		  For i As Integer = 0 To demos.LastIndex
+		    Me.AddRow(0, demos(i))
+		  Next
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SelectionChanged(section As Integer, row As Integer)
+		  Dim demos(-1) As String = DemoManager.Demos
+		  
+		  Self.BackButtonCaption = "Back"
+		  
+		  Var demo As New DemoScreen
+		  
+		  demo.Show
+		  demo.LoadDemo(row)
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="Index"

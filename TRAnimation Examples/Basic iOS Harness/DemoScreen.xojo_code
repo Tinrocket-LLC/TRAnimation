@@ -47,16 +47,19 @@ End
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h0
+		Sub LoadDemo(demoIndex as Integer)
+		  Dim demos(-1) As String = DemoManager.Demos
+		  
+		  DemoManager.RunDemo(demos(demoIndex), TRAnimationCanvasMobile1)
+		  
+		End Sub
+	#tag EndMethod
+
+
 #tag EndWindowCode
 
 #tag Events TRAnimationCanvasMobile1
-	#tag Event
-		Sub Opening()
-		  
-		  Me.Core = New DemoSimpleInteractionCanvasCore(Me)
-		  
-		End Sub
-	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
