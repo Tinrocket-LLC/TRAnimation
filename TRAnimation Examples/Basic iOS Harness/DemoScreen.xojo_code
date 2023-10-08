@@ -33,15 +33,28 @@ Begin MobileScreen DemoScreen
       Visible         =   True
       Width           =   320
    End
+   Begin Timer Timer1
+      Height          =   32
+      Height          =   32
+      Left            =   60
+      Left            =   60
+      LockedInPosition=   False
+      PanelIndex      =   -1
+      Parent          =   ""
+      Period          =   0
+      RunMode         =   1
+      Scope           =   0
+      Top             =   60
+      Top             =   60
+      Width           =   32
+      Width           =   32
+   End
 End
 #tag EndMobileScreen
 
 #tag WindowCode
 	#tag Event
-		Sub Resized()
-		  
-		  // Center the sprite coordinate system
-		  TRAnimationCanvasMobile1.Core.Camera.Position.Set(ContentSize.Width / 2, ContentSize.Height / 2)
+		Sub Closing()
 		  
 		End Sub
 	#tag EndEvent
@@ -57,9 +70,27 @@ End
 	#tag EndMethod
 
 
+	#tag Property, Flags = &h0
+		DefaultDemo As Integer = 0
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
 #tag Events TRAnimationCanvasMobile1
+#tag EndEvents
+#tag Events Timer1
+	#tag Event
+		Sub Run()
+		  
+		  // Demo must be loaded from Timer; the screen's Opening event won't have the correct size of the contents
+		  // which will mess up the demo's camera (it needs the animation controls width and height)
+		  // This timer will fire after the window has been laid out
+		  
+		  Self.LoadDemo(Self.DefaultDemo)
+		  
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoGravityCanvasCore</ObjName>
- <ObjContainerID>941062143</ObjContainerID>
+ <ObjContainerID>1355030527</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
@@ -173,6 +173,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UpdateLayout()</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.SolarSystem)</SourceLine>
    <SourceLine>'</SourceLine>
    <SourceLine>'Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
@@ -229,7 +230,7 @@
    <SourceLine>Sub Destructor()</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Make sure we're tearing everything down</SourceLine>
-   <SourceLine>'Break</SourceLine>
+   <SourceLine>Break</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>

@@ -31,8 +31,8 @@
    <SourceLine></SourceLine>
    <SourceLine>animationControl.TRAnimationCanvasDelegate_SetCore(core)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>core.Refresh</SourceLine>
    <SourceLine>core.UpdateLayout</SourceLine>
+   <SourceLine>core.Refresh</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>

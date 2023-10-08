@@ -109,6 +109,20 @@
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
+ <HookInstance>
+  <ItemName>Closing</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1250922495</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Closing()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Core.Stop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Method>
   <ItemName>TRAnimationCanvasDelegate_Refresh</ItemName>
   <Compatibility></Compatibility>

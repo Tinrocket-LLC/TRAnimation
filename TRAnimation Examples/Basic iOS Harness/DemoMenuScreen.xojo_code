@@ -66,8 +66,11 @@ End
 		  
 		  Var demo As New DemoScreen
 		  
+		  demo.Size.Width = Self.Size.Width
+		  demo.Size.Height = Self.Size.Height
+		  
+		  demo.DefaultDemo = row
 		  demo.Show
-		  demo.LoadDemo(row)
 		  
 		End Sub
 	#tag EndEvent
