@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="2108628991">
  <ObjName>TRAnimationSpriteTextNumber</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>444569599</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSpriteText</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -24,7 +24,7 @@
    <SourceLine>Me.mCurrentNumber = Me.AnimationBehavior.Tween.Value</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.TextInsteadOfNumber = "" Then</SourceLine>
-   <SourceLine>Me.Text = Me.TextBefore + Format(Me.mCurrentNumber, Me.TextFormat) + Me.TextAfter</SourceLine>
+   <SourceLine>Me.Text = Me.TextBefore + Me.mCurrentNumber.ToString(Me.TextFormat) + Me.TextAfter</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Me.Text = Me.TextInsteadOfNumber</SourceLine>
    <SourceLine>End</SourceLine>
@@ -322,7 +322,7 @@
   <PartID>343453695</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property CurrentNumber As Double</SourceLine>
+   <SourceLine>CurrentNumber As Double</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -509,7 +509,7 @@
   <ViewProperty>
    <ObjName>CurrentNumber</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Integer</ItemType>
+   <ItemType>Double</ItemType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>TextFormat</ObjName>
