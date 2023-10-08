@@ -55,6 +55,16 @@ End
 
 #tag WindowCode
 	#tag Event
+		Sub Opening()
+		  
+		  // Work around https://tracker.xojo.com/xojoinc/xojo/-/issues/74341
+		  Self.Width = Self.Width - 20
+		  Self.Width = Self.Width + 20
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Resizing()
 		  
 		  Me.UpdateLayout
@@ -101,6 +111,7 @@ End
 		  
 		  DemoManager.RunDemo(DemoManager.Demo.SimpleInteraction, TRAnimationCanvasDesktop1)
 		  
+		  TRAnimationCanvasDesktop1.Height = TRAnimationCanvasDesktop1.Height
 		  
 		End Sub
 	#tag EndEvent

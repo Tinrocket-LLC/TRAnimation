@@ -1,14 +1,14 @@
 #tag MobileScreen
-Begin MobileScreen Screen1
+Begin MobileScreen DemoScreen
    BackButtonCaption=   ""
-   Compatibility   =   ""
+   Compatibility   =   "(TargetIOS and (Target64Bit))"
    ControlCount    =   0
    Device = 1
-   HasNavigationBar=   False
+   HasNavigationBar=   True
    LargeTitleDisplayMode=   2
    Left            =   0
    Orientation = 0
-   TabBarVisible   =   True
+   TabBarVisible   =   False
    TabIcon         =   0
    TintColor       =   &c00000000
    Title           =   "Untitled"
@@ -16,19 +16,20 @@ Begin MobileScreen Screen1
    Begin TRAnimationCanvasMobile TRAnimationCanvasMobile1
       AccessibilityHint=   ""
       AccessibilityLabel=   ""
+      AllowKeyEvents  =   False
       AutoLayout      =   TRAnimationCanvasMobile1, 4, BottomLayoutGuide, 4, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 1, <Parent>, 1, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 2, <Parent>, 2, False, +1.00, 4, 1, 0, , True
-      AutoLayout      =   TRAnimationCanvasMobile1, 3, TopLayoutGuide, 3, False, +1.00, 4, 1, 0, , True
+      AutoLayout      =   TRAnimationCanvasMobile1, 3, TopLayoutGuide, 4, False, +1.00, 4, 1, 0, , True
       BackgroundColor =   &c33669900
       ControlCount    =   0
       Enabled         =   True
-      Height          =   548
+      Height          =   503
       Left            =   0
       LockedInPosition=   False
       Scope           =   0
       TintColor       =   &c000000
-      Top             =   20
+      Top             =   65
       Visible         =   True
       Width           =   320
    End
@@ -40,7 +41,7 @@ End
 		Sub Resized()
 		  
 		  // Center the sprite coordinate system
-		  TRAnimationCanvasMobile1.Core.Camera.Position.Set(Me.Size.Width / 2, Me.Size.Height / 2)
+		  TRAnimationCanvasMobile1.Core.Camera.Position.Set(ContentSize.Width / 2, ContentSize.Height / 2)
 		  
 		End Sub
 	#tag EndEvent

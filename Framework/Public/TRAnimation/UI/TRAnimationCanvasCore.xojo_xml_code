@@ -922,7 +922,7 @@
   <PartID>1129191423</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property DragInProgress As Boolean</SourceLine>
+   <SourceLine>DragInProgress As Boolean</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1022,6 +1022,11 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>&amp;c000000</PropertyValue>
    <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DragInProgress</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

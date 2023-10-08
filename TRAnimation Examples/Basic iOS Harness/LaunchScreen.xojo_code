@@ -1,7 +1,7 @@
 #tag IOSLaunchScreen
 Begin iosView LaunchScreen
    BackButtonTitle =   ""
-   BackgroundColor =   &c33669900
+   BackgroundColor =   &cFFFFFF00
    Compatibility   =   ""
    Device = 1
    LargeTitleMode  =   2
