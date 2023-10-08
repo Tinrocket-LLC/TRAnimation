@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1656168447">
  <ObjName>DemoSolarSystemSprite</ObjName>
- <ObjContainerID>1725169663</ObjContainerID>
+ <ObjContainerID>941062143</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationGroupSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -386,7 +386,7 @@
   <ViewProperty>
    <ObjName>LastSolverElapsedTime</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Integer</ItemType>
+   <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

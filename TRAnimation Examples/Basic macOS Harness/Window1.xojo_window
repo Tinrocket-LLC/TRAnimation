@@ -66,7 +66,7 @@ End
 	#tag MenuHandler
 		Function DemoPlanets() As Boolean Handles DemoPlanets.Action
 		  
-		  TRAnimationCanvasDesktop1.Core = New DemoGravityCanvasCore(TRAnimationCanvasDesktop1)
+		  DemoManager.RunDemo(DemoManager.Demo.Planets, TRAnimationCanvasDesktop1)
 		  
 		  Return True
 		  
@@ -76,7 +76,7 @@ End
 	#tag MenuHandler
 		Function DemoSimpleInteraction() As Boolean Handles DemoSimpleInteraction.Action
 		  
-		  TRAnimationCanvasDesktop1.Core = New DemoSimpleInteractionCanvasCore(TRAnimationCanvasDesktop1)
+		  DemoManager.RunDemo(DemoManager.Demo.SimpleInteraction, TRAnimationCanvasDesktop1)
 		  
 		  Return True
 		  

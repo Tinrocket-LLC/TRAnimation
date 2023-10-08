@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoGravityCanvasCore</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>941062143</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
@@ -173,7 +173,6 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UpdateLayout()</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.SolarSystem)</SourceLine>
    <SourceLine>'</SourceLine>
    <SourceLine>'Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
@@ -224,12 +223,36 @@
   <ItemName>Destructor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>303994879</PartID>
+  <PartID>878458879</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Destructor()</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Break</SourceLine>
+   <SourceLine>// Make sure we're tearing everything down</SourceLine>
+   <SourceLine>'Break</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Stop</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>635420671</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Stop()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.Stop()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Solver.Stop</SourceLine>
+   <SourceLine>Me.Solver = Nil</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
