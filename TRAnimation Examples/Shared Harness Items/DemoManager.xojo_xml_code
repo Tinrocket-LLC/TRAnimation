@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="1442303999">
  <ObjName>DemoManager</ObjName>
- <ObjContainerID>754421759</ObjContainerID>
+ <ObjContainerID>717828095</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -16,25 +16,23 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Shared Sub RunDemo(demo as String, animationControl as TRAnimationCanvasDelegate)</SourceLine>
    <SourceLine>Dim demos(-1) As String = DemoManager.Demos</SourceLine>
+   <SourceLine>Dim core As TRAnimationCanvasCore = animationControl.TRAnimationCanvasDelegate_GetCore</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#If TargetDesktop</SourceLine>
-   <SourceLine>Dim ad As TRAnimationCanvasDesktop = TRAnimationCanvasDesktop(animationControl)</SourceLine>
-   <SourceLine>If ad.Core &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>ad.Core.Stop</SourceLine>
+   <SourceLine>If core &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>core.Stop</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Select Case demo</SourceLine>
    <SourceLine>Case demos(0)</SourceLine>
-   <SourceLine>ad.Core = New DemoSimpleInteractionCanvasCore(ad)</SourceLine>
+   <SourceLine>core = New DemoSimpleInteractionCanvasCore(animationControl)</SourceLine>
    <SourceLine>Case demos(1)</SourceLine>
-   <SourceLine>ad.Core = New DemoGravityCanvasCore(ad)</SourceLine>
+   <SourceLine>core = New DemoGravityCanvasCore(animationControl)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>ad.Core.Refresh</SourceLine>
-   <SourceLine>ad.Core.UpdateLayout</SourceLine>
-   <SourceLine>#ElseIf TargetMobileDevice Or TargetMobileSimulator</SourceLine>
+   <SourceLine>animationControl.TRAnimationCanvasDelegate_SetCore(core)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>core.Refresh</SourceLine>
+   <SourceLine>core.UpdateLayout</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>

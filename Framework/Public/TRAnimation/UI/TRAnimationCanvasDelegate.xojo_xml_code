@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="417519615">
  <ObjName>TRAnimationCanvasDelegate</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1997139967</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>1</IsInterface>
@@ -168,6 +168,42 @@
   <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_GetCore</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1757548543</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_GetCore() As TRAnimationCanvasCore</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAnimationCanvasCore</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_SetCore</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>195885055</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_SetCore(core as TRAnimationCanvasCore)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <ViewBehavior>
   <ViewProperty>
