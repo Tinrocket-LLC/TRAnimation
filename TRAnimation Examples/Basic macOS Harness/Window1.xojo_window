@@ -99,10 +99,8 @@ End
 	#tag Event
 		Sub Opening()
 		  
-		  Me.Core = New DemoSimpleInteractionCanvasCore(Me)
-		  'Me.Core = New DemoGravityCanvasCore(Me)
+		  DemoManager.RunDemo(DemoManager.Demo.SimpleInteraction, TRAnimationCanvasDesktop1)
 		  
-		  Self.UpdateLayout
 		  
 		End Sub
 	#tag EndEvent

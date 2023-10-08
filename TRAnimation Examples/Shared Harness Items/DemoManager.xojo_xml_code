@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1442303999">
  <ObjName>DemoManager</ObjName>
- <ObjContainerID>754421759</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -28,6 +28,9 @@
    <SourceLine>Case demo.Planets</SourceLine>
    <SourceLine>ad.Core = New DemoGravityCanvasCore(ad)</SourceLine>
    <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ad.Core.Refresh</SourceLine>
+   <SourceLine>ad.Core.UpdateLayout</SourceLine>
    <SourceLine>#ElseIf TargetMobileDevice Or TargetMobileSimulator</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#EndIf</SourceLine>
