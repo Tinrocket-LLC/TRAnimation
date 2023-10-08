@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoSimpleInteractionCanvasCore</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>794435583</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -22,6 +22,33 @@
    <SourceLine>Me.CircleSprite.FillColor = Color.White</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.SceneRoot.AddChild(Me.CircleSprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//* Description *//</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// This sprite will allow you to place items at 1:1 scale and position with the screen</SourceLine>
+   <SourceLine>Dim screenSpaceSprite As New TRAnimationGroupScreenSprite</SourceLine>
+   <SourceLine>Me.SceneRoot.AddChild(screenSpaceSprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim descriptionSprite As New TRAnimationSpriteText</SourceLine>
+   <SourceLine>descriptionSprite.TextFontSize = 14</SourceLine>
+   <SourceLine>descriptionSprite.TextColor = Color.White</SourceLine>
+   <SourceLine>descriptionSprite.Position.Set(10, 20) // Relative to the upper left</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim interaction As String</SourceLine>
+   <SourceLine>#If TargetDesktop</SourceLine>
+   <SourceLine>interaction = "Click"</SourceLine>
+   <SourceLine>#ElseIf TargetMobileDevice Or TargetMobileSimulator</SourceLine>
+   <SourceLine>interaction = "Tap"</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim description As String</SourceLine>
+   <SourceLine>description = "1) %interaction% the background to tween the circle's position." + EndOfLine + EndOfLine</SourceLine>
+   <SourceLine>description = description + "2) Drag the circle around the screen." + EndOfLine + EndOfLine</SourceLine>
+   <SourceLine>description = description + "3) %interaction% the circle to show an alert." + EndOfLine</SourceLine>
+   <SourceLine>description = description.ReplaceAll("%interaction%", interaction)</SourceLine>
+   <SourceLine>descriptionSprite.Text = description</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>screenSpaceSprite.AddChild(descriptionSprite)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>

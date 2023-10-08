@@ -34,20 +34,12 @@ Begin MobileScreen DemoScreen
       Width           =   320
    End
    Begin Timer Timer1
-      Height          =   32
-      Height          =   32
-      Left            =   60
-      Left            =   60
       LockedInPosition=   False
       PanelIndex      =   -1
       Parent          =   ""
       Period          =   0
       RunMode         =   1
       Scope           =   0
-      Top             =   60
-      Top             =   60
-      Width           =   32
-      Width           =   32
    End
 End
 #tag EndMobileScreen
@@ -55,6 +47,15 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Closing()
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Resized()
+		  
+		  // TODO: This is not going to update the layout because the layout still has the old size; use my TRLayoutTimer
+		  'TRAnimationCanvasMobile1.Core.UpdateLayout
 		  
 		End Sub
 	#tag EndEvent
@@ -77,8 +78,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events TRAnimationCanvasMobile1
-#tag EndEvents
 #tag Events Timer1
 	#tag Event
 		Sub Run()
@@ -199,6 +198,14 @@ End
 		Visible=false
 		Group="Behavior"
 		InitialValue=""
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="DefaultDemo"
+		Visible=false
+		Group="Behavior"
+		InitialValue="0"
 		Type="Integer"
 		EditorType=""
 	#tag EndViewProperty

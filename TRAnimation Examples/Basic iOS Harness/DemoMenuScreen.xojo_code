@@ -8,7 +8,7 @@ Begin MobileScreen DemoMenuScreen
    LargeTitleDisplayMode=   2
    Left            =   0
    Orientation = 0
-   TabBarVisible   =   True
+   TabBarVisible   =   False
    TabIcon         =   0
    TintColor       =   &c00000000
    Title           =   "TRAnimation Demos"
@@ -65,10 +65,7 @@ End
 		  Self.BackButtonCaption = "Back"
 		  
 		  Var demo As New DemoScreen
-		  
-		  demo.Size.Width = Self.Size.Width
-		  demo.Size.Height = Self.Size.Height
-		  
+		  demo.Title = demos(row)
 		  demo.DefaultDemo = row
 		  demo.Show
 		  

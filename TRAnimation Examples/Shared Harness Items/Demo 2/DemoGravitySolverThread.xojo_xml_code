@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="509362175">
  <ObjName>DemoGravitySolverThread</ObjName>
- <ObjContainerID>941062143</ObjContainerID>
+ <ObjContainerID>1355030527</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>Thread</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -30,7 +30,7 @@
    <SourceLine>Dim elapsedTime As Double = (ms - lastMicroseconds) / kMillion</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If elapsedTime &gt;= kSolverFPS Then</SourceLine>
-   <SourceLine>Me.SolarSystem.SolveGravity(elapsedTime)</SourceLine>
+   <SourceLine>Me.SolarSystem.SolveGravity(kSolverFPS) // Run at constant time step</SourceLine>
    <SourceLine>lastMicroseconds = ms</SourceLine>
    <SourceLine>'System.DebugLog(Str(elapsedTime))</SourceLine>
    <SourceLine>End</SourceLine>
@@ -76,20 +76,6 @@
  </Property>
  <ViewBehavior>
   <ViewProperty>
-   <ObjName>Left</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Top</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
@@ -119,31 +105,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>DebugIdentifier</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>String</ItemType>
-   <EditorType>MultiLineEditor</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>ThreadID</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>ThreadState</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>ThreadStates</ItemType>
-   <EditorType>Enum</EditorType>
-   <Enumeration>
-    <ItemDef>0 - Running</ItemDef>
-    <ItemDef>1 - Waiting</ItemDef>
-    <ItemDef>2 - Paused</ItemDef>
-    <ItemDef>3 - Sleeping</ItemDef>
-    <ItemDef>4 - NotRunning</ItemDef>
-   </Enumeration>
+   <ItemType>UInteger</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

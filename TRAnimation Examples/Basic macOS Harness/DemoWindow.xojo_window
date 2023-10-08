@@ -56,6 +56,11 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Opening()
+		  Dim demos(-1) As String = DemoManager.Demos
+		  
+		  DemoManager.RunDemo(demos(1), TRAnimationCanvasDesktop1)
+		  
+		  TRAnimationCanvasDesktop1.Height = TRAnimationCanvasDesktop1.Height
 		  
 		  // Work around https://tracker.xojo.com/xojoinc/xojo/-/issues/74341
 		  Self.Width = Self.Width - 20
@@ -107,18 +112,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events TRAnimationCanvasDesktop1
-	#tag Event
-		Sub Opening()
-		  Dim demos(-1) As String = DemoManager.Demos
-		  
-		  DemoManager.RunDemo(demos(0), TRAnimationCanvasDesktop1)
-		  
-		  TRAnimationCanvasDesktop1.Height = TRAnimationCanvasDesktop1.Height
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="Name"
