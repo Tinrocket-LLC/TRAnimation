@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoGravityCanvasCore</ObjName>
- <ObjContainerID>1725169663</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
@@ -173,8 +173,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UpdateLayout()</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Center the sprite coordinate system</SourceLine>
-   <SourceLine>'Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.SolarSystem)</SourceLine>
    <SourceLine>'</SourceLine>
    <SourceLine>'Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
@@ -219,6 +218,26 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>behavior as TRAnimationBehavior, tween as TRTween</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Destructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>303994879</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Destructor()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Break</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Property>

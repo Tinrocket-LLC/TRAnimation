@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<block type="Module" ID="2008657919">
+ <ObjName>DemoSimpleInteractionCanvasCore</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>TRAnimationCanvasCore</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <HookInstance>
+  <ItemName>Initialize</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1778808831</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Initialize()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.CircleSprite = New DemoSimpleCircleSprite</SourceLine>
+   <SourceLine>Me.CircleSprite.Radius = 40</SourceLine>
+   <SourceLine>Me.CircleSprite.FillColor = Color.White</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SceneRoot.AddChild(Me.CircleSprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>NextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1790308351</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub NextFrame(g as Graphics, elapsedTime as Double)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>PointerDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>632334335</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.HitSprite = Nil Then</SourceLine>
+   <SourceLine>// Nothing was tapped; move the circle to the touch position</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Set postion animated</SourceLine>
+   <SourceLine>Dim f As New TRTweenFunctionCubic</SourceLine>
+   <SourceLine>f.EaseMode = TRTween.Ease.ModeOut</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim b As New TRAnimationBehaviorTarget(Me.CircleSprite, 0.25, f)</SourceLine>
+   <SourceLine>b.TargetPoint = worldPosition</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.CircleSprite.TargetBehavior = b</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>PointerDrag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>808726527</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>// Drag the sprite around</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Set position directly</SourceLine>
+   <SourceLine>Me.HitSprite.Item.Position = worldPosition</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>PointerTap</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2026838015</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerTap(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>MessageBox("Tapped")</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>UpdateLayout</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>721143807</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub UpdateLayout()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Center the sprite coordinate system</SourceLine>
+   <SourceLine>Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <Property>
+  <ItemName>CircleSprite</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1992409087</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>CircleSprite As DemoSimpleCircleSprite</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>CircleSprite As DemoSimpleCircleSprite</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>DragDelaySecondsThreshold</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0.0</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TapDurationThreshold</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0.5</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DebugDrawBounds</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DebugDrawBoundsColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;c000000</PropertyValue>
+   <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DragInProgress</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DragDistanceThreshold</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>1.0</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FPS</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsPointerDown</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>PointerDownDuration</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

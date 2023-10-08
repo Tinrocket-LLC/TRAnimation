@@ -63,6 +63,27 @@ End
 	#tag EndEvent
 
 
+	#tag MenuHandler
+		Function DemoPlanets() As Boolean Handles DemoPlanets.Action
+		  
+		  TRAnimationCanvasDesktop1.Core = New DemoGravityCanvasCore(TRAnimationCanvasDesktop1)
+		  
+		  Return True
+		  
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function DemoSimpleInteraction() As Boolean Handles DemoSimpleInteraction.Action
+		  
+		  TRAnimationCanvasDesktop1.Core = New DemoSimpleInteractionCanvasCore(TRAnimationCanvasDesktop1)
+		  
+		  Return True
+		  
+		End Function
+	#tag EndMenuHandler
+
+
 	#tag Method, Flags = &h0
 		Sub UpdateLayout()
 		  
@@ -78,7 +99,8 @@ End
 	#tag Event
 		Sub Opening()
 		  
-		  Me.Core = New DemoGravityCanvasCore(Me)
+		  Me.Core = New DemoSimpleInteractionCanvasCore(Me)
+		  'Me.Core = New DemoGravityCanvasCore(Me)
 		  
 		  Self.UpdateLayout
 		  

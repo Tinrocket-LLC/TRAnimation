@@ -105,6 +105,36 @@ Begin Menu MainMenuBar
          Visible = True
       End
    End
+   Begin DesktopMenuItem UntitledMenu
+      SpecialMenu = 0
+      Index = -2147483648
+      Text = "Demo"
+      AutoEnabled = True
+      AutoEnable = True
+      Visible = True
+      Begin DesktopMenuItem DemoSimpleInteraction
+         SpecialMenu = 0
+         Index = -2147483648
+         Text = "Simple Interaction"
+         ShortcutKey = "1"
+         Shortcut = "Cmd+1"
+         MenuModifier = True
+         AutoEnabled = True
+         AutoEnable = True
+         Visible = True
+      End
+      Begin DesktopMenuItem DemoPlanets
+         SpecialMenu = 0
+         Index = -2147483648
+         Text = "Planets"
+         ShortcutKey = "2"
+         Shortcut = "Cmd+2"
+         MenuModifier = True
+         AutoEnabled = True
+         AutoEnable = True
+         Visible = True
+      End
+   End
    Begin DesktopMenuItem HelpMenu
       SpecialMenu = 0
       Index = -2147483648
