@@ -5,6 +5,7 @@ Inherits Thread
 	#tag Event
 		Sub Run()
 		  Const kMillion = 1000000
+		  Dim kSolverFPS As Double = 1.0 / 30
 		  
 		  If Me.SolarSystem = Nil Then
 		    Return
@@ -16,7 +17,11 @@ Inherits Thread
 		    Dim ms As Double = System.Microseconds
 		    Dim elapsedTime As Double = (ms - lastMicroseconds) / kMillion
 		    
-		    Me.SolarSystem.SolveGravity(elapsedTime)
+		    If elapsedTime >= kSolverFPS Then
+		      Me.SolarSystem.SolveGravity(elapsedTime)
+		      lastMicroseconds = ms
+		      'System.DebugLog(Str(elapsedTime))
+		    End
 		  Wend
 		  
 		End Sub

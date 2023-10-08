@@ -19,6 +19,28 @@
    <SourceLine></SourceLine>
    <SourceLine>'Me.SolveGravity(elapsedTime)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Dim i, u As Integer</SourceLine>
+   <SourceLine>Dim activePlanets(-1) As DemoPlanetSprite = Me.Planets</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>u = activePlanets.LastIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//* Update the positions based on the new velocities and elapsed time *//</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim scaledVelocity As New TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p0 As TRVector2D = Me.Sun.Position</SourceLine>
+   <SourceLine>For i = 0 To u</SourceLine>
+   <SourceLine>scaledVelocity.Set(activePlanets(i).Velocity.X * elapsedTime, activePlanets(i).Velocity.Y * elapsedTime)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>activePlanets(i).Position.Add(scaledVelocity)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If TRVector2D.Distance(p0, activePlanets(i).Position) &gt; kMaxDistance Then</SourceLine>
+   <SourceLine>activePlanets(i).Inactive = True</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -144,23 +166,23 @@
    <SourceLine>Next</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>//* Update the positions based on the new velocities and elapsed time *//</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Const kMaxDistance = 5000.0</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim scaledVelocity As New TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim p0 As TRVector2D = Me.Sun.Position</SourceLine>
-   <SourceLine>For i = 0 To u</SourceLine>
-   <SourceLine>scaledVelocity.Set(activePlanets(i).Velocity.X * elapsedTime, activePlanets(i).Velocity.Y * elapsedTime)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>activePlanets(i).Position.Add(scaledVelocity)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If TRVector2D.Distance(p0, activePlanets(i).Position) &gt; kMaxDistance Then</SourceLine>
-   <SourceLine>activePlanets(i).Inactive = True</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine>Next</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'//* Update the positions based on the new velocities and elapsed time *//</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Const kMaxDistance = 5000.0</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Dim scaledVelocity As New TRVector2D</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Dim p0 As TRVector2D = Me.Sun.Position</SourceLine>
+   <SourceLine>'For i = 0 To u</SourceLine>
+   <SourceLine>'scaledVelocity.Set(activePlanets(i).Velocity.X * elapsedTime, activePlanets(i).Velocity.Y * elapsedTime)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'activePlanets(i).Position.Add(scaledVelocity)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'If TRVector2D.Distance(p0, activePlanets(i).Position) &gt; kMaxDistance Then</SourceLine>
+   <SourceLine>'activePlanets(i).Inactive = True</SourceLine>
+   <SourceLine>'End</SourceLine>
+   <SourceLine>'Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>//* Clean up *//</SourceLine>
@@ -177,6 +199,7 @@
    <SourceLine>Me.Planets = Me.PlanetsNextBuffer</SourceLine>
    <SourceLine>Me.PlanetsNextBuffer = nextPlanets</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.LastSolverElapsedTime = elapsedTime</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -262,6 +285,21 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>LastSolverElapsedTime</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1408133119</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastSolverElapsedTime As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastSolverElapsedTime As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>IsAnimatingOverride</ObjName>
@@ -344,6 +382,11 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>True</PropertyValue>
    <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LastSolverElapsedTime</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>
