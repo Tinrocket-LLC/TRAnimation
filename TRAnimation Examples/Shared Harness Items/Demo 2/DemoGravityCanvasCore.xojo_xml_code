@@ -173,7 +173,6 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UpdateLayout()</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.SolarSystem)</SourceLine>
    <SourceLine>'</SourceLine>
    <SourceLine>'Me.ClickCounterText.Position.Set(10, Me.Height-20) // This sprite is inside a screenspace group, so we can position it relative to the window coordinates</SourceLine>
