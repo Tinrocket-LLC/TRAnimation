@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1442303999">
  <ObjName>DemoManager</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>754421759</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -14,7 +14,8 @@
   <PartID>204066815</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Shared Sub RunDemo(d as Demo, animationControl as TRAnimationCanvasDelegate)</SourceLine>
+   <SourceLine>Shared Sub RunDemo(demo as String, animationControl as TRAnimationCanvasDelegate)</SourceLine>
+   <SourceLine>Dim demos(-1) As String = DemoManager.Demos</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#If TargetDesktop</SourceLine>
    <SourceLine>Dim ad As TRAnimationCanvasDesktop = TRAnimationCanvasDesktop(animationControl)</SourceLine>
@@ -22,10 +23,10 @@
    <SourceLine>ad.Core.Stop</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Select Case d</SourceLine>
-   <SourceLine>Case Demo.SimpleInteraction</SourceLine>
+   <SourceLine>Select Case demo</SourceLine>
+   <SourceLine>Case demos(0)</SourceLine>
    <SourceLine>ad.Core = New DemoSimpleInteractionCanvasCore(ad)</SourceLine>
-   <SourceLine>Case demo.Planets</SourceLine>
+   <SourceLine>Case demos(1)</SourceLine>
    <SourceLine>ad.Core = New DemoGravityCanvasCore(ad)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -41,8 +42,30 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>1</IsShared>
-  <ItemParams>d as Demo, animationControl as TRAnimationCanvasDelegate</ItemParams>
+  <ItemParams>demo as String, animationControl as TRAnimationCanvasDelegate</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Demos</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>717629439</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shared Function Demos() As String()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Array( _</SourceLine>
+   <SourceLine>"Simple Interaction", _</SourceLine>
+   <SourceLine>"Planets")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>1</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>String()</ItemResult>
  </Method>
  <ViewBehavior>
   <ViewProperty>
@@ -79,21 +102,5 @@
    <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
- <Enumeration>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemName>Demo</ItemName>
-  <ItemFlags>0</ItemFlags>
-  <ItemType>Integer</ItemType>
-  <BinaryEnum>0</BinaryEnum>
-  <ItemName>Demo</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>937820159</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>SimpleInteraction</SourceLine>
-   <SourceLine>Planets</SourceLine>
-  </ItemSource>
- </Enumeration>
 </block>
 </RBProject>

@@ -75,8 +75,9 @@ End
 
 	#tag MenuHandler
 		Function DemoPlanets() As Boolean Handles DemoPlanets.Action
+		  Dim demos(-1) As String = DemoManager.Demos
 		  
-		  DemoManager.RunDemo(DemoManager.Demo.Planets, TRAnimationCanvasDesktop1)
+		  DemoManager.RunDemo(demos(1), TRAnimationCanvasDesktop1)
 		  
 		  Return True
 		  
@@ -85,8 +86,9 @@ End
 
 	#tag MenuHandler
 		Function DemoSimpleInteraction() As Boolean Handles DemoSimpleInteraction.Action
+		  Dim demos(-1) As String = DemoManager.Demos
 		  
-		  DemoManager.RunDemo(DemoManager.Demo.SimpleInteraction, TRAnimationCanvasDesktop1)
+		  DemoManager.RunDemo(demos(0), TRAnimationCanvasDesktop1)
 		  
 		  Return True
 		  
@@ -108,8 +110,9 @@ End
 #tag Events TRAnimationCanvasDesktop1
 	#tag Event
 		Sub Opening()
+		  Dim demos(-1) As String = DemoManager.Demos
 		  
-		  DemoManager.RunDemo(DemoManager.Demo.SimpleInteraction, TRAnimationCanvasDesktop1)
+		  DemoManager.RunDemo(demos(0), TRAnimationCanvasDesktop1)
 		  
 		  TRAnimationCanvasDesktop1.Height = TRAnimationCanvasDesktop1.Height
 		  
