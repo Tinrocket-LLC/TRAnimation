@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="729042943">
  <ObjName>TRAnimationCanvasCore</ObjName>
- <ObjContainerID>1455699967</ObjContainerID>
+ <ObjContainerID>363902975</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationTimerDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -319,6 +319,10 @@
    <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Me.HitSprite.UpdateDragPoint(worldPosition)</SourceLine>
    <SourceLine>Me.HitSprite.DragStartPointWorld = Me.DragStartPointWorld</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
+   <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerDown(worldPosition, Me.HitSprite)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>RaiseEvent PointerDown(screenPosition, worldPosition)</SourceLine>
@@ -353,8 +357,14 @@
    <SourceLine>Me.mDragInProgress = downDurationSeconds &gt;= Me.DragDelaySecondsThreshold And Me.DragDistanceMax &gt; Me.DragDistanceThreshold</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.DragInProgress Then</SourceLine>
-   <SourceLine>If Me.HitSprite &lt;&gt; Nil And Me.HitSprite.Item.CanDrag Then</SourceLine>
+   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If Me.HitSprite.Item.CanDrag Then</SourceLine>
    <SourceLine>Me.HitSprite.UpdateDragPoint(worldPosition)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
+   <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerDrag(worldPosition, Me.HitSprite)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'System.DebugLog("Drag")</SourceLine>
@@ -384,6 +394,7 @@
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>Dim tapCount As Integer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
    <SourceLine>Me.PointerDownBeginMicroseconds = -1</SourceLine>
@@ -392,15 +403,18 @@
    <SourceLine>'System.DebugLog("Tap " + Me.DragDistanceMax.ToString)</SourceLine>
    <SourceLine>'System.DebugLog("Tap")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerTap(screenPosition, worldPosition)</SourceLine>
-   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerTap(screenPosition, worldPosition)</SourceLine>
+   <SourceLine>tapCount = 1</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'System.DebugLog("Drag " + Me.DragDistanceMax.ToString)</SourceLine>
    <SourceLine>'System.DebugLog("Up")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition)</SourceLine>
-   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition)</SourceLine>
+   <SourceLine>If Me.HitSprite &lt;&gt; Nil And Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
+   <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerUp(worldPosition, Me.HitSprite, tapCount)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount)</SourceLine>
+   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition, tapCount)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = False</SourceLine>
    <SourceLine>Me.mDragInProgress = False</SourceLine>
@@ -536,19 +550,11 @@
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
-  <ItemName>PointerTap</ItemName>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemFlags>33</ItemFlags>
-  <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
-  <ItemResult></ItemResult>
- </Hook>
- <Hook>
   <ItemName>PointerUp</ItemName>
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>

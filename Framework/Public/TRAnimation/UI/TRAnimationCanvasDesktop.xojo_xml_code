@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2088798207">
  <ObjName>TRAnimationCanvasDesktop</ObjName>
- <ObjContainerID>1455699967</ObjContainerID>
+ <ObjContainerID>237207551</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>DesktopCanvas</Superclass>
  <Interfaces>TRAnimationCanvasDelegate</Interfaces>
@@ -251,45 +251,20 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>TRAnimationCanvasDelegate_Raise_PointerTap</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>840990719</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerTap(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
-   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
-   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
-   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerTap(screenPosition, worldPosition)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
   <ItemName>TRAnimationCanvasDelegate_Raise_PointerUp</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1078202367</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition)</SourceLine>
+   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -297,7 +272,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -433,19 +408,11 @@
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
-  <ItemName>PointerTap</ItemName>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemFlags>33</ItemFlags>
-  <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
-  <ItemResult></ItemResult>
- </Hook>
- <Hook>
   <ItemName>PointerUp</ItemName>
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Property>

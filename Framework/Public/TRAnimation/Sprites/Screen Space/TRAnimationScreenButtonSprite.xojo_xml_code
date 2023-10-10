@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="592103423">
  <ObjName>TRAnimationButtonSprite</ObjName>
- <ObjContainerID>126197759</ObjContainerID>
+ <ObjContainerID>219277311</ObjContainerID>
  <IsClass>1</IsClass>
- <Superclass>TRAnimationSprite</Superclass>
+ <Superclass>TRAnimationGroupSprite</Superclass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility>(TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit)) or  (TargetIOS and (Target64Bit)) or  (TargetAndroid and (Target64Bit))</Compatibility>
+ <HookInstance>
+  <ItemName>PointerDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>912674815</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerDown(position as TRVector2D, hitSprite as TRAnimationHitSprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Highlighted = True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>PointerUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1178101759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerUp(position as TRVector2D, hitSprite as TRAnimationHitSprite, tapCount as Integer)</SourceLine>
+   <SourceLine>Dim localP As TRVector2D = Me.CurrentWorldTransform.Inverse.ApplyAffineTransform(position)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.Highlighted Then</SourceLine>
+   <SourceLine>RaiseEvent Pressed(position, localP, tapCount)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Highlighted = False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>PointerDrag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1933742079</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerDrag(position as TRVector2D, hitSprite as TRAnimationHitSprite)</SourceLine>
+   <SourceLine>Dim localP As TRVector2D = Me.CurrentWorldTransform.Inverse.ApplyAffineTransform(position)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Highlighted = Me.HitTestOverride(Nil, Nil, localP)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Method>
   <ItemName>NextFrameOverride</ItemName>
   <Compatibility></Compatibility>
@@ -21,9 +69,19 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim r As Double = Min(Me.Width, Me.Height) - 0.00000001</SourceLine>
+   <SourceLine>// FillRoundRectangle different on desktop vs iOS</SourceLine>
+   <SourceLine>#If TargetDesktop</SourceLine>
+   <SourceLine>Dim r As Double = Min(Me.Width, Me.Height)</SourceLine>
+   <SourceLine>#ElseIf TargetMobileDevice Or TargetMobileSimulator</SourceLine>
+   <SourceLine>Dim r As Double = Min(Me.Width, Me.Height) / 2 - 0.00000001 // TODO: BYO epsilon until XOJO 2023 R3</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If Me.Highlighted Then</SourceLine>
+   <SourceLine>g.DrawingColor = Me.HighlightColor</SourceLine>
+   <SourceLine>Else</SourceLine>
    <SourceLine>g.DrawingColor = Me.FillColor</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>g.FillRoundRectangle(Me.Center.X, Me.Center.Y, Me.Width, Me.Height, r, r)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -62,19 +120,19 @@
   <ItemResult>TRAnimationBounds</ItemResult>
  </Method>
  <Method>
-  <ItemName>UpdateCenter</ItemName>
+  <ItemName>UpdateLayout</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>39227391</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub UpdateCenter()</SourceLine>
+   <SourceLine>Sub UpdateLayout()</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Center.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine>Me.Label.Position.Set((Me.Width / 2) + Me.LabelOffset.X, (Me.Height - Me.Label.LastFontHeight) / 2 + Me.Label.LastFontAscent + Me.LabelOffset.Y)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -100,11 +158,19 @@
    <SourceLine></SourceLine>
    <SourceLine>Super.Constructor</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.LabelOffset = New TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.Label = New TRAnimationSpriteText("Button")</SourceLine>
-   <SourceLine>Me.Label.TextFontSize = 20</SourceLine>
+   <SourceLine>Me.Label.TextFontSize = 24</SourceLine>
    <SourceLine>Me.Label.TextAlignment = TRAnimationSpriteText.Alignment.Center</SourceLine>
-   <SourceLine>Me.Label.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// We need to cache a few font values</SourceLine>
+   <SourceLine>Dim p As New Picture(2, 2)</SourceLine>
+   <SourceLine>Me.Label.NextFrameOverride(p.Graphics, Nil, New TRAffineTransform, 0)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.AddChild(Me.Label)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.UpdateCenter</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -135,6 +201,14 @@
   <ItemParams>screenP as TRVector2D, worldP as TRVector2D, localP as TRVector2D</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
+ <Hook>
+  <ItemName>Pressed</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>worldP as TRVector2D, localP as TRVector2D, tapCount as Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
  <Property>
   <ItemName>Height</ItemName>
   <Compatibility></Compatibility>
@@ -195,10 +269,61 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>LabelOffset</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1484087295</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LabelOffset As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LabelOffset As TRVector2D</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Highlighted</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1358481407</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Highlighted As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Highlighted As Boolean</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>HighlightColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1965590527</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>HighlightColor As Color = Color.Gray</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>HighlightColor As Color = Color.Gray</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
-   <ObjName>IsAnimatingOverride</ObjName>
+   <ObjName>RotationAsDegrees</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AntiAlias</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
@@ -235,14 +360,8 @@
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>RotationAsDegrees</ObjName>
+   <ObjName>IsAnimatingOverride</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Double</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>AntiAlias</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>True</PropertyValue>
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
@@ -292,6 +411,17 @@
   </ViewProperty>
   <ViewProperty>
    <ObjName>FillColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;c000000</PropertyValue>
+   <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Highlighted</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HighlightColor</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>&amp;c000000</PropertyValue>
    <ItemType>Color</ItemType>

@@ -3,7 +3,7 @@ Begin MobileScreen DemoScreen
    BackButtonCaption=   ""
    Compatibility   =   "(TargetIOS and (Target64Bit))"
    ControlCount    =   0
-   Device = 1
+   Device = 12
    HasNavigationBar=   True
    LargeTitleDisplayMode=   2
    Left            =   0
@@ -13,27 +13,48 @@ Begin MobileScreen DemoScreen
    TintColor       =   &c00000000
    Title           =   "Untitled"
    Top             =   0
+   Begin MobileCanvas BackgroundColorCanvas
+      AccessibilityHint=   ""
+      AccessibilityLabel=   ""
+      AllowKeyEvents  =   False
+      AutoLayout      =   BackgroundColorCanvas, 4, <Parent>, 4, False, +1.00, 4, 1, 0, , True
+      AutoLayout      =   BackgroundColorCanvas, 1, <Parent>, 1, False, +1.00, 4, 1, 0, , True
+      AutoLayout      =   BackgroundColorCanvas, 2, <Parent>, 2, False, +1.00, 4, 1, 0, , True
+      AutoLayout      =   BackgroundColorCanvas, 3, BottomLayoutGuide, 3, False, +1.00, 4, 1, -10, , True
+      ControlCount    =   0
+      Enabled         =   True
+      Height          =   10
+      Left            =   0
+      LockedInPosition=   False
+      PanelIndex      =   -1
+      Parent          =   ""
+      Scope           =   0
+      TintColor       =   &c000000
+      Top             =   886
+      Visible         =   True
+      Width           =   414
+   End
    Begin TRAnimationCanvasMobile TRAnimationCanvasMobile1
       AccessibilityHint=   ""
       AccessibilityLabel=   ""
       AllowKeyEvents  =   False
-      AutoLayout      =   TRAnimationCanvasMobile1, 4, BottomLayoutGuide, 4, False, +1.00, 4, 1, 0, , True
+      AutoLayout      =   TRAnimationCanvasMobile1, 4, BottomLayoutGuide, 3, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 1, <Parent>, 1, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 2, <Parent>, 2, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 3, TopLayoutGuide, 4, False, +1.00, 4, 1, 0, , True
       BackgroundColor =   &c33669900
       ControlCount    =   0
       Enabled         =   True
-      Height          =   503
+      Height          =   831
       Left            =   0
       LockedInPosition=   False
       Scope           =   0
       TintColor       =   &c000000
       Top             =   65
       Visible         =   True
-      Width           =   320
+      Width           =   414
    End
-   Begin Timer Timer1
+   Begin Timer LoadDemoTimer
       LockedInPosition=   False
       PanelIndex      =   -1
       Parent          =   ""
@@ -78,7 +99,18 @@ End
 
 #tag EndWindowCode
 
-#tag Events Timer1
+#tag Events BackgroundColorCanvas
+	#tag Event
+		Sub Paint(g As Graphics)
+		  
+		  // We just need something to fill the home indicator area with a background color
+		  g.DrawingColor = TRAnimationCanvasMobile1.BackgroundColor
+		  g.FillRectangle(0, 0, g.Width, g.Height)
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LoadDemoTimer
 	#tag Event
 		Sub Run()
 		  

@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="43339775">
  <ObjName>TRAnimationCanvasMobile</ObjName>
- <ObjContainerID>1997139967</ObjContainerID>
+ <ObjContainerID>501213183</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>MobileCanvas</Superclass>
  <Interfaces> TRAnimationCanvasDelegate</Interfaces>
@@ -205,14 +205,14 @@
   <PartID>30674943</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition)</SourceLine>
+   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -220,7 +220,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -296,31 +296,6 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>g as Graphics, elapsedTime as Double</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
-  <ItemName>TRAnimationCanvasDelegate_Raise_PointerTap</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1946044415</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerTap(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
-   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
-   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
-   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerTap(screenPosition, worldPosition)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -419,15 +394,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
-  <ItemResult></ItemResult>
- </Hook>
- <Hook>
-  <ItemName>PointerTap</ItemName>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemFlags>33</ItemFlags>
-  <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
@@ -479,11 +446,6 @@
  </Property>
  <ViewBehavior>
   <ViewProperty>
-   <ObjName>AllowKeyEvents</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>TintColor</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>ColorGroup</ItemType>
@@ -529,6 +491,11 @@
    <Visible>1</Visible>
    <PropertyGroup>UI Control</PropertyGroup>
    <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AllowKeyEvents</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>

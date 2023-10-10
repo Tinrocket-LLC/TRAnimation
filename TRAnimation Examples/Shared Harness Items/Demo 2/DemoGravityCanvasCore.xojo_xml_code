@@ -18,14 +18,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Initialize()</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Initialize_Planets</SourceLine>
-   <SourceLine>Me.Initialize_Description</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.Start</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.Solver = New DemoGravitySolverThread</SourceLine>
-   <SourceLine>Me.Solver.SolarSystem = Me.SolarSystem</SourceLine>
-   <SourceLine>Me.Solver.Start</SourceLine>
+   <SourceLine>Me.Initialize</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -67,20 +60,6 @@
   </ItemSource>
  </HookInstance>
  <HookInstance>
-  <ItemName>PointerTap</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>2026838015</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub PointerTap(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.UpdateLayout</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
- </HookInstance>
- <HookInstance>
   <ItemName>UpdateLayout</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -90,6 +69,8 @@
    <SourceLine>Sub UpdateLayout()</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Camera.ZoomToFit(New Rect(0, 0, Me.Width, Me.Height), 0.5, 0.0, Me.SolarSystem)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.ResetButton.Position.Set(20, Me.Height - Me.ResetButton.Height - 20)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -101,7 +82,19 @@
   <PartID>786946047</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.ResetButton.Highlighted Then</SourceLine>
+   <SourceLine>// Button tap</SourceLine>
+   <SourceLine>Me.Initialize</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// Background Tap</SourceLine>
+   <SourceLine>If tapCount &gt; 0 Then</SourceLine>
+   <SourceLine>Me.UpdateLayout</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -236,13 +229,13 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>Initialize_Description</ItemName>
+  <ItemName>Initialize_UI</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1493086207</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Initialize_Description()</SourceLine>
+   <SourceLine>Sub Initialize_UI()</SourceLine>
    <SourceLine>//* Description *//</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// This sprite will allow you to place items at 1:1 scale and position with the screen</SourceLine>
@@ -268,6 +261,43 @@
    <SourceLine>descriptionSprite.Text = description</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>screenSpaceSprite.AddChild(descriptionSprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.ResetButton = New TRAnimationButtonSprite</SourceLine>
+   <SourceLine>Me.ResetButton.Position.Set(100,100) // Default position; will update later</SourceLine>
+   <SourceLine>Me.ResetButton.Height = 44</SourceLine>
+   <SourceLine>Me.ResetButton.FillColor = Color.RGB(255,255,255,191)</SourceLine>
+   <SourceLine>Me.ResetButton.HighlightColor = Color.RGB(255,255,255,127)</SourceLine>
+   <SourceLine>Me.ResetButton.Label.Text = "Reset"</SourceLine>
+   <SourceLine>Me.ResetButton.Label.TextColor = Color.White</SourceLine>
+   <SourceLine>Me.ResetButton.UpdateLayout</SourceLine>
+   <SourceLine>screenSpaceSprite.AddChild(Me.ResetButton)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Initialize</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1514473471</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Initialize()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Initialize_Planets</SourceLine>
+   <SourceLine>Me.Initialize_UI</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Start</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Solver = New DemoGravitySolverThread</SourceLine>
+   <SourceLine>Me.Solver.SolarSystem = Me.SolarSystem</SourceLine>
+   <SourceLine>Me.Solver.Start</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -305,6 +335,21 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Solver As DemoGravitySolverThread</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>ResetButton</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>585797631</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>ResetButton As TRAnimationButtonSprite</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ResetButton As TRAnimationButtonSprite</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>

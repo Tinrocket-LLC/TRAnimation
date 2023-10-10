@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1567711231">
  <ObjName>TRAnimationGroupScreenSprite</ObjName>
- <ObjContainerID>126197759</ObjContainerID>
+ <ObjContainerID>577818623</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationGroupSprite</Superclass>
  <ItemFlags>1</ItemFlags>

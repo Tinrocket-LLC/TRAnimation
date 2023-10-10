@@ -110,22 +110,6 @@
   </ItemSource>
  </HookInstance>
  <HookInstance>
-  <ItemName>PointerTap</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>2026838015</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub PointerTap(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>MessageBox("Tapped")</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
- </HookInstance>
- <HookInstance>
   <ItemName>UpdateLayout</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -136,6 +120,22 @@
    <SourceLine></SourceLine>
    <SourceLine>// Center the sprite coordinate system</SourceLine>
    <SourceLine>Me.Camera.Position.Set(Me.Width / 2, Me.Height / 2)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>PointerUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1186015231</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If tapCount &gt; 0 And Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>MessageBox("Tapped")</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
