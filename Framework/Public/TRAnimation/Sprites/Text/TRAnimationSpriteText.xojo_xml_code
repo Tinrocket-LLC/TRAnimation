@@ -2,7 +2,7 @@
 <RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="892450815">
  <ObjName>TRAnimationSpriteText</ObjName>
- <ObjContainerID>444569599</ObjContainerID>
+ <ObjContainerID>1108951039</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>

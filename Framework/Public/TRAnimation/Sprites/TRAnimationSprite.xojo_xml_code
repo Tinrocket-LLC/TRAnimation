@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="208971775">
  <ObjName>TRAnimationSprite</ObjName>
- <ObjContainerID>1594126335</ObjContainerID>
+ <ObjContainerID>1904066559</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -63,8 +63,15 @@
    <SourceLine>// Run behaviors</SourceLine>
    <SourceLine>If Not Me.Behaviors.HasKey(Me.kTargetBehaviorKey) And Me.NextTargetBehavior.Count &gt; 0 Then</SourceLine>
    <SourceLine>// Always a 1 frame delay between consecutive actions to let the previous action finish</SourceLine>
-   <SourceLine>Me.TargetBehavior = Me.NextTargetBehavior(0)</SourceLine>
+   <SourceLine>Dim t As TRAnimationBehaviorTarget = Me.NextTargetBehavior(0)</SourceLine>
    <SourceLine>Me.NextTargetBehavior.RemoveAt(0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>t.StartAlpha = Me.Alpha</SourceLine>
+   <SourceLine>t.StartScale = Me.Scale.Copy</SourceLine>
+   <SourceLine>t.StartPosition = Me.Position.Copy</SourceLine>
+   <SourceLine>t.StartRotationAsDegrees = Me.RotationAsDegrees</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.TargetBehavior = t</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// TODO: Run default target behavior first?</SourceLine>
@@ -76,7 +83,7 @@
    <SourceLine>Me.Behaviors.Remove(keys(i))</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>'System.DebugLog("Run Animation: " + keys(i) + ", Wait for: " + b.WaitForSignal + ", When complete: " + b.isCompleteSignal)</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>System.DebugLog(b.WaitForSignal + ", " + b.isCompleteSignal)</SourceLine>
    <SourceLine>b.NextFrame(elapsedTime)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
@@ -631,7 +638,7 @@
    <SourceLine>Return True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.Behaviors.Values.Count &gt; 0 Then</SourceLine>
+   <SourceLine>If Me.Behaviors.Values.Count &gt; 0 Or Me.NextTargetBehavior.Count &gt; 0 Then</SourceLine>
    <SourceLine>Return True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>

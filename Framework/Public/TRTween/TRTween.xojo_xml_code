@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="-1068780495">
  <ObjName>TRTween</ObjName>
- <ObjContainerID>2055487487</ObjContainerID>
+ <ObjContainerID>1858963455</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -337,7 +337,11 @@
    <SourceLine>#Pragma NilObjectChecking False</SourceLine>
    <SourceLine>#Pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Return Max(0.0, Me.CurrentTime - Me.Delay) / Me.Duration</SourceLine>
+   <SourceLine>Dim v As Double = Max(0.0, Me.CurrentTime - Me.Delay) / Me.Duration</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Work around some floating point issues: We sometimes never reach 1.0</SourceLine>
+   <SourceLine>// See: Floating Point v01.xojo_binary_project</SourceLine>
+   <SourceLine>Return Ceiling(v * 1000) / 1000</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>

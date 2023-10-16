@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoSimpleInteractionCanvasCore</ObjName>
- <ObjContainerID>794435583</ObjContainerID>
+ <ObjContainerID>25499647</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -74,7 +74,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.HitSprite = Nil Then</SourceLine>
+   <SourceLine>If Me.HitSprite.Item = Nil Then</SourceLine>
    <SourceLine>// Nothing was tapped; move the circle to the touch position</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Set postion animated</SourceLine>
@@ -99,7 +99,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If Me.HitSprite.Item &lt;&gt; Nil Then</SourceLine>
    <SourceLine>// Drag the sprite around</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Set position directly</SourceLine>
@@ -132,7 +132,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If tapCount &gt; 0 And Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If tapCount &gt; 0 And Me.HitSprite.Item &lt;&gt; Nil Then</SourceLine>
    <SourceLine>MessageBox("Tapped")</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoGravityCanvasCore</ObjName>
- <ObjContainerID>1355030527</ObjContainerID>
+ <ObjContainerID>941062143</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
@@ -84,15 +84,26 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.ResetButton.Highlighted Then</SourceLine>
-   <SourceLine>// Button tap</SourceLine>
-   <SourceLine>Me.Initialize</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Return</SourceLine>
-   <SourceLine>Else</SourceLine>
    <SourceLine>// Background Tap</SourceLine>
    <SourceLine>If tapCount &gt; 0 Then</SourceLine>
    <SourceLine>Me.UpdateLayout</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>SpriteEvent</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1979901951</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub SpriteEvent(sprite as TRAnimationSprite, eventData as Variant)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If sprite IsA TRAnimationButtonSprite Then // Optional check for button class, but all we need for this simple example is the event data</SourceLine>
+   <SourceLine>If eventData = "Pressed" Then</SourceLine>
+   <SourceLine>me.Initialize</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -149,9 +160,11 @@
    <SourceLine></SourceLine>
    <SourceLine>Super.Stop()</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If Me.Solver &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Me.Solver.Stop</SourceLine>
-   <SourceLine>Me.Solver = Nil</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.Solver = Nil</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -266,6 +279,8 @@
    <SourceLine>Me.ResetButton.Position.Set(100,100) // Default position; will update later</SourceLine>
    <SourceLine>Me.ResetButton.Height = 44</SourceLine>
    <SourceLine>Me.ResetButton.FillColor = Color.RGB(255,255,255,191)</SourceLine>
+   <SourceLine>'Me.ResetButton.StrokeColor = Color.RGB(255,255,255)</SourceLine>
+   <SourceLine>'Me.ResetButton.StrokeWidth = 2</SourceLine>
    <SourceLine>Me.ResetButton.HighlightColor = Color.RGB(255,255,255,127)</SourceLine>
    <SourceLine>Me.ResetButton.Label.Text = "Reset"</SourceLine>
    <SourceLine>Me.ResetButton.Label.TextColor = Color.White</SourceLine>
@@ -290,14 +305,20 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Initialize()</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.Stop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SceneRoot.Children.RemoveAll</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.Initialize_Planets</SourceLine>
    <SourceLine>Me.Initialize_UI</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Start</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Me.Solver = New DemoGravitySolverThread</SourceLine>
    <SourceLine>Me.Solver.SolarSystem = Me.SolarSystem</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.UpdateLayout</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.Solver.Start</SourceLine>
+   <SourceLine>Me.Start</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
