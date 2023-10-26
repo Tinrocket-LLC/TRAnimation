@@ -1,5 +1,14 @@
 # TRAnimation
 
+2023-10-26, Version 1.3
+* New: Framework changes for alternate renderer support (SceneKit is currently in private testing)
+* New: Early support for rendering sprites to pictures
+* Change: There's now a single animation timer for all platforms
+* Change: It's no longer possible to access sprite's children array directly from outside TRAnimationSprite; it's now a protected property. Accessor methods must be used. (We need to do internal tracking of when sprites are removed, for alternate render support)
+* Fix: The animation timer could spawn multiple timers, causing the frame rate to become very high
+* Miscellaneous improvements
+
+
 2023-10-16, Version 1.2.1
 * New: SpriteEvent event in TRAnimationCanvasCore, allowing sprites in the scene graph to message the parent control for custom events. Currently used by TRAnimationButtonSprite to notify the top-level control when it was tapped.
 * Fixed: Issue in TRAnimation stoped animating before serving all queued animations (.NextTargetBehavior array)
