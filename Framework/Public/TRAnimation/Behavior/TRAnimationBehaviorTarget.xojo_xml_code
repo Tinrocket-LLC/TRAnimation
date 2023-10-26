@@ -2,7 +2,7 @@
 <RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="2037446655">
  <ObjName>TRAnimationBehaviorTarget</ObjName>
- <ObjContainerID>1342517247</ObjContainerID>
+ <ObjContainerID>1091315711</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationBehavior</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -160,6 +160,10 @@
    <SourceLine></SourceLine>
    <SourceLine>If Me.NextFrameDelegate &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Me.NextFrameDelegate.TRAnimationBehaviorDelegate_BehaviorNextFrame(Me, Me.Tween)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.isComplete Then</SourceLine>
+   <SourceLine>Me.NextFrameDelegate.TRAnimationBehaviorDelegate_BehaviorComplete(Me)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>

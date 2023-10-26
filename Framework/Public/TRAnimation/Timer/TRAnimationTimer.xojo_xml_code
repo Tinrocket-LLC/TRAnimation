@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="116584447">
  <ObjName>TRAnimationTimer</ObjName>
- <ObjContainerID>2049099775</ObjContainerID>
+ <ObjContainerID>1495971839</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>Timer</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -83,16 +83,18 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>#If TargetMobile Then</SourceLine>
+   <SourceLine>AddHandler Me.Run, AddressOf Advance</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>AddHandler Me.Action, AddressOf Advance</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.FPS = 60</SourceLine>
    <SourceLine>Me.RunMode = Timer.RunModes.Multiple</SourceLine>
    <SourceLine>Me.mIdentifier = TRCounter.NextValue("TRAnimationTimer")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If TRAnimationTimer.Timers = Nil Then</SourceLine>
-   <SourceLine>TRAnimationTimer.Timers = New Dictionary</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>TRAnimationTimer.Timers.Value(Me.mIdentifier) = Me</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>Dim v As Double = Rnd() * 1000000</SourceLine>
+   <SourceLine>Me.DebugID = V.ToString("0000000")</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -100,37 +102,6 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams></ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
-  <ItemName>RestartAnimation</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1892907007</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Shared Sub RestartAnimation(id as Integer = -1)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If TRAnimationTimer.Timers = Nil Then</SourceLine>
-   <SourceLine>TRAnimationTimer.Timers = New Dictionary</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If id &lt;&gt; -1 Then</SourceLine>
-   <SourceLine>Dim t As TRAnimationTimer = TRAnimationTimer.Timers.Value(id)</SourceLine>
-   <SourceLine>t.RunMode = Timer.RunModes.Multiple</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>For Each t As TRAnimationTimer In TRAnimationTimer.Timers.Values</SourceLine>
-   <SourceLine>t.RunMode = Timer.RunModes.Multiple</SourceLine>
-   <SourceLine>Next</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>1</IsShared>
-  <ItemParams>id as Integer = -1</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -188,7 +159,7 @@
   <PartID>131364863</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Advance()</SourceLine>
+   <SourceLine>Sub Advance(sender as TRAnimationTimer)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
@@ -197,7 +168,7 @@
    <SourceLine>If Me.AnimationDelegate &lt;&gt; Nil Then</SourceLine>
    <SourceLine>Dim needsAnimation As Boolean = Me.AnimationDelegate.TRAnimationTimerDelegate_NeedsAnimation(Me)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.AnimationDelegate.TRAnimationTimerDelegate_NeedsAnimation(Me) Then</SourceLine>
+   <SourceLine>If needsAnimation Then</SourceLine>
    <SourceLine>'If Not Me.LastNeedsAnimation Then</SourceLine>
    <SourceLine>'System.DebugLog("Start " + Me.ElapsedSeconds.ToString)</SourceLine>
    <SourceLine>'End</SourceLine>
@@ -217,13 +188,21 @@
    <SourceLine>Me.LastNeedsAnimation = needsAnimation</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>'Static kLastMicroseconds As Double = 0</SourceLine>
+   <SourceLine>'Static kDebugID As Integer = Rnd * 1000</SourceLine>
+   <SourceLine>'Dim ms As Double = System.Microseconds</SourceLine>
+   <SourceLine>'Dim computedFPS As Double = (1000000.0 / (ms - kLastMicroseconds))</SourceLine>
+   <SourceLine>'kLastMicroseconds = ms</SourceLine>
+   <SourceLine>'System.DebugLog("Timer FPS: " + computedFPS.ToString("0.0") + " Debug ID: " + Me.DebugID)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
+  <ItemParams>sender as TRAnimationTimer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -241,10 +220,6 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.RunMode = Timer.RunModes.Off</SourceLine>
    <SourceLine>Me.AnimationDelegate = Nil</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If TRAnimationTimer.Timers.HasKey(Me.mIdentifier) Then</SourceLine>
-   <SourceLine>TRAnimationTimer.Timers.Remove(Me.mIdentifier)</SourceLine>
-   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -386,21 +361,6 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>Timers</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1163382783</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Shared Timers As Dictionary</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Timers As Dictionary</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>1</IsShared>
- </Property>
- <Property>
   <ItemName>mIdentifier</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -449,13 +409,48 @@
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
+ <Property>
+  <ItemName>DebugID</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>93151231</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DebugID As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DebugID As String</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Enabled</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>RunMode</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>2</PropertyValue>
-   <ItemType>Timer.RunModes</ItemType>
+   <ItemType>RunModes</ItemType>
    <EditorType>Enum</EditorType>
    <Enumeration>
     <ItemDef>0 - Off</ItemDef>

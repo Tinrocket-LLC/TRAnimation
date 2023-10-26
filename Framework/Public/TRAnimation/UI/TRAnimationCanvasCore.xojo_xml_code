@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="729042943">
  <ObjName>TRAnimationCanvasCore</ObjName>
- <ObjContainerID>363902975</ObjContainerID>
+ <ObjContainerID>501213183</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationTimerDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -83,14 +83,12 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Refresh // Force a refresh just in case there's no animation</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#If TargetMobileDevice Or TargetMobileSimulator</SourceLine>
-   <SourceLine>Me.AnimationTimer = New TRAnimationTimerMobile</SourceLine>
-   <SourceLine>#ElseIf TargetDesktop</SourceLine>
-   <SourceLine>Me.AnimationTimer = New TRAnimationTimerDesktop</SourceLine>
-   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>If Me.AnimationTimer = Nil Then</SourceLine>
+   <SourceLine>Me.AnimationTimer = New TRAnimationTimer</SourceLine>
+   <SourceLine>Me.AnimationTimer.AnimationDelegate = Me</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.AnimationTimer.FPS = Me.FPS</SourceLine>
-   <SourceLine>Me.AnimationTimer.AnimationDelegate = Me</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -167,6 +165,10 @@
    <SourceLine>p = t.Scale</SourceLine>
    <SourceLine>g.Scale(p.X, p.Y)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If Me.RenderDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Me.RenderDelegate.TRAnimationCanvasRendererDelegate_PrepareNextFrame(me.Camera, me)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>g.SaveState</SourceLine>
    <SourceLine>Me.SceneRoot.NextFrame(g, Me, Nil, New TRAffineTransform, elapsedTime)</SourceLine>
    <SourceLine>g.RestoreState</SourceLine>
@@ -178,6 +180,10 @@
    <SourceLine></SourceLine>
    <SourceLine>If Me.DebugDrawBounds Then</SourceLine>
    <SourceLine>Me.HandleEvent_Paint_DebugDrawBounds(g)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.RenderDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Me.RenderDelegate.TRAnimationCanvasRendererDelegate_FrameIsReadyToDisplay(Me)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -308,7 +314,6 @@
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>Dim didEvent As Boolean</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = True</SourceLine>
    <SourceLine>Me.PointerDownBeginMicroseconds = System.Microseconds</SourceLine>
@@ -323,18 +328,15 @@
    <SourceLine>Me.HitSprite.DragStartPointWorld = Me.DragStartPointWorld</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
-   <SourceLine>// Group objects capture pointer events</SourceLine>
    <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerDown(worldPosition, Me.HitSprite)</SourceLine>
-   <SourceLine>didEvent = True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Me.HitSprite = New TRAnimationHitSprite // Replace the hitsprite with a fresh one, so it's not nil in case anyone checks against Core.HitSprite.Item</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Not didEvent Then</SourceLine>
    <SourceLine>RaiseEvent PointerDown(screenPosition, worldPosition) // For subclasses</SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition, worldPosition) // For control instances</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -356,7 +358,6 @@
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>Dim didEvent As Boolean</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = True</SourceLine>
    <SourceLine></SourceLine>
@@ -371,18 +372,14 @@
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
-   <SourceLine>// Group objects capture pointer events</SourceLine>
    <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerDrag(worldPosition, Me.HitSprite)</SourceLine>
-   <SourceLine>didEvent = True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'System.DebugLog("Drag")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Not didEvent Then</SourceLine>
    <SourceLine>RaiseEvent PointerDrag(screenPosition, worldPosition) // For subclasses</SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition, worldPosition)// For control instances</SourceLine>
-   <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -422,12 +419,11 @@
    <SourceLine>'System.DebugLog("Up")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.HitSprite &lt;&gt; Nil And Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
-   <SourceLine>// Group objects capture pointer events</SourceLine>
    <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerUp(worldPosition, Me.HitSprite, tapCount)</SourceLine>
-   <SourceLine>Else</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount) // For subclasses</SourceLine>
    <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition, tapCount) // For control instances</SourceLine>
-   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = False</SourceLine>
    <SourceLine>Me.mDragInProgress = False</SourceLine>
@@ -562,6 +558,50 @@
   <IsShared>0</IsShared>
   <ItemParams>sprite as TRAnimationSprite, eventData as Variant</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Destructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1999937535</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Destructor()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'Break</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ScaleFactor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>327946239</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ScaleFactor() As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.UniversalCanvas.TRAnimationCanvasDelegate_ScaleFactor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
  </Method>
  <Hook>
   <ItemName>NextFrame</ItemName>
@@ -995,6 +1035,21 @@
    <SourceLine></SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>RenderDelegate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>34373631</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RenderDelegate As TRAnimationCanvasRendererDelegate</SourceLine>
+   <SourceLine>// For rendering to anything other than Graphics</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RenderDelegate As TRAnimationCanvasRendererDelegate</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
   <ViewProperty>

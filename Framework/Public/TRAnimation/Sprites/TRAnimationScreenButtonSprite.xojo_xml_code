@@ -75,31 +75,19 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.Core = New WeakRef(core)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// FillRoundRectangle different on desktop vs iOS</SourceLine>
-   <SourceLine>#If TargetDesktop</SourceLine>
-   <SourceLine>Dim r As Double = Min(Me.Width, Me.Height)</SourceLine>
-   <SourceLine>#ElseIf TargetMobileDevice Or TargetMobileSimulator</SourceLine>
-   <SourceLine>Dim r As Double = Min(Me.Width, Me.Height) / 2 - 0.00000001 // TODO: BYO epsilon until XOJO 2023 R?</SourceLine>
-   <SourceLine>#EndIf</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>If Me.Highlighted Then</SourceLine>
-   <SourceLine>g.DrawingColor = Me.HighlightColor</SourceLine>
+   <SourceLine>Me.Shape.FillColor = Me.HighlightColor</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>g.DrawingColor = Me.FillColor</SourceLine>
+   <SourceLine>Me.Shape.FillColor = Me.FillColor</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>g.FillRoundRectangle(Me.Center.X, Me.Center.Y, Me.Width, Me.Height, r, r)</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>Me.Shape.StrokeWidth = Me.StrokeWidth</SourceLine>
    <SourceLine>If Me.StrokeWidth &gt; 0 Then</SourceLine>
-   <SourceLine>g.PenSize = Me.StrokeWidth</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>If Me.Highlighted Then</SourceLine>
-   <SourceLine>g.DrawingColor = Me.HighlightStrokeColor</SourceLine>
+   <SourceLine>Me.Shape.StrokeColor = Me.HighlightStrokeColor</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>g.DrawingColor = Me.StrokeColor</SourceLine>
+   <SourceLine>Me.Shape.StrokeColor = Me.StrokeColor</SourceLine>
    <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>g.DrawRoundRectangle(Me.Center.X, Me.Center.Y, Me.Width, Me.Height, r, r)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -152,6 +140,8 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.Label.Position.Set((Me.Width / 2) + Me.LabelOffset.X, (Me.Height - Me.Label.LastFontHeight) / 2 + Me.Label.LastFontAscent + Me.LabelOffset.Y)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.ConstructShape</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -178,8 +168,10 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.Core = New WeakRef(Nil)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.LabelOffset = New TRVector2D</SourceLine>
+   <SourceLine>Me.Shape = New TRAnimationPathSprite</SourceLine>
+   <SourceLine>Me.ConstructShape</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.LabelOffset = New TRVector2D</SourceLine>
    <SourceLine>Me.Label = New TRAnimationSpriteText("Button")</SourceLine>
    <SourceLine>Me.Label.TextFontSize = 24</SourceLine>
    <SourceLine>Me.Label.TextAlignment = TRAnimationSpriteText.Alignment.Center</SourceLine>
@@ -188,6 +180,7 @@
    <SourceLine>Dim p As New Picture(2, 2)</SourceLine>
    <SourceLine>Me.Label.NextFrameOverride(p.Graphics, Nil, New TRAffineTransform, 0)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.AddChild(Me.Shape)</SourceLine>
    <SourceLine>Me.AddChild(Me.Label)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.UpdateCenter</SourceLine>
@@ -220,6 +213,30 @@
   <IsShared>0</IsShared>
   <ItemParams>screenP as TRVector2D, worldP as TRVector2D, localP as TRVector2D</ItemParams>
   <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ConstructShape</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>424796159</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ConstructShape()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim r As Double = Min(Me.Width, Me.Height) / 2 - 0.000001 // TODO: BYO epsilon :(</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim rr As New GraphicsPath</SourceLine>
+   <SourceLine>rr.AddRoundRectangle(0, 0, Me.Width, Me.Height, r, r)</SourceLine>
+   <SourceLine>Me.Shape.Path = rr</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Hook>
   <ItemName>Pressed</ItemName>
@@ -271,21 +288,6 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Label As TRAnimationSpriteText</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>FillColor</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1239392255</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>FillColor As Color = Color.White</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>FillColor As Color = Color.White</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -350,21 +352,6 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>StrokeWidth</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1896658943</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>StrokeWidth As Double = 0.0</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>StrokeWidth As Double = 0.0</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>HighlightStrokeColor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -380,10 +367,40 @@
   <IsShared>0</IsShared>
  </Property>
  <Property>
+  <ItemName>Shape</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1152255999</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Shape As TRAnimationPathSprite</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Shape As TRAnimationPathSprite</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>FillColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1451816959</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>FillColor As Color = Color.White</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>FillColor As Color = Color.White</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
   <ItemName>StrokeColor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>1815820287</PartID>
+  <PartID>1439557631</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>StrokeColor As Color = Color.White</SourceLine>
@@ -391,6 +408,21 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>StrokeColor As Color = Color.White</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>StrokeWidth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1067495423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>StrokeWidth As Double = 0.0</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>StrokeWidth As Double = 0.0</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -490,12 +522,6 @@
    <ItemType>Integer</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>FillColor</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>&amp;c000000</PropertyValue>
-   <ItemType>Color</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>Highlighted</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Boolean</ItemType>
@@ -507,22 +533,28 @@
    <ItemType>Color</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>StrokeWidth</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0.0</PropertyValue>
-   <ItemType>Double</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>HighlightStrokeColor</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>Color.Gray</PropertyValue>
    <ItemType>Color</ItemType>
   </ViewProperty>
   <ViewProperty>
+   <ObjName>FillColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>Color.White</PropertyValue>
+   <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
    <ObjName>StrokeColor</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>Color.Gray</PropertyValue>
+   <PropertyValue>Color.White</PropertyValue>
    <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>StrokeWidth</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0.0</PropertyValue>
+   <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>
  <Constant>

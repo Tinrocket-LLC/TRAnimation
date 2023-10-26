@@ -2,7 +2,7 @@
 <RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2008657919">
  <ObjName>DemoGravityCanvasCore</ObjName>
- <ObjContainerID>941062143</ObjContainerID>
+ <ObjContainerID>1355030527</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationCanvasCore</Superclass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
@@ -307,7 +307,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.Stop</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.SceneRoot.Children.RemoveAll</SourceLine>
+   <SourceLine>Me.SceneRoot.RemoveAllChildren</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Initialize_Planets</SourceLine>
    <SourceLine>Me.Initialize_UI</SourceLine>
@@ -327,6 +327,24 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationBehaviorDelegate_BehaviorComplete</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2044284927</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationBehaviorDelegate_BehaviorComplete(behavior as TRAnimationBehavior)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>behavior as TRAnimationBehavior</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Property>

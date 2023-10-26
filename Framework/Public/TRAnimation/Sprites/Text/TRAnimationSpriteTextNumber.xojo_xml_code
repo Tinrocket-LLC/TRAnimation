@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="2108628991">
  <ObjName>TRAnimationSpriteTextNumber</ObjName>
- <ObjContainerID>444569599</ObjContainerID>
+ <ObjContainerID>289284095</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSpriteText</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -27,6 +27,14 @@
    <SourceLine>Me.Text = Me.TextBefore + Me.mCurrentNumber.ToString(Me.TextFormat) + Me.TextAfter</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Me.Text = Me.TextInsteadOfNumber</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.StartColor &lt;&gt; Me.TargetColor Then</SourceLine>
+   <SourceLine>Dim p As Double = Me.AnimationBehavior.Tween.Progress</SourceLine>
+   <SourceLine>Dim sc As Color = Me.StartColor</SourceLine>
+   <SourceLine>Dim tc As Color = Me.TargetColor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.TextColor = Color.RGB(sc.Red * (1-p) + tc.Red * p, sc.Green * (1-p) + tc.Green * p, sc.Blue * (1-p) + tc.Blue * p, sc.Alpha * (1-p) + tc.Alpha * p)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Super.NextFrameOverride(g, core, worldTransform, elapsedTime)</SourceLine>
@@ -81,14 +89,20 @@
    <SourceLine>Me.StartNumber = Me.CurrentNumber</SourceLine>
    <SourceLine>Me.TargetNumber = targetNumber</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.StartColor = Me.TextColor</SourceLine>
+   <SourceLine>Me.TargetColor = Me.StartColor</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.AnimationBehavior.Reset</SourceLine>
    <SourceLine>Me.AnimationBehavior.Tween.Duration = animationDuration</SourceLine>
    <SourceLine>Me.AnimationBehavior.Tween.StartValue = Me.StartNumber</SourceLine>
    <SourceLine>Me.AnimationBehavior.Tween.EndValue = Me.TargetNumber</SourceLine>
    <SourceLine>Me.AnimationBehavior.WaitForSignal = waitForSignal</SourceLine>
    <SourceLine>Me.AnimationBehavior.isCompleteSignal = isCompleteSignal</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Me.Behaviors.Value(kBehaviorKey) = Me.AnimationBehavior</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If animationDuration = 0 Then</SourceLine>
+   <SourceLine>Me.mCurrentNumber = targetNumber</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -312,7 +326,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>TargetColor As Color</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
+  <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <Property>
@@ -363,7 +377,32 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>StartColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>459501567</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>StartColor As Color</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>StartColor As Color</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>LastFontHeight</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LastFontAscent</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>RotationAsDegrees</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
@@ -517,6 +556,12 @@
    <PropertyValue>0</PropertyValue>
    <ItemType>String</ItemType>
    <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>StartColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;c000000</PropertyValue>
+   <ItemType>Color</ItemType>
   </ViewProperty>
  </ViewBehavior>
  <Constant>

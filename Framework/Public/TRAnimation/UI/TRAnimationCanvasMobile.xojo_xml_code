@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="43339775">
  <ObjName>TRAnimationCanvasMobile</ObjName>
  <ObjContainerID>501213183</ObjContainerID>
@@ -119,6 +119,7 @@
    <SourceLine>Sub Closing()</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.Core.Stop</SourceLine>
+   <SourceLine>Me.Core = Nil</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -397,6 +398,42 @@
   <IsShared>0</IsShared>
   <ItemParams>sprite as TRAnimationSprite, eventData as Variant</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_ScaleFactor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>579125247</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_ScaleFactor() As Double</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Static screenScale As Double = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If screenScale = 0 Then</SourceLine>
+   <SourceLine>Declare Function NSClassFromString Lib "Foundation" (className As CFStringRef) As Ptr</SourceLine>
+   <SourceLine>Declare Function mainScreen Lib "UIKit.framework" Selector "mainScreen" (clsRef As ptr) As ptr</SourceLine>
+   <SourceLine>Declare Function scale Lib "UIKit.framework" Selector "scale" (objRef As ptr) As Double</SourceLine>
+   <SourceLine>Dim clsRef As ptr = NSClassFromString("UIScreen")</SourceLine>
+   <SourceLine>Dim mainScreenRef As ptr = mainScreen(clsRef)</SourceLine>
+   <SourceLine>screenScale = scale(mainScreenRef)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return screenScale</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
  </Method>
  <Hook>
   <ItemName>Opening</ItemName>

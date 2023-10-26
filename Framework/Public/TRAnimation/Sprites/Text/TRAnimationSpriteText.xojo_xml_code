@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="892450815">
  <ObjName>TRAnimationSpriteText</ObjName>
  <ObjContainerID>1108951039</ObjContainerID>
@@ -25,59 +25,52 @@
    <SourceLine>g.SaveState</SourceLine>
    <SourceLine>g.DrawingColor = Me.TextColor</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim fs As Double = Me.TextFontSize</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If Me.UseScreenSpaceFontSize Then</SourceLine>
-   <SourceLine>Dim invS As TRVector2D = core.InverseScreenScale(Me)</SourceLine>
-   <SourceLine>g.Scale(invS.X, invS.Y) // Scaling the current graphics stack provides better results than changing the font size, and on iOS, is simpler.</SourceLine>
-   <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>Dim yStep As Double</SourceLine>
    <SourceLine>#If TargetMobileDevice Or TargetMobileSimulator</SourceLine>
    <SourceLine>g.Font = Me.FontObject</SourceLine>
+   <SourceLine>yStep = g.Font.LineHeight</SourceLine>
+   <SourceLine>Me.LastFontAscent = g.Font.Ascent</SourceLine>
    <SourceLine>#ElseIf TargetDesktop</SourceLine>
    <SourceLine>g.FontName = Me.TextFontName</SourceLine>
    <SourceLine>g.Bold = (Me.TextFontName = "SystemBold")</SourceLine>
    <SourceLine>g.FontSize = Me.TextFontSize</SourceLine>
+   <SourceLine>yStep = g.TextHeight</SourceLine>
+   <SourceLine>Me.LastFontAscent = g.FontAscent</SourceLine>
    <SourceLine>#EndIf</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim offsetX As Double = 0</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>#If TargetMobileDevice Or TargetMobileSimulator</SourceLine>
-   <SourceLine>// Work around iOS bug: multi-line text won't draw</SourceLine>
+   <SourceLine>Dim textW, maxTextW, offsetX As Double</SourceLine>
    <SourceLine>Dim ss(-1) As String = Me.Text.Split(EndOfLine)</SourceLine>
-   <SourceLine>Dim yStep As Double = g.Font.LineHeight</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each s As String In ss</SourceLine>
+   <SourceLine>textW = g.TextWidth(s)</SourceLine>
    <SourceLine>Select Case Me.TextAlignment</SourceLine>
    <SourceLine>Case Alignment.Center</SourceLine>
-   <SourceLine>offsetX = -g.TextWidth(s) / 2</SourceLine>
+   <SourceLine>offsetX = -textW / 2</SourceLine>
    <SourceLine>Case Alignment.Right</SourceLine>
-   <SourceLine>offsetX = -g.TextWidth(s)</SourceLine>
+   <SourceLine>offsetX = -textW</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>g.DrawText(s, offsetX, 0)</SourceLine>
    <SourceLine>g.Translate(0, yStep)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>maxTextW = Max(textW, maxTextW)</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.LastFontAscent = g.Font.Ascent</SourceLine>
-   <SourceLine>#ElseIf TargetDesktop</SourceLine>
+   <SourceLine>Me.LastFontHeight = g.TextHeight</SourceLine>
+   <SourceLine>Me.LastMaxTextWidth = maxTextW</SourceLine>
+   <SourceLine>Me.LastMaxTextHeight = yStep * ss.Count</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.LastTextOffset.X = 0</SourceLine>
    <SourceLine>Select Case Me.TextAlignment</SourceLine>
    <SourceLine>Case Alignment.Center</SourceLine>
-   <SourceLine>offsetX = -g.TextWidth(Me.Text) / 2</SourceLine>
+   <SourceLine>Me.LastTextOffset.X = Me.LastMaxTextWidth / 2 </SourceLine>
    <SourceLine>Case Alignment.Right</SourceLine>
-   <SourceLine>offsetX = -g.TextWidth(Me.Text)</SourceLine>
+   <SourceLine>Me.LastTextOffset.X = Me.LastMaxTextWidth</SourceLine>
    <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>g.DrawText(Me.Text, offsetX, 0)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.LastFontAscent = g.FontAscent</SourceLine>
-   <SourceLine>#EndIf</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.LastFontHeight = g.TextHeight</SourceLine>
+   <SourceLine>Me.LastTextOffset.Y = Me.LastFontAscent</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>g.RestoreState</SourceLine>
    <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -167,6 +160,95 @@
   <IsShared>0</IsShared>
   <ItemParams>c As TRAnimationSprite = nil</ItemParams>
   <ItemResult>TRAnimationSprite</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>251234303</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.Constructor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.LastTextOffset = New TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToPicture</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>112343039</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToPicture(toPicture as Picture = nil, screenScale as Double, core as TRAnimationCanvasCore) As Picture</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>toPicture = Super.ToPicture(toPicture, screenScale, core)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim g As Graphics = toPicture.Graphics</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'g.DrawingColor = Color.Red</SourceLine>
+   <SourceLine>'g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.SaveState</SourceLine>
+   <SourceLine>g.Scale(screenScale, screenScale)</SourceLine>
+   <SourceLine>g.Translate(Me.LastTextOffset.X, Me.LastTextOffset.Y)</SourceLine>
+   <SourceLine>Me.NextFrameOverride(g, core, New TRAffineTransform, 0.0)</SourceLine>
+   <SourceLine>g.RestoreState</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return toPicture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>toPicture as Picture = nil, screenScale as Double, core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LocalBoundsOverride</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1928650751</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LocalBoundsOverride() As TRAnimationBounds</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim r As Rect = New Rect(-Me.LastTextOffset.X, --Me.LastTextOffset.X, Me.LastMaxTextWidth, Me.LastMaxTextHeight)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRAnimationBounds(r)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAnimationBounds</ItemResult>
  </Method>
  <Property>
   <ItemName>Text</ItemName>
@@ -341,21 +423,6 @@
   </GetAccessor>
  </Property>
  <Property>
-  <ItemName>UseScreenSpaceFontSize</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1643929599</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>UseScreenSpaceFontSize As Boolean</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>UseScreenSpaceFontSize As Boolean</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>LastFontHeight</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -382,6 +449,51 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>LastFontAscent As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>LastMaxTextWidth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2069100543</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastMaxTextWidth As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastMaxTextWidth As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>LastMaxTextHeight</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2122086399</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastMaxTextHeight As Double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastMaxTextHeight As Double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>LastTextOffset</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>492036095</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastTextOffset As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastTextOffset As TRVector2D</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -506,17 +618,22 @@
    <ItemType>Double</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>UseScreenSpaceFontSize</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>LastFontHeight</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Double</ItemType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>LastFontAscent</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LastMaxTextWidth</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LastMaxTextHeight</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Double</ItemType>
   </ViewProperty>

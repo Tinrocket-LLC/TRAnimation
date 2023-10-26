@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="208971775">
  <ObjName>TRAnimationSprite</ObjName>
- <ObjContainerID>1617872895</ObjContainerID>
+ <ObjContainerID>1904066559</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -46,6 +46,10 @@
    <SourceLine>// Transparency propagates to children</SourceLine>
    <SourceLine>g.Transparency = 100 - ((100 - g.Transparency) * Me.Alpha)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If core.RenderDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>core.RenderDelegate.TRAnimationCanvasRendererDelegate_NextFrame(Me, core, g, Me.CurrentWorldTransform)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>If DrawChildrenFirst Then</SourceLine>
    <SourceLine>For Each child In Me.Children</SourceLine>
    <SourceLine>child.NextFrame(g, core, Me, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
@@ -61,10 +65,10 @@
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Run behaviors</SourceLine>
-   <SourceLine>If Not Me.Behaviors.HasKey(Me.kTargetBehaviorKey) And Me.NextTargetBehavior.Count &gt; 0 Then</SourceLine>
+   <SourceLine>If Not Me.Behaviors.HasKey(Me.kTargetBehaviorKey) And Me.TargetBehaviorQueue.Count &gt; 0 Then</SourceLine>
    <SourceLine>// Always a 1 frame delay between consecutive actions to let the previous action finish</SourceLine>
-   <SourceLine>Dim t As TRAnimationBehaviorTarget = Me.NextTargetBehavior(0)</SourceLine>
-   <SourceLine>Me.NextTargetBehavior.RemoveAt(0)</SourceLine>
+   <SourceLine>Dim t As TRAnimationBehaviorTarget = Me.TargetBehaviorQueue(0)</SourceLine>
+   <SourceLine>Me.TargetBehaviorQueue.RemoveAt(0)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>t.StartAlpha = Me.Alpha</SourceLine>
    <SourceLine>t.StartScale = Me.Scale.Copy</SourceLine>
@@ -83,16 +87,29 @@
    <SourceLine>Me.Behaviors.Remove(keys(i))</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>'System.DebugLog("Run Animation: " + keys(i) + ", Wait for: " + b.WaitForSignal + ", When complete: " + b.isCompleteSignal)</SourceLine>
-   <SourceLine>System.DebugLog(b.WaitForSignal + ", " + b.isCompleteSignal)</SourceLine>
+   <SourceLine>'System.DebugLog(b.WaitForSignal + ", " + b.isCompleteSignal)</SourceLine>
    <SourceLine>b.NextFrame(elapsedTime)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Clean up</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>g.RestoreState</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If core.RenderDelegate &lt;&gt; Nil Then</SourceLine>
    <SourceLine>For Each child In Me.DeleteQueue</SourceLine>
-   <SourceLine>Me.RemoveChild(child)</SourceLine>
+   <SourceLine>// Make sure all children are removed from the delegate renderer</SourceLine>
+   <SourceLine>Dim allChildren(-1) As TRAnimationSprite</SourceLine>
+   <SourceLine>child.Flatten(allChildren)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each subChild As TRAnimationSprite In allChildren</SourceLine>
+   <SourceLine>core.RenderDelegate.TRAnimationCanvasRendererDelegate_RemoveFromScene(subChild)</SourceLine>
    <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>core.RenderDelegate.TRAnimationCanvasRendererDelegate_RemoveFromScene(child)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Me.DeleteQueue.ResizeTo(-1)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -638,7 +655,7 @@
    <SourceLine>Return True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.Behaviors.Values.Count &gt; 0 Or Me.NextTargetBehavior.Count &gt; 0 Then</SourceLine>
+   <SourceLine>If Me.Behaviors.Values.Count &gt; 0 Or Me.TargetBehaviorQueue.Count &gt; 0 Then</SourceLine>
    <SourceLine>Return True</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -732,6 +749,7 @@
    <SourceLine>Dim i As Integer = Me.FirstIndexOf(sprite)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If i &gt; -1 Then</SourceLine>
+   <SourceLine>Me.DeleteQueue.Add(Me.Children(i))</SourceLine>
    <SourceLine>Me.Children.RemoveAt(i)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -762,6 +780,7 @@
    <SourceLine></SourceLine>
    <SourceLine>For i = u DownTo 0</SourceLine>
    <SourceLine>If Me.Children(i).Name = name Then</SourceLine>
+   <SourceLine>Me.DeleteQueue.Add(Me.Children(i))</SourceLine>
    <SourceLine>Me.Children.RemoveAt(i)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
@@ -823,7 +842,6 @@
    <SourceLine>If Me.FirstIndexOf(child) &lt; 0 Then</SourceLine>
    <SourceLine>If index &lt; 0 Then</SourceLine>
    <SourceLine>Me.Children.Add(child)</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Me.Children.AddAt(0, child)</SourceLine>
    <SourceLine>End</SourceLine>
@@ -921,7 +939,7 @@
    <SourceLine>c.Name = Me.Name</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Don't copy</SourceLine>
-   <SourceLine>'c.NextTargetBehavior</SourceLine>
+   <SourceLine>'c.TargetBehaviorQueue</SourceLine>
    <SourceLine>'c.Parent</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>c.Position = Me.Position.Copy</SourceLine>
@@ -941,6 +959,173 @@
   <IsShared>0</IsShared>
   <ItemParams>c As TRAnimationSprite = nil</ItemParams>
   <ItemResult>TRAnimationSprite</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveTargetBehaviors</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>109625343</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveTargetBehaviors(name as String = "")</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If name = "" Then</SourceLine>
+   <SourceLine>// Remove all</SourceLine>
+   <SourceLine>Me.TargetBehavior = Nil</SourceLine>
+   <SourceLine>Me.TargetBehaviorQueue.RemoveAll</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If Me.TargetBehavior &lt;&gt; Nil And Me.TargetBehavior.Name = name Then</SourceLine>
+   <SourceLine>Me.TargetBehavior = Nil</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim u As Integer = Me.TargetBehaviorQueue.LastIndex</SourceLine>
+   <SourceLine>For i As Integer = u DownTo 0</SourceLine>
+   <SourceLine>If Me.TargetBehaviorQueue(i).Name = name Then</SourceLine>
+   <SourceLine>Me.TargetBehaviorQueue.RemoveAt(i)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>name as String = ""</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>HasBehaviors</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>673558527</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function HasBehaviors() As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.TargetBehaviorQueue.Count &gt; 0 And Me.Behaviors.Values.Count &gt; 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationBehaviorDelegate_BehaviorComplete</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>273473535</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationBehaviorDelegate_BehaviorComplete(behavior as TRAnimationBehavior)</SourceLine>
+   <SourceLine>// Part of the TRAnimationBehaviorDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Abstract</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>behavior as TRAnimationBehavior</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToPicture</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1456875519</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToPicture(toPicture as Picture = nil, screenScale as Double, core as TRAnimationCanvasCore) As Picture</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim r As TRAnimationBounds = Me.LocalBoundsOverride</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If toPicture = Nil Or toPicture.Width &lt; r.AABB.Width * screenScale Or toPicture.Height &lt; r.AABB.Height * screenScale Then</SourceLine>
+   <SourceLine>toPicture = New Picture(Max(1, Round(r.AABB.Width * screenScale)), Max(1, Round(r.AABB.Height * screenScale)))</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>toPicture.Graphics.ClearRectangle(0, 0, toPicture.Width, toPicture.Height)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return toPicture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>toPicture as Picture = nil, screenScale as Double, core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveChild</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1578493951</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveChild(index as Integer)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.DeleteQueue.Add(Me.Children(index))</SourceLine>
+   <SourceLine>Me.Children.RemoveAt(index)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>index as Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveAllChildren</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>276779007</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveAllChildren()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each child As TRAnimationSprite In Me.Children</SourceLine>
+   <SourceLine>Me.DeleteQueue.Add(child)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Children.ResizeTo(-1)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Hook>
   <ItemName>CollisionBounds</ItemName>
@@ -962,7 +1147,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>Children(-1) As TRAnimationSprite</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
+  <ItemFlags>1</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <Property>
@@ -1399,17 +1584,17 @@
   </GetAccessor>
  </Property>
  <Property>
-  <ItemName>NextTargetBehavior(-1)</ItemName>
+  <ItemName>TargetBehaviorQueue(-1)</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1843388415</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>NextTargetBehavior(-1) As TRAnimationBehaviorTarget</SourceLine>
+   <SourceLine>TargetBehaviorQueue(-1) As TRAnimationBehaviorTarget</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>NextTargetBehavior(-1) As TRAnimationBehaviorTarget</ItemDeclaration>
+  <ItemDeclaration>TargetBehaviorQueue(-1) As TRAnimationBehaviorTarget</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
