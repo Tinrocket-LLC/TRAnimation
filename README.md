@@ -4,7 +4,7 @@ TRAnimation is a lite, cross-platform sprite animation & interaction framework f
 
 This framework is being developed in conjunction with commercial app development by tinrocket.com and capsuleapps.com. One of these apps is (Photo Tape)[https://www.tinrocket.com/apps/photo-tape/]. 
 
-![Photo Tape by Tinrocket](Data/RPReplay_Final1697486727.gif)
+![Photo Tape by Tinrocket](Data/General 2 v009 App Preview.gif)
 
 ### Current limitations
 
