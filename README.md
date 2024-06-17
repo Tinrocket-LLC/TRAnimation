@@ -6,11 +6,11 @@ This framework is being developed in conjunction with commercial app development
 
 ![Photo Tape by Tinrocket](Data/General 2 v009 App Preview.gif)
 
+The render model is based on the Graphics class; where there is no hardware acceleration. TRAnimation includes a delegate class to use another rendering system, such as Apple's SceneKit, and the repo contains a sample project which uses the (SceneKitMBS)[https://www.monkeybreadsoftware.de/xojo/plugin-mac64bit.shtml] plugin from (Monkeybread Software)[https://www.monkeybreadsoftware.com].
+
 ### Current limitations
 
-1) The render model is based on the Graphics class; there is no hardware acceleration. That said, it's fast enough for dozens of animated sprites. TRAnimation could be adapted to another display model if one were implemented in XOJO.
-
-2) TRAnimation is limited to macOS and iOS platforms because of dependency on CGAffineTransform. This dependency will be removed in the future.
+1) TRAnimation is limited to macOS and iOS platforms because of dependency on CGAffineTransform. This dependency will be removed in the future.
 
 ### Gallery
 
