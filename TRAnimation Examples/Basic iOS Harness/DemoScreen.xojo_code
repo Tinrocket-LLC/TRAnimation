@@ -26,8 +26,6 @@ Begin MobileScreen DemoScreen
       Height          =   10
       Left            =   0
       LockedInPosition=   False
-      PanelIndex      =   -1
-      Parent          =   ""
       Scope           =   0
       TintColor       =   &c000000
       Top             =   886
@@ -35,23 +33,18 @@ Begin MobileScreen DemoScreen
       Width           =   414
    End
    Begin TRAnimationCanvasMobile TRAnimationCanvasMobile1
-      AccessibilityHint=   ""
-      AccessibilityLabel=   ""
-      AllowKeyEvents  =   False
       AutoLayout      =   TRAnimationCanvasMobile1, 4, BottomLayoutGuide, 3, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 1, <Parent>, 1, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 2, <Parent>, 2, False, +1.00, 4, 1, 0, , True
       AutoLayout      =   TRAnimationCanvasMobile1, 3, TopLayoutGuide, 4, False, +1.00, 4, 1, 0, , True
-      BackgroundColor =   &c33669900
-      ControlCount    =   0
-      Enabled         =   True
+      Height          =   831
       Height          =   831
       Left            =   0
+      Left            =   0
       LockedInPosition=   False
-      Scope           =   0
-      TintColor       =   &c000000
       Top             =   65
-      Visible         =   True
+      Top             =   65
+      Width           =   414
       Width           =   414
    End
    Begin Timer LoadDemoTimer

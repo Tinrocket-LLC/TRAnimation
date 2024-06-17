@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="2088798207">
  <ObjName>TRAnimationCanvasDesktop</ObjName>
- <ObjContainerID>941963263</ObjContainerID>
+ <ObjContainerID>0</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>DesktopCanvas</Superclass>
  <Interfaces>TRAnimationCanvasDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
- <Compatibility></Compatibility>
+ <Compatibility>(TargetDesktop and (Target32Bit or Target64Bit))</Compatibility>
  <HookInstance>
   <ItemName>MouseDown</ItemName>
   <Compatibility></Compatibility>

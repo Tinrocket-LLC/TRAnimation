@@ -25,30 +25,30 @@ Begin DesktopWindow DemoWindow
    Visible         =   True
    Width           =   640
    Begin TRAnimationCanvasDesktop TRAnimationCanvasDesktop1
-      AllowAutoDeactivate=   True
-      AllowFocus      =   False
-      AllowFocusRing  =   True
-      AllowTabs       =   False
-      Backdrop        =   0
-      BackgroundColor =   &c33669900
+      AllowAutoDeactivate=   "True"
+      AllowFocus      =   "False"
+      AllowFocusRing  =   "True"
+      AllowTabs       =   "False"
+      Backdrop        =   "0"
+      BackgroundColor =   "&c33669900"
       Enabled         =   True
-      Height          =   640
+      Height          =   "640"
       Index           =   -2147483648
-      Left            =   0
-      LockBottom      =   True
+      Left            =   "0"
+      LockBottom      =   "True"
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
+      LockLeft        =   "True"
+      LockRight       =   "True"
+      LockTop         =   "True"
       Scope           =   0
-      TabIndex        =   0
+      TabIndex        =   "0"
       TabPanelIndex   =   0
-      TabStop         =   True
+      TabStop         =   "True"
       Tooltip         =   ""
-      Top             =   0
-      Transparent     =   False
+      Top             =   "0"
+      Transparent     =   "False"
       Visible         =   True
-      Width           =   640
+      Width           =   "640"
    End
 End
 #tag EndDesktopWindow
