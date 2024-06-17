@@ -2,11 +2,11 @@
 
 TRAnimation is a lite, cross-platform sprite animation & interaction framework for XOJO.
 
-This framework is being developed in conjunction with commercial app development by tinrocket.com and capsuleapps.com. One of these apps is (Photo Tape)[https://www.tinrocket.com/apps/photo-tape/]. 
+This framework is being developed in conjunction with commercial app development by tinrocket.com and capsuleapps.com. One of these apps is [Photo Tape](https://www.tinrocket.com/apps/photo-tape/).
 
 ![Photo Tape by Tinrocket](Data/General_2_v009_App_Preview.gif)
 
-The render model is based on the Graphics class; where there is no hardware acceleration. TRAnimation includes a delegate class to use another rendering system, such as Apple's SceneKit, and the repo contains a sample project which uses the (SceneKitMBS)[https://www.monkeybreadsoftware.de/xojo/plugin-mac64bit.shtml] plugin from (Monkeybread Software)[https://www.monkeybreadsoftware.com].
+The render model is based on the Graphics class; where there is no hardware acceleration. TRAnimation includes a delegate class to use another rendering system, such as Apple's SceneKit, and the repo contains a sample project which uses the [SceneKitMBS](https://www.monkeybreadsoftware.de/xojo/plugin-mac64bit.shtml) plugin from [Monkeybread Software](https://www.monkeybreadsoftware.com).
 
 ### Current limitations
 
