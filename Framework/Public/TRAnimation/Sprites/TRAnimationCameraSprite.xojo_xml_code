@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="1753274367">
  <ObjName>TRAnimationCameraSprite</ObjName>
- <ObjContainerID>1904066559</ObjContainerID>
+ <ObjContainerID>368007167</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -15,7 +15,7 @@
   <PartID>1266694143</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub ZoomToFit(viewPort as Rect, duration as Double = 0.0, delay as Double = 0.0, zoomTarget as TRAnimationSprite = Nil)</SourceLine>
+   <SourceLine>Sub ZoomToFit(viewPort as Rect, duration as Double = 0.0, delay as Double = 0.0, zoomTarget as TRAnimationSprite = Nil, ignoreItems as Set = nil)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
@@ -29,23 +29,26 @@
    <SourceLine>zoomTarget = Me</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>zoomTarget.UpdateTransforms // Helps make sure things are correct</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Dim i As Integer</SourceLine>
    <SourceLine>Dim startP As TRVector2D = Me.Position.Copy</SourceLine>
    <SourceLine>Dim startS As TRVector2D = Me.Scale.Copy</SourceLine>
-   <SourceLine>Dim finalViewport As Rect = New Rect(viewPort.Left, viewPort.Top, viewPort.Width, viewPort.Height)</SourceLine>
+   <SourceLine>Dim finalViewport As Rect = viewPort.Copy</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>finalViewport.Offset(Me.ViewportPadding, Me.ViewportPadding)</SourceLine>
    <SourceLine>finalViewport.Width = Max(1, finalViewport.Width - Me.ViewportPadding * 2)</SourceLine>
    <SourceLine>finalViewport.Height = Max(1, finalViewport.Height - Me.ViewportPadding * 2)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For i = 1 To 2 // Without two iterations, things will be in the wrong place. Why?</SourceLine>
-   <SourceLine>Dim b As TRAnimationBounds = zoomTarget.WorldBounds</SourceLine>
+   <SourceLine>Dim b As TRAnimationBounds = zoomTarget.WorldBounds(ignoreItems)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If b = Nil Then</SourceLine>
    <SourceLine>// Simple center</SourceLine>
    <SourceLine>Me.Position.Set(finalViewport.Left + finalViewport.Width / 2, finalViewport.Top + finalViewport.Height / 2)</SourceLine>
    <SourceLine>Me.Scale.Set(1)</SourceLine>
    <SourceLine>Me.IsAnimatingOverride = False</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -86,7 +89,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>viewPort as Rect, duration as Double = 0.0, delay as Double = 0.0, zoomTarget as TRAnimationSprite = Nil</ItemParams>
+  <ItemParams>viewPort as Rect, duration as Double = 0.0, delay as Double = 0.0, zoomTarget as TRAnimationSprite = Nil, ignoreItems as Set = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -148,8 +151,7 @@
    <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
    <SourceLine>Super.Constructor</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim f As TRTweenFunction = New TRTweenFunctionCubic</SourceLine>
-   <SourceLine>f.EaseMode = TRTween.Ease.ModeOut</SourceLine>
+   <SourceLine>Dim f As TRTweenFunction = New TRTweenFunctionCubic(TRTween.Ease.ModeOut)</SourceLine>
    <SourceLine>Me.TweenFunction = f</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -192,6 +194,17 @@
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IgnoreBoundsTest</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>IsAnimatingOverride</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>

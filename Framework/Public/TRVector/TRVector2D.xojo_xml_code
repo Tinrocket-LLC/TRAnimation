@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r1.1" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2024r1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="1116047359">
  <ObjName>TRVector2D</ObjName>
- <ObjContainerID>216453119</ObjContainerID>
+ <ObjContainerID>222892031</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -44,7 +44,7 @@
    <SourceLine>Sub Add(v as TRVector2D)</SourceLine>
    <SourceLine>//d Adds the parameter to the current TRVector2D object.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
    <SourceLine>#pragma StackOverflowChecking False</SourceLine>
    <SourceLine>#pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
@@ -104,6 +104,8 @@
    <SourceLine>#Pragma NilObjectChecking False</SourceLine>
    <SourceLine>#Pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>'If x = 0 And y = 0 Then Return 0.0</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>If y &gt;= 0.0 Then</SourceLine>
    <SourceLine>Return ATan2(y,x) / Me.Radian</SourceLine>
    <SourceLine>Else</SourceLine>
@@ -134,6 +136,8 @@
    <SourceLine>#pragma StackOverflowChecking False</SourceLine>
    <SourceLine>#pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'If x = 0 And y = 0 Then Return 0.0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If y &gt;= 0.0 Then</SourceLine>
    <SourceLine>Return ATan2(y,x)</SourceLine>
@@ -404,10 +408,10 @@
    <SourceLine>Sub Negate()</SourceLine>
    <SourceLine>//d Negates the current X and Y properties.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#pragma BackgroundTasks FALSE</SourceLine>
-   <SourceLine>#pragma StackOverflowChecking False</SourceLine>
-   <SourceLine>#pragma NilObjectChecking False</SourceLine>
-   <SourceLine>#pragma BoundsChecking False</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>X = -X</SourceLine>
    <SourceLine>Y = -Y</SourceLine>
@@ -786,8 +790,8 @@
    <SourceLine>#pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>X = X - vx</SourceLine>
-   <SourceLine>Y = Y - vy</SourceLine>
+   <SourceLine>Me.X = Me.X - vx</SourceLine>
+   <SourceLine>Me.Y = Me.Y - vy</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -813,8 +817,8 @@
    <SourceLine>#Pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>X = X - v.X</SourceLine>
-   <SourceLine>Y = Y - v.Y</SourceLine>
+   <SourceLine>Me.X = Me.X - v.X</SourceLine>
+   <SourceLine>Me.Y = Me.Y - v.Y</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -840,8 +844,8 @@
    <SourceLine>#pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>X = v1.X - v2.X</SourceLine>
-   <SourceLine>Y = v1.Y - v2.Y</SourceLine>
+   <SourceLine>Me.X = v1.X - v2.X</SourceLine>
+   <SourceLine>Me.Y = v1.Y - v2.Y</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -974,7 +978,7 @@
    <SourceLine>#pragma NilObjectChecking False</SourceLine>
    <SourceLine>#pragma BoundsChecking False</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if s &gt; 0 or s &lt; 0 or s = 0 then</SourceLine>
+   <SourceLine>If s &gt; 0 Or s &lt; 0 Or s = 0 Then</SourceLine>
    <SourceLine>//Is a number</SourceLine>
    <SourceLine>X = X * s</SourceLine>
    <SourceLine>Y = Y * s</SourceLine>
@@ -1121,6 +1125,84 @@
   <IsShared>0</IsShared>
   <ItemParams>p as Point</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Operator_Compare</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>715653119</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Operator_Compare(v as TRVector2D) As Integer</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If v = Nil _</SourceLine>
+   <SourceLine>Or Me.X &lt;&gt; v.X _</SourceLine>
+   <SourceLine>Or Me.Y &lt;&gt; v.Y Then</SourceLine>
+   <SourceLine>Return 1</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return 0 // Same</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Operator_Subtract</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>912068607</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Operator_Subtract(v as TRVector2D) As TRVector2D</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(Me.X - v.X, Me.Y - v.Y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Operator_Add</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>77246463</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Operator_Add(v as TRVector2D) As TRVector2D</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New TRVector2D(Me.X + v.X, Me.Y + v.Y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v as TRVector2D</ItemParams>
+  <ItemResult>TRVector2D</ItemResult>
  </Method>
  <Note>
   <ItemName>Description</ItemName>
@@ -1307,7 +1389,7 @@
   <PartID>1973145599</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>2</ItemType>
-  <ItemDef>3.141592654</ItemDef>
+  <ItemDef>3.1415926535897932</ItemDef>
   <ItemFlags>0</ItemFlags>
  </Constant>
  <Constant>

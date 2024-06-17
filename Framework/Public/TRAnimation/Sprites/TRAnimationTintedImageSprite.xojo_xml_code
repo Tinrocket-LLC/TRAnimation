@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
-<block type="Module" ID="1311487999">
- <ObjName>TRAnimationHitSprite</ObjName>
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
+<block type="Module" ID="904847359">
+ <ObjName>TRAnimationTintedImageSprite</ObjName>
  <ObjContainerID>368007167</ObjContainerID>
  <IsClass>1</IsClass>
- <Superclass>TRAnimationSprite</Superclass>
+ <Superclass>TRAnimationImageSprite</Superclass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
- <Compatibility></Compatibility>
+ <Compatibility>(TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit)) or  (TargetIOS and (Target64Bit)) or  (TargetAndroid and (Target64Bit))</Compatibility>
  <Method>
   <ItemName>Constructor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>137943039</PartID>
+  <PartID>1262737407</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>Sub Constructor(p as Picture)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
-   <SourceLine>Super.Constructor</SourceLine>
+   <SourceLine>Me.SpriteSource = p</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.DragStartPointLocal = New TRVector2D</SourceLine>
-   <SourceLine>Me.DragCurrentLocal = New TRVector2D</SourceLine>
-   <SourceLine>Me.DragPreviousPointLocal = New TRVector2D</SourceLine>
-   <SourceLine>Me.ItemStartPositionLocal = New TRVector2D</SourceLine>
+   <SourceLine>Super.Constructor(p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim f As New TRTweenFunctionLinear</SourceLine>
+   <SourceLine>Me.AnimationBehavior = New TRAnimationBehavior(1.0, 0.0, f)</SourceLine>
+   <SourceLine>Me.AnimationBehavior.NextFrameDelegate = Me</SourceLine>
+   <SourceLine>Me.Behaviors.Value(kBehaviorKey) = Me.AnimationBehavior</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -35,66 +36,59 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
+  <ItemParams>p as Picture</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>DraggedItemPositionLocal</ItemName>
+  <ItemName>UpdateSprite</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>2115375103</PartID>
+  <PartID>473493503</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function DraggedItemPositionLocal() As TRVector2D</SourceLine>
+   <SourceLine>Sub UpdateSprite()</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// This is all in local space</SourceLine>
+   <SourceLine>// TODO: Recolor .SpriteSource with TintColor using multiply blend mode and set .Sprite</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim v1 As TRVector2D = New TRVector2D(Me.DragCurrentLocal)</SourceLine>
-   <SourceLine>v1.Subtract(Me.DragStartPointLocal)</SourceLine>
-   <SourceLine>v1 = Me.CurrentLocalTransform.ApplyAffineTransform(v1)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Return v1</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
+   <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams></ItemParams>
-  <ItemResult>TRVector2D</ItemResult>
+  <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>UpdateDragPoint</ItemName>
+  <ItemName>SetTargetTintColor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>1447194623</PartID>
+  <PartID>491345919</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub UpdateDragPoint(worldP as TRVector2D, updateItemPosition as Boolean = True)</SourceLine>
+   <SourceLine>Sub SetTargetTintColor(tColor as Color, animationDuration as Double = 0.0, waitForSignal as String = "", isCompleteSignal as String = "")</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim p As TRVector2D = worldP</SourceLine>
+   <SourceLine>Me.StartTintColor = Me.TintColor</SourceLine>
+   <SourceLine>Me.TargetTintColor = tColor</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Convert world to local</SourceLine>
+   <SourceLine>Me.AnimationBehavior.Reset</SourceLine>
+   <SourceLine>Me.AnimationBehavior.Tween.Duration = animationDuration</SourceLine>
+   <SourceLine>Me.AnimationBehavior.Tween.StartValue = 0</SourceLine>
+   <SourceLine>Me.AnimationBehavior.Tween.EndValue = 1</SourceLine>
+   <SourceLine>Me.AnimationBehavior.WaitForSignal = waitForSignal</SourceLine>
+   <SourceLine>Me.AnimationBehavior.isCompleteSignal = isCompleteSignal</SourceLine>
+   <SourceLine>Me.Behaviors.Value(kBehaviorKey) = Me.AnimationBehavior</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>p = Me.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.DragPreviousPointLocal.Set(Me.DragCurrentLocal)</SourceLine>
-   <SourceLine>Me.DragCurrentLocal.Set(p)</SourceLine>
-   <SourceLine>Me.Delta = New TRVector2D(Me.DragCurrentLocal)</SourceLine>
-   <SourceLine>Me.Delta.Subtract(Me.DragPreviousPointLocal)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If Me.Item &lt;&gt; Nil And updateItemPosition Then</SourceLine>
-   <SourceLine>Me.Item.Position.Set(Me.DraggedItemPositionLocal)</SourceLine>
-   <SourceLine>Me.Item.UpdateTransforms</SourceLine>
+   <SourceLine>If animationDuration = 0 Then</SourceLine>
+   <SourceLine>Me.TintColor = tColor</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -103,35 +97,31 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>worldP as TRVector2D, updateItemPosition as Boolean = True</ItemParams>
+  <ItemParams>tColor as Color, animationDuration as Double = 0.0, waitForSignal as String = "", isCompleteSignal as String = ""</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>UndoLastDrag</ItemName>
+  <ItemName>NextFrameOverride</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>1205274623</PartID>
+  <PartID>1974753279</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub UndoLastDrag(updateItemPosition as Boolean = True)</SourceLine>
-   <SourceLine>// WIP</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>Sub NextFrameOverride(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim p As TRVector2D = Me.DragPreviousPointLocal</SourceLine>
-   <SourceLine>Me.DragCurrentLocal.Set(Me.DragPreviousPointLocal)</SourceLine>
-   <SourceLine>Me.DragPreviousPointLocal.Set(p)</SourceLine>
+   <SourceLine>If Me.StartTintColor &lt;&gt; Me.TargetTintColor Then</SourceLine>
+   <SourceLine>Dim p As Double = Me.AnimationBehavior.Tween.Progress</SourceLine>
+   <SourceLine>Dim sc As Color = Me.StartTintColor</SourceLine>
+   <SourceLine>Dim tc As Color = Me.TargetTintColor</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Delta = New TRVector2D(Me.DragCurrentLocal)</SourceLine>
-   <SourceLine>Me.Delta.Subtract(Me.DragPreviousPointLocal)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If updateItemPosition And Me.Item &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>Me.Item.Position.Set(Me.DraggedItemPositionLocal)</SourceLine>
-   <SourceLine>Me.Item.UpdateTransforms</SourceLine>
+   <SourceLine>Me.TintColor = Color.RGB(sc.Red * (1-p) + tc.Red * p, sc.Green * (1-p) + tc.Green * p, sc.Blue * (1-p) + tc.Blue * p, sc.Alpha * (1-p) + tc.Alpha * p)</SourceLine>
    <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.NextFrameOverride(g, core, worldTransform, elapsedTime)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -139,158 +129,135 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>updateItemPosition as Boolean = True</ItemParams>
+  <ItemParams>g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
   <ItemResult></ItemResult>
  </Method>
- <Method>
-  <ItemName>Copy</ItemName>
+ <Property>
+  <ItemName>SpriteSource</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>1020284927</PartID>
+  <PartID>740300799</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function Copy(c As TRAnimationSprite = nil) As TRAnimationSprite</SourceLine>
-   <SourceLine>// Note: Not supported for this class</SourceLine>
-   <SourceLine>End Function</SourceLine>
+   <SourceLine>SpriteSource As Picture</SourceLine>
+   <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
+  <ItemDeclaration>SpriteSource As Picture</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>c As TRAnimationSprite = nil</ItemParams>
-  <ItemResult>TRAnimationSprite</ItemResult>
- </Method>
+ </Property>
  <Property>
-  <ItemName>DragStartPointLocal</ItemName>
+  <ItemName>mTintColor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>881924095</PartID>
+  <PartID>1276401663</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>DragStartPointLocal As TRVector2D</SourceLine>
+   <SourceLine>mTintColor As Color = &amp;cFFFFFF</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>DragStartPointLocal As TRVector2D</ItemDeclaration>
+  <ItemDeclaration>mTintColor As Color = &amp;cFFFFFF</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>TintColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>835577855</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>TintColor As Color</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>TintColor As Color</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>mTintColor = value</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.UpdateSprite</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return mTintColor</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>StartTintColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>729141247</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>StartTintColor As Color</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>StartTintColor As Color</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>TargetTintColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1383221247</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>TargetTintColor As Color</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>TargetTintColor As Color</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <Property>
-  <ItemName>DragCurrentLocal</ItemName>
+  <ItemName>AnimationBehavior</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>932016127</PartID>
+  <PartID>1037455359</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>DragCurrentLocal As TRVector2D</SourceLine>
+   <SourceLine>AnimationBehavior As TRAnimationBehavior</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>DragCurrentLocal As TRVector2D</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>Item</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1798561791</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Item As TRAnimationSprite</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Item As TRAnimationSprite</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>ItemStartPositionLocal</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1496250367</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>ItemStartPositionLocal As TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>ItemStartPositionLocal As TRVector2D</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>DragPreviousPointLocal</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>454764543</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>DragPreviousPointLocal As TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>DragPreviousPointLocal As TRVector2D</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>Delta</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1247238143</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Delta As TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Delta As TRVector2D</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>UserData</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1223495679</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>UserData As Variant</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>UserData As Variant</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>DragStartPointWorld</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>231448575</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>DragStartPointWorld As TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>DragStartPointWorld As TRVector2D</ItemDeclaration>
+  <ItemDeclaration>AnimationBehavior As TRAnimationBehavior</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
   <ViewProperty>
-   <ObjName>RenderBuffer</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Picture</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>IgnoreBoundsTest</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>IsAnimatingOverride</ObjName>
@@ -310,16 +277,6 @@
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>DrawChildrenFirst</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Hidden</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>ID</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
@@ -329,6 +286,32 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>1</PropertyValue>
    <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Hidden</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DrawChildrenFirst</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RotationAsDegrees</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AntiAlias</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Sprite</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -364,16 +347,27 @@
    <ItemType>Integer</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>RotationAsDegrees</ObjName>
+   <ObjName>TintColor</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Double</ItemType>
+   <PropertyValue>&amp;c000000</PropertyValue>
+   <ItemType>Color</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>AntiAlias</ObjName>
+   <ObjName>TargetTintColor</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>True</PropertyValue>
-   <ItemType>Boolean</ItemType>
+   <PropertyValue>&amp;c000000</PropertyValue>
+   <ItemType>Color</ItemType>
   </ViewProperty>
  </ViewBehavior>
+ <Constant>
+  <ItemName>kBehaviorKey</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>723716095</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef>NumberAnimation</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
 </block>
 </RBProject>

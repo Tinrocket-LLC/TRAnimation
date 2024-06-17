@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="157734911">
  <ObjName>TRAnimationPathSprite</ObjName>
- <ObjContainerID>757831679</ObjContainerID>
+ <ObjContainerID>368007167</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -16,16 +16,21 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub NextFrameOverride(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.Path = Nil Then Return</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If Me.FillColor &lt;&gt; Color.Clear Then</SourceLine>
    <SourceLine>g.DrawingColor = Me.FillColor</SourceLine>
    <SourceLine>g.FillPath(Me.Path)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.StrokeWidth &gt; 0 Then</SourceLine>
-   <SourceLine>g.PenSize = Me.StrokeWidth</SourceLine>
    <SourceLine>g.DrawingColor = Me.StrokeColor</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>g.PenSize = Me.StrokeWidth</SourceLine>
    <SourceLine>g.DrawPath(Me.Path)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -37,6 +42,57 @@
   <IsShared>0</IsShared>
   <ItemParams>g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LocalBoundsOverride</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>362295295</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LocalBoundsOverride() As TRAnimationBounds</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim r As TRAnimationBounds</SourceLine>
+   <SourceLine>Dim rr As Rect</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.Path &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>rr = Me.Path.Bounds</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If rr = Nil Then</SourceLine>
+   <SourceLine>// Work around bug: https://tracker.xojo.com/xojoinc/xojo/-/issues/74625</SourceLine>
+   <SourceLine>Me.Path.MoveToPoint(-1, -1)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rr = Me.Path.Bounds</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If rr = Nil Then </SourceLine>
+   <SourceLine>rr = New Rect</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim padding As Integer = (Me.StrokeWidth / 2) + 0.5 // Round up</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>r = New TRAnimationBounds(rr)</SourceLine>
+   <SourceLine>r.AABB.Inset(-padding, -padding)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.RenderBufferOffset.Set(-r.AABB.Left, -r.AABB.Top)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'System.DebugLog(Str(r.AABB.Left) + ", " + Str(r.AABB.Top) + ", " + Str(r.AABB.Width) + ", " + Str(r.AABB.Height))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return r</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAnimationBounds</ItemResult>
  </Method>
  <Property>
   <ItemName>Path</ItemName>
@@ -99,6 +155,17 @@
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>IgnoreBoundsTest</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>RotationAsDegrees</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
@@ -180,6 +247,24 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>StrokeColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>Color.White</PropertyValue>
+   <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>StrokeWidth</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0.0</PropertyValue>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FillColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>Color.White</PropertyValue>
+   <ItemType>Color</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

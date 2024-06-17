@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="729042943">
  <ObjName>TRAnimationCanvasCore</ObjName>
- <ObjContainerID>501213183</ObjContainerID>
+ <ObjContainerID>941963263</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationTimerDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -81,7 +81,8 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Refresh // Force a refresh just in case there's no animation</SourceLine>
+   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Refresh // Force a refresh in case there's no animation</SourceLine>
+   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Refresh // Force a second refresh because some sprites require to passes (text sprites) before they have all the info they need to draw; also seems to prevent flicker with the SceneKit renderer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.AnimationTimer = Nil Then</SourceLine>
    <SourceLine>Me.AnimationTimer = New TRAnimationTimer</SourceLine>
@@ -148,6 +149,8 @@
    <SourceLine>elapsedTime = Self.AnimationTimer.ElapsedSeconds</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>elapsedTime = elapsedTime * Me.TimeScale</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>g.DrawingColor = Me.UniversalCanvas.TRAnimationCanvasDelegate_BackgroundColor</SourceLine>
    <SourceLine>g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
    <SourceLine>g.DrawingColor = Color.Black</SourceLine>
@@ -208,7 +211,7 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim inverseScale As Double = Me.InverseScreenScale(me.SceneRoot).X</SourceLine>
+   <SourceLine>Dim inverseScale As Double = Me.InverseScreenScale(Me.SceneRoot).X</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim results(-1) As TRAnimationSprite</SourceLine>
    <SourceLine>Me.SceneRoot.Flatten(results)</SourceLine>
@@ -216,16 +219,29 @@
    <SourceLine>g.DrawingColor = DebugDrawBoundsColor</SourceLine>
    <SourceLine>g.PenSize = 1.0 * inverseScale</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Dim labelStep As Double</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>For Each child As TRAnimationSprite In results</SourceLine>
+   <SourceLine>child.UpdateTransforms</SourceLine>
    <SourceLine>Dim bounds As TRAnimationBounds = child.WorldBounds</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If bounds &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>g.FillOval(-3 + bounds.Position.X, -3 + bounds.Position.Y, 5, 5)</SourceLine>
+   <SourceLine>// Bounds center</SourceLine>
+   <SourceLine>g.DrawLine(bounds.Position.X - 5, bounds.Position.Y, bounds.Position.X + 5, bounds.Position.Y)</SourceLine>
+   <SourceLine>g.DrawLine(bounds.Position.X, bounds.Position.Y - 5, bounds.Position.X, bounds.Position.Y + 5)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>g.DrawOval(bounds.Position.X - bounds.Radius, bounds.Position.Y - bounds.Radius, bounds.Radius * 2, bounds.Radius * 2)</SourceLine>
+   <SourceLine>// Bounds circle</SourceLine>
+   <SourceLine>'g.FillOval(-3 + bounds.Position.X, -3 + bounds.Position.Y, 5, 5)</SourceLine>
+   <SourceLine>'g.DrawOval(bounds.Position.X - bounds.Radius, bounds.Position.Y - bounds.Radius, bounds.Radius * 2, bounds.Radius * 2)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If bounds.AABB &lt;&gt; Nil Then</SourceLine>
    <SourceLine>g.DrawRectangle(bounds.AABB.Left, bounds.AABB.Top, bounds.AABB.Width, bounds.AABB.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If TargetDesktop Then</SourceLine>
+   <SourceLine>g.FontSize = 10 * inverseScale</SourceLine>
+   <SourceLine>g.DrawText(child.Name + ": " + Str(bounds.AABB.Width) + " ✕ " + Str(bounds.AABB.Height), bounds.AABB.Left + bounds.AABB.Width + 5 * inverseScale, bounds.AABB.Top + bounds.AABB.Height + labelStep)</SourceLine>
+   <SourceLine>labelStep = labelStep - g.TextHeight * inverseScale</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
@@ -309,7 +325,7 @@
   <PartID>202020863</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub HandleEvent_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub HandleEvent_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
@@ -329,13 +345,15 @@
    <SourceLine></SourceLine>
    <SourceLine>If Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
    <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerDown(worldPosition, Me.HitSprite)</SourceLine>
+   <SourceLine>ElseIf Me.HitSprite.Item.PointerEventDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Me.HitSprite.Item.PointerEventDelegate.PointerDown(worldPosition, Me.HitSprite)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>Me.HitSprite = New TRAnimationHitSprite // Replace the hitsprite with a fresh one, so it's not nil in case anyone checks against Core.HitSprite.Item</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerDown(screenPosition, worldPosition) // For subclasses</SourceLine>
-   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition, worldPosition) // For control instances</SourceLine>
+   <SourceLine>RaiseEvent PointerDown(screenPosition, worldPosition, eventData) // For subclasses</SourceLine>
+   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition, worldPosition, eventData) // For control instances</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -343,7 +361,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -353,7 +371,7 @@
   <PartID>964227071</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub HandleEvent_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub HandleEvent_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
@@ -361,7 +379,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = True</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
+   <SourceLine>Dim downDurationSeconds As Double = ((System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0) * Me.TimeScale</SourceLine>
    <SourceLine>Me.DragDistanceMax = Max(Me.DragDistanceMax, TRVector2D.Distance(worldPosition, Me.DragStartPointWorld))</SourceLine>
    <SourceLine>Me.mDragInProgress = downDurationSeconds &gt;= Me.DragDelaySecondsThreshold And Me.DragDistanceMax &gt; Me.DragDistanceThreshold</SourceLine>
    <SourceLine></SourceLine>
@@ -373,13 +391,14 @@
    <SourceLine></SourceLine>
    <SourceLine>If Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
    <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerDrag(worldPosition, Me.HitSprite)</SourceLine>
+   <SourceLine>ElseIf Me.HitSprite.Item.PointerEventDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Me.HitSprite.Item.PointerEventDelegate.PointerDrag(worldPosition, Me.HitSprite)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'System.DebugLog("Drag")</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerDrag(screenPosition, worldPosition) // For subclasses</SourceLine>
-   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition, worldPosition)// For control instances</SourceLine>
+   <SourceLine>RaiseEvent PointerDrag(screenPosition, worldPosition, eventData) // For subclasses</SourceLine>
+   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition, worldPosition, eventData)// For control instances</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -388,7 +407,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -398,14 +417,14 @@
   <PartID>1042665471</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub HandleEvent_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub HandleEvent_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>Dim tapCount As Integer</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim downDurationSeconds As Double = (System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0</SourceLine>
+   <SourceLine>Dim downDurationSeconds As Double = ((System.Microseconds - Me.PointerDownBeginMicroseconds) / 1000000.0) * Me.TimeScale</SourceLine>
    <SourceLine>Me.PointerDownBeginMicroseconds = -1</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Not Me.DragInProgress And downDurationSeconds &lt; Me.TapDurationThreshold Then</SourceLine>
@@ -418,12 +437,16 @@
    <SourceLine>'System.DebugLog("Drag " + Me.DragDistanceMax.ToString)</SourceLine>
    <SourceLine>'System.DebugLog("Up")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.HitSprite &lt;&gt; Nil And Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
+   <SourceLine>If Me.HitSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If Me.HitSprite.Item IsA TRAnimationGroupSprite Then</SourceLine>
    <SourceLine>TRAnimationGroupSprite(Me.HitSprite.Item).PointerUp(worldPosition, Me.HitSprite, tapCount)</SourceLine>
+   <SourceLine>ElseIf Me.HitSprite.Item &lt;&gt; Nil And Me.HitSprite.Item &lt;&gt; Nil And Me.HitSprite.Item.PointerEventDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Me.HitSprite.Item.PointerEventDelegate.PointerUp(worldPosition, Me.HitSprite, tapCount)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount) // For subclasses</SourceLine>
-   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition, tapCount) // For control instances</SourceLine>
+   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount, eventData) // For subclasses</SourceLine>
+   <SourceLine>Me.UniversalCanvas.TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition, worldPosition, tapCount, eventData) // For control instances</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.IsAnimatingOverride = False</SourceLine>
    <SourceLine>Me.mDragInProgress = False</SourceLine>
@@ -436,7 +459,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -616,7 +639,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
@@ -624,7 +647,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
@@ -632,7 +655,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
@@ -908,7 +931,7 @@
    <SourceLine>// Return seconds</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.PointerDownBeginMicroseconds &gt; 0 Then</SourceLine>
-   <SourceLine>Return (System.Microseconds - Me.PointerDownBeginMicroseconds) / kMillion</SourceLine>
+   <SourceLine>Return ((System.Microseconds - Me.PointerDownBeginMicroseconds) / kMillion) * Me.TimeScale</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return 0</SourceLine>
@@ -999,11 +1022,11 @@
   <PartID>492795903</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>DebugDrawBoundsColor As Color = Color.Black</SourceLine>
+   <SourceLine>DebugDrawBoundsColor As Color = &amp;c000000CC</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>DebugDrawBoundsColor As Color = Color.Black</ItemDeclaration>
+  <ItemDeclaration>DebugDrawBoundsColor As Color = &amp;c000000CC</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -1048,6 +1071,21 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>RenderDelegate As TRAnimationCanvasRendererDelegate</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>TimeScale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1714368511</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>TimeScale As Double = 1</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>TimeScale As Double = 1</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -1134,6 +1172,12 @@
    <ObjName>DragInProgress</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TimeScale</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>1</PropertyValue>
+   <ItemType>Double</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

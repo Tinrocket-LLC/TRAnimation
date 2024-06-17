@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2037446655">
  <ObjName>TRAnimationBehaviorTarget</ObjName>
- <ObjContainerID>1091315711</ObjContainerID>
+ <ObjContainerID>2116259839</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationBehavior</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -173,6 +173,36 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>elapsedTime as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>AddToTarget</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1871157247</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub AddToTarget(exclusive as Boolean = False)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.SourceSprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If exclusive Then</SourceLine>
+   <SourceLine>Me.SourceSprite.Behaviors.RemoveAll</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SourceSprite.AddBehavior(Me)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>exclusive as Boolean = False</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Property>

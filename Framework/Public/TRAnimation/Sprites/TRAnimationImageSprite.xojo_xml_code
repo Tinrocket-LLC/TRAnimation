@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="895811583">
  <ObjName>TRAnimationImageSprite</ObjName>
- <ObjContainerID>1891045375</ObjContainerID>
+ <ObjContainerID>368007167</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -47,7 +47,11 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If Me.Sprite = Nil Then </SourceLine>
+   <SourceLine>Me.Center.Set(0, 0)</SourceLine>
+   <SourceLine>Else</SourceLine>
    <SourceLine>Me.Center.Set(Me.Sprite.Width / 2, Me.Sprite.Height / 2)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -71,8 +75,11 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.Sprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If Me.Sprite &lt;&gt; Nil And core.RenderDelegate = Nil Then</SourceLine>
    <SourceLine>g.DrawPicture(Me.Sprite, -Me.Center.x, -Me.Center.y, Me.Sprite.Width, Me.Sprite.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'g.DrawingColor = Color.Red</SourceLine>
+   <SourceLine>'g.FillRectangle(-Me.Center.x, -Me.Center.y, Me.Sprite.Width, Me.Sprite.Height)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -154,6 +161,11 @@
    <SourceLine>Function Copy(c As TRAnimationSprite = nil) As TRAnimationSprite</SourceLine>
    <SourceLine>// Note: Not complete for this class or all subclasses that ship with TRAnimation</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>If c = Nil Then</SourceLine>
    <SourceLine>c = New TRAnimationImageSprite</SourceLine>
    <SourceLine>End</SourceLine>
@@ -194,6 +206,17 @@
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>IgnoreBoundsTest</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>IsAnimatingOverride</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>

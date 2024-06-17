@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="1556461567">
  <ObjName>TRAffineTransform</ObjName>
- <ObjContainerID>1578756095</ObjContainerID>
+ <ObjContainerID>1091635199</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>Memoryblock</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -745,6 +745,38 @@
   <IsShared>0</IsShared>
   <ItemParams>vector as TRVector2D</ItemParams>
   <ItemResult>TRVector2D</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ApplyAffineTransform</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1458989055</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ApplyAffineTransform(point as Point) As Point</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks kSafeMode</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim pointCG As CGPoint</SourceLine>
+   <SourceLine>pointCG.x = point.X</SourceLine>
+   <SourceLine>pointCG.y = point.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function CGPointApplyAffineTransform Lib CoreGraphics (pointCG As CGPoint, t As CGAffineTransform) As CGPoint</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>pointCG = CGPointApplyAffineTransform(pointCG, Matrix)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return New Point(pointCG.x, pointCG.y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>point as Point</ItemParams>
+  <ItemResult>Point</ItemResult>
  </Method>
  <Property>
   <ItemName>Matrix</ItemName>

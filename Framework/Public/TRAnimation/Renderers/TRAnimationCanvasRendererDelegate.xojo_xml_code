@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2023r3.1" FormatVersion="2" MinIDEVersion="20140300">
 <block type="Module" ID="2050379775">
  <ObjName>TRAnimationCanvasRendererDelegate</ObjName>
- <ObjContainerID>1930573823</ObjContainerID>
+ <ObjContainerID>158531583</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>1</IsInterface>
@@ -77,6 +77,24 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>camera as TRAnimationCameraSprite, core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasRendererDelegate_Hide</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1654712319</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasRendererDelegate_Hide(sprite as TRAnimationSprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <ViewBehavior>

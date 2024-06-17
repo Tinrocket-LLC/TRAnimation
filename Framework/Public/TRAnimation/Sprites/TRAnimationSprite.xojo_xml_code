@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="208971775">
  <ObjName>TRAnimationSprite</ObjName>
- <ObjContainerID>1904066559</ObjContainerID>
+ <ObjContainerID>1751595007</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>TRAnimationBehaviorDelegate</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -24,18 +24,29 @@
    <SourceLine>Me.mParent = New WeakRef(parent)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.Hidden Then</SourceLine>
+   <SourceLine>If core.RenderDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>core.RenderDelegate.TRAnimationCanvasRendererDelegate_Hide(Me)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim child As TRAnimationSprite</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>g.SaveState</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If core.RenderDelegate = Nil Then</SourceLine>
+   <SourceLine>// This is only needed when were rendering to graphics</SourceLine>
    <SourceLine>g.AntiAliased = Me.AntiAlias</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// "Translate, Rotate, Scale" https://gamedev.stackexchange.com/a/29265</SourceLine>
    <SourceLine>g.Translate(Me.Position.X, Me.Position.Y)</SourceLine>
    <SourceLine>g.Rotate(Me.RotationAsDegrees * kRadian)</SourceLine>
    <SourceLine>g.Scale(Me.Scale.X, Me.Scale.Y)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Transparency always propagates to children through graphics</SourceLine>
+   <SourceLine>g.Transparency = 100 - ((100 - g.Transparency) * Me.Alpha)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Me.CurrentLocalTransform.Reset</SourceLine>
    <SourceLine>Me.CurrentLocalTransform.Translate(Me.Position.X, Me.Position.Y)</SourceLine>
@@ -43,21 +54,24 @@
    <SourceLine>Me.CurrentLocalTransform.Scale(Me.Scale.X, Me.Scale.Y)</SourceLine>
    <SourceLine>Me.CurrentWorldTransform = TRAffineTransform.Concat(Me.CurrentLocalTransform, currentWorldTransform)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Transparency propagates to children</SourceLine>
-   <SourceLine>g.Transparency = 100 - ((100 - g.Transparency) * Me.Alpha)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If core.RenderDelegate &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>core.RenderDelegate.TRAnimationCanvasRendererDelegate_NextFrame(Me, core, g, Me.CurrentWorldTransform)</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine>Me.NextFrameOverrideBackground(g, core, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If DrawChildrenFirst Then</SourceLine>
    <SourceLine>For Each child In Me.Children</SourceLine>
    <SourceLine>child.NextFrame(g, core, Me, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>NextFrameOverride(g, core, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
+   <SourceLine>Me.NextFrameOverride(g, core, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If core.RenderDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>core.RenderDelegate.TRAnimationCanvasRendererDelegate_NextFrame(Me, core, g, Me.CurrentWorldTransform)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>NextFrameOverride(g, core, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
+   <SourceLine>Me.NextFrameOverride(g, core, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If core.RenderDelegate &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>core.RenderDelegate.TRAnimationCanvasRendererDelegate_NextFrame(Me, core, g, Me.CurrentWorldTransform)</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each child In Me.Children</SourceLine>
    <SourceLine>child.NextFrame(g, core, Me, Me.CurrentWorldTransform, elapsedTime)</SourceLine>
@@ -143,6 +157,9 @@
    <SourceLine>Me.CurrentWorldTransform = New TRAffineTransform</SourceLine>
    <SourceLine>Me.ID = TRCounter.NextValue("TRAnimationSprite.ID")</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Me.RenderBufferOffset = New TRVector2D // Related to the optional RenderBuffer as Picture property; controls how the RenderBuffer is translated when drawn</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -217,6 +234,12 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UpdateCenter()</SourceLine>
    <SourceLine>// Abstract</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -233,13 +256,13 @@
   <PartID>1690603519</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function WorldBounds() As TRAnimationBounds</SourceLine>
+   <SourceLine>Function WorldBounds(ignoreItems as Set = nil) As TRAnimationBounds</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.Hidden Then</SourceLine>
+   <SourceLine>If Me.Hidden Or Me.IgnoreBoundsTest Or (ignoreItems &lt;&gt; Nil And ignoreItems.HasMember(Me)) Then</SourceLine>
    <SourceLine>Return Nil</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
@@ -252,7 +275,7 @@
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each child As TRAnimationSprite In Me.Children</SourceLine>
-   <SourceLine>childBounds = child.WorldBounds</SourceLine>
+   <SourceLine>childBounds = child.WorldBounds(ignoreItems)</SourceLine>
    <SourceLine>If childBounds &lt;&gt; Nil Then</SourceLine>
    <SourceLine>worldBounds.Add(childBounds)</SourceLine>
    <SourceLine>End</SourceLine>
@@ -270,7 +293,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
+  <ItemParams>ignoreItems as Set = nil</ItemParams>
   <ItemResult>TRAnimationBounds</ItemResult>
  </Method>
  <Method>
@@ -286,9 +309,9 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.Hidden Then</SourceLine>
-   <SourceLine>Return</SourceLine>
-   <SourceLine>End</SourceLine>
+   <SourceLine>'If Me.Hidden Then</SourceLine>
+   <SourceLine>'Return</SourceLine>
+   <SourceLine>'End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>results.Add(Me)</SourceLine>
    <SourceLine></SourceLine>
@@ -422,12 +445,12 @@
    <SourceLine>Me.CurrentLocalTransform.Scale(Me.Scale.X, Me.Scale.Y)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If parent &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>currentWorldTransform = parent.CurrentWorldTransform.Copy // Why copy? Maybe it's better to subtract old CurrentLocalTransform and apply new CurrentLocalTransform</SourceLine>
+   <SourceLine>Me.CurrentWorldTransform = parent.CurrentWorldTransform.Copy // Why copy? Maybe it's better to subtract old CurrentLocalTransform and apply new CurrentLocalTransform</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>currentWorldTransform = New TRAffineTransform</SourceLine>
+   <SourceLine>Me.CurrentWorldTransform = New TRAffineTransform</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.CurrentWorldTransform = TRAffineTransform.Concat(Me.CurrentLocalTransform, currentWorldTransform)</SourceLine>
+   <SourceLine>Me.CurrentWorldTransform = TRAffineTransform.Concat(Me.CurrentLocalTransform, Me.CurrentWorldTransform)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each child As TRAnimationSprite In Me.Children</SourceLine>
    <SourceLine>child.UpdateTransforms(Me)</SourceLine>
@@ -451,6 +474,11 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub NextFrameOverride(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
    <SourceLine>// Abstract</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -494,6 +522,12 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function LocalBoundsOverride() As TRAnimationBounds</SourceLine>
    <SourceLine>// Abstract</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -512,6 +546,12 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Reset()</SourceLine>
    <SourceLine>// Abstract</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -556,7 +596,7 @@
   <PartID>184256511</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub DebugDrawBounds(g as Graphics, viewport as Rect, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
+   <SourceLine>Sub DebugDrawBounds(g as Graphics)</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
@@ -593,7 +633,7 @@
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>g as Graphics, viewport as Rect, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
+  <ItemParams>g as Graphics</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -605,6 +645,12 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function HitTestOverride(screenP as TRVector2D, worldP as TRVector2D, localP as TRVector2D) As Boolean</SourceLine>
    <SourceLine>// Abstract</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -625,6 +671,12 @@
    <SourceLine>// Part of the TRAnimationBehaviorDelegate interface.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Abstract</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -656,7 +708,16 @@
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Me.Behaviors.Values.Count &gt; 0 Or Me.TargetBehaviorQueue.Count &gt; 0 Then</SourceLine>
+   <SourceLine>If Me.Behaviors.Values.Count = 1 And Me.TargetBehaviorQueue.Count = 0 Then</SourceLine>
+   <SourceLine>// Extra check for the current (and only) behavior — it could be complete but not yet removed from the behavior list!</SourceLine>
+   <SourceLine>Dim v() As Variant = Me.Behaviors.Values</SourceLine>
+   <SourceLine>Dim b As TRAnimationBehavior = TRAnimationBehavior(v(0))</SourceLine>
+   <SourceLine>If Not b.isComplete Then</SourceLine>
    <SourceLine>Return True</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For Each s As TRAnimationSprite In Me.Children</SourceLine>
@@ -691,7 +752,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Dim rt, st As TRAffineTransform</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>rt =  Me.CurrentWorldTransform</SourceLine>
+   <SourceLine>rt = Me.CurrentWorldTransform</SourceLine>
    <SourceLine>st = s.CurrentWorldTransform.Inverse</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return TRAffineTransform.Concat(st, rt)</SourceLine>
@@ -839,15 +900,20 @@
    <SourceLine></SourceLine>
    <SourceLine>If child = Nil Then Return</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Me.FirstIndexOf(child) &lt; 0 Then</SourceLine>
+   <SourceLine>Dim i As Integer = Me.FirstIndexOf(child)</SourceLine>
+   <SourceLine>If i &gt; -1 Then</SourceLine>
+   <SourceLine>Me.Children.RemoveAt(i) // Remove first</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>If index &lt; 0 Then</SourceLine>
+   <SourceLine>// Add at end</SourceLine>
    <SourceLine>Me.Children.Add(child)</SourceLine>
    <SourceLine>Else</SourceLine>
+   <SourceLine>// Add at index</SourceLine>
    <SourceLine>Me.Children.AddAt(0, child)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>child.UpdateTransforms(Me)</SourceLine>
-   <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -915,7 +981,7 @@
    <SourceLine></SourceLine>
    <SourceLine>// Deep copy of children</SourceLine>
    <SourceLine>For Each child As TRAnimationSprite In Me.Children</SourceLine>
-   <SourceLine>c.Children.Add(child.Copy)</SourceLine>
+   <SourceLine>c.AddChild(child.Copy)</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Don't copy </SourceLine>
@@ -923,7 +989,7 @@
    <SourceLine>'c.DebugLastHitPoint</SourceLine>
    <SourceLine>'c.DeleteQueue</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>c.DrawChildrenFirst =  Me.DrawChildrenFirst</SourceLine>
+   <SourceLine>c.DrawChildrenFirst = Me.DrawChildrenFirst</SourceLine>
    <SourceLine>c.Hidden = Me.Hidden</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Don't copy </SourceLine>
@@ -1034,6 +1100,12 @@
    <SourceLine>// Part of the TRAnimationBehaviorDelegate interface.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Abstract</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1057,12 +1129,31 @@
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim r As TRAnimationBounds = Me.LocalBoundsOverride</SourceLine>
+   <SourceLine>Dim w As Integer = Max(1, Round(r.AABB.Width * screenScale))</SourceLine>
+   <SourceLine>Dim h As Integer = Max(1, Round(r.AABB.Height * screenScale))</SourceLine>
+   <SourceLine>Dim g As Graphics</SourceLine>
+   <SourceLine>Dim debugColor As Color = Color.Clear</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If toPicture = Nil Or toPicture.Width &lt; r.AABB.Width * screenScale Or toPicture.Height &lt; r.AABB.Height * screenScale Then</SourceLine>
-   <SourceLine>toPicture = New Picture(Max(1, Round(r.AABB.Width * screenScale)), Max(1, Round(r.AABB.Height * screenScale)))</SourceLine>
+   <SourceLine>// Make a new buffer if our buffer isn't big enough</SourceLine>
+   <SourceLine>If toPicture = Nil Or toPicture.Width &lt; w Or toPicture.Height &lt; h Then</SourceLine>
+   <SourceLine>toPicture = New Picture(w, h)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g = toPicture.Graphics</SourceLine>
+   <SourceLine>debugColor = Color.RGB(Rnd * 256, Rnd * 256, Rnd * 256)</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>toPicture.Graphics.ClearRectangle(0, 0, toPicture.Width, toPicture.Height)</SourceLine>
+   <SourceLine>g = toPicture.Graphics</SourceLine>
+   <SourceLine>g.ClearRectangle(0, 0, toPicture.Width, toPicture.Height)</SourceLine>
    <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Debugging</SourceLine>
+   <SourceLine>'g.DrawingColor = debugColor</SourceLine>
+   <SourceLine>'g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.SaveState</SourceLine>
+   <SourceLine>g.Scale(screenScale, screenScale)</SourceLine>
+   <SourceLine>g.Translate(-r.AABB.Left, -r.AABB.Top)</SourceLine>
+   <SourceLine>Me.NextFrameOverride(g, core, New TRAffineTransform, 0.0)</SourceLine>
+   <SourceLine>g.RestoreState</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return toPicture</SourceLine>
    <SourceLine></SourceLine>
@@ -1126,6 +1217,59 @@
   <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NextFrameOverrideBackground</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2052401151</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub NextFrameOverrideBackground(g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Abstract</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>g as Graphics, core as TRAnimationCanvasCore, worldTransform as TRAffineTransform, elapsedTime as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ChildrenArrayCopy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1563242495</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ChildrenArrayCopy() As TRAnimationSprite()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim child, c() As TRAnimationSprite</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each child In Me.Children</SourceLine>
+   <SourceLine>c.Add(child)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return c</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAnimationSprite()</ItemResult>
  </Method>
  <Hook>
   <ItemName>CollisionBounds</ItemName>
@@ -1613,6 +1757,66 @@
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
+ <Property>
+  <ItemName>RenderBuffer</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1569060863</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RenderBuffer As Picture</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RenderBuffer As Picture</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>RenderBufferOffset</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1058920447</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RenderBufferOffset As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RenderBufferOffset As TRVector2D</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>IgnoreBoundsTest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1836941311</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>IgnoreBoundsTest As Boolean = False</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>IgnoreBoundsTest As Boolean = False</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>PointerEventDelegate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1395617791</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>PointerEventDelegate As TRAnimationGroupSprite</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>PointerEventDelegate As TRAnimationGroupSprite</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -1694,6 +1898,17 @@
   <ViewProperty>
    <ObjName>IsAnimatingOverride</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IgnoreBoundsTest</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
   </ViewProperty>
  </ViewBehavior>

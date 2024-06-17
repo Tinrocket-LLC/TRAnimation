@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="2088798207">
  <ObjName>TRAnimationCanvasDesktop</ObjName>
- <ObjContainerID>237207551</ObjContainerID>
+ <ObjContainerID>941963263</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>DesktopCanvas</Superclass>
  <Interfaces>TRAnimationCanvasDelegate</Interfaces>
@@ -208,7 +208,7 @@
   <PartID>755013631</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
@@ -223,7 +223,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -233,7 +233,7 @@
   <PartID>1089390591</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
@@ -248,7 +248,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -258,7 +258,7 @@
   <PartID>1078202367</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = nil)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
@@ -273,7 +273,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>

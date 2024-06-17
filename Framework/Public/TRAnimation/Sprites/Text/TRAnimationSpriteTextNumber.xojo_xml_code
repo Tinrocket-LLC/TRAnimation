@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="2108628991">
  <ObjName>TRAnimationSpriteTextNumber</ObjName>
- <ObjContainerID>289284095</ObjContainerID>
+ <ObjContainerID>324769791</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSpriteText</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -190,25 +190,6 @@
   <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Method>
- <Method>
-  <ItemName>TRAnimationBehaviorDelegate_BehaviorNextFrame</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>977602559</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationBehaviorDelegate_BehaviorNextFrame(behavior as TRAnimationBehavior, tween as TRTween)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>1</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>behavior as TRAnimationBehavior, tween as TRTween</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
  <Property>
   <ItemName>TargetNumber</ItemName>
   <Compatibility></Compatibility>
@@ -389,10 +370,31 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>StartColor As Color</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
+  <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>IgnoreBoundsTest</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LastMaxTextWidth</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LastMaxTextHeight</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Double</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>LastFontHeight</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
@@ -490,11 +492,6 @@
    <ItemType>Double</ItemType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>UseScreenSpaceFontSize</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
@@ -558,7 +555,7 @@
    <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>StartColor</ObjName>
+   <ObjName>TargetColor</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>&amp;c000000</PropertyValue>
    <ItemType>Color</ItemType>
@@ -572,7 +569,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemType>0</ItemType>
   <ItemDef>NumberAnimation</ItemDef>
-  <ItemFlags>0</ItemFlags>
+  <ItemFlags>33</ItemFlags>
  </Constant>
 </block>
 </RBProject>

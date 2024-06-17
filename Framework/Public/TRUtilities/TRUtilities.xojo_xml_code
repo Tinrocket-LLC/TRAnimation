@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r3.2" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="1323515903">
  <ObjName>TRUtilities</ObjName>
- <ObjContainerID>1365530623</ObjContainerID>
+ <ObjContainerID>1091635199</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -87,6 +87,346 @@
   <IsShared>0</IsShared>
   <ItemParams>Extends a() as Object</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TemporaryFolder</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1818994687</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TemporaryFolder() As FolderItem</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If TargetIOS</SourceLine>
+   <SourceLine>// https://forum.xojo.com/t/fyi-xojo-2021r3-introduces-a-bug-when-saving-to-specialfolder-temporary-in-ios/66917/6?u=john_balestrieri</SourceLine>
+   <SourceLine>Dim ioF As xojo.io.FolderItem = Xojo.IO.SpecialFolder.Temporary</SourceLine>
+   <SourceLine>Dim tempfolder As FolderItem = New FolderItem(ioF.Path, FolderItem.PathModes.Native)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If tempfolder Is Nil Then</SourceLine>
+   <SourceLine>Break // Handle this error</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>ElseIf tempfolder.Exists = False Then</SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>tempfolder.CreateFolder</SourceLine>
+   <SourceLine>Catch err As IOException</SourceLine>
+   <SourceLine>//This usually means the user's device storage is full</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Break // Handle this error</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return tempfolder</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return SpecialFolder.Temporary</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>FolderItem</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>VariantContentsAreEqual</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>546056191</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function VariantContentsAreEqual(v1 as Variant, v2 as Variant) As Boolean</SourceLine>
+   <SourceLine>// Use introspection to get the type info of the objects</SourceLine>
+   <SourceLine>Dim typeInfo1 As Introspection.TypeInfo = Introspection.GetType(v1)</SourceLine>
+   <SourceLine>Dim typeInfo2 As Introspection.TypeInfo = Introspection.GetType(v2)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If typeInfo1 &lt;&gt; Nil And typeInfo2 &lt;&gt; Nil And typeInfo1.IsClass And typeInfo2.IsClass Then</SourceLine>
+   <SourceLine>Dim o1 As Object = v1</SourceLine>
+   <SourceLine>Dim o2 As Object = v2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Check if both objects are of the same type</SourceLine>
+   <SourceLine>If typeInfo1.FullName = typeInfo2.FullName Then</SourceLine>
+   <SourceLine>// Look for Operator_Compare in the first object</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim methods() As Introspection.MethodInfo = typeInfo1.GetMethods</SourceLine>
+   <SourceLine>For Each methodInfo As Introspection.MethodInfo In methods</SourceLine>
+   <SourceLine>If methodInfo.Name = "Operator_Compare" Then</SourceLine>
+   <SourceLine>// If Operator_Compare exists, invoke it dynamically</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return methodInfo.Invoke(v1, Array(v2)) = 0</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return v1 = v2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v1 as Variant, v2 as Variant</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ValuesAreEqual</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1369780223</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ValuesAreEqual(d1 as Dictionary, d2 as Dictionary, ParamArray keys as String) As Boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine>Dim key As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If d1 &lt;&gt; Nil And d2 &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>For Each key In keys</SourceLine>
+   <SourceLine>If d1.HasKey(key) And d2.HasKey(key) And TRUtilities.VariantContentsAreEqual(d1.Value(key), d2.Value(key)) Then</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>d1 as Dictionary, d2 as Dictionary, ParamArray keys as String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Seconds</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>358447103</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Seconds(microseconds as Double) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return microseconds / 1000000.0</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>microseconds as Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>GuessEncoding</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1295615999</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function GuessEncoding(s As String) As TextEncoding</SourceLine>
+   <SourceLine>// Joe Strout</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Guess what text encoding the text in the given string is in.</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// Note that it this version does not report whether the UTF-32 or</SourceLine>
+   <SourceLine>// UTF-16 that is in the wrong byte order.  If that's a possibility,</SourceLine>
+   <SourceLine>// you should use the other version of GuessEncoding instead.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim whoCares As Boolean</SourceLine>
+   <SourceLine>return TRUtilities.GuessEncoding( s, whoCares )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>TextEncoding</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>GuessEncoding</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2076753919</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function GuessEncoding(s As String, ByRef outWrongOrder As Boolean) As TextEncoding</SourceLine>
+   <SourceLine>// Joe Strout</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Guess what text encoding the text in the given string is in.</SourceLine>
+   <SourceLine>// This ignores the encoding set on the string, and guesses</SourceLine>
+   <SourceLine>// one of the following:</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>//   * UTF-32</SourceLine>
+   <SourceLine>//   * UTF-16</SourceLine>
+   <SourceLine>//   * UTF-8</SourceLine>
+   <SourceLine>//   * Encodings.SystemDefault</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// If the UTF-32 or UTF-16 is in the wrong byte order for this platform,</SourceLine>
+   <SourceLine>// then outWrongOrder will be set to true.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>static isBigEndian, endianChecked As Boolean</SourceLine>
+   <SourceLine>if not endianChecked then</SourceLine>
+   <SourceLine>Dim temp As String = Encodings.UTF16.Chr( &amp;hFEFF )</SourceLine>
+   <SourceLine>isBigEndian = (temp.MiddleBytes( 1, 1 ).AscByte = &amp;hFE)</SourceLine>
+   <SourceLine>endianChecked = true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// check for a BOM</SourceLine>
+   <SourceLine>Dim b0 As Integer = s.MiddleBytes( 1, 1 ).AscByte</SourceLine>
+   <SourceLine>Dim b1 As Integer = s.MiddleBytes( 2, 1 ).AscByte</SourceLine>
+   <SourceLine>Dim b2 As Integer = s.MiddleBytes( 3, 1 ).AscByte</SourceLine>
+   <SourceLine>Dim b3 As Integer = s.MiddleBytes( 4, 1 ).AscByte</SourceLine>
+   <SourceLine>if b0=0 and b1=0 and b2=&amp;hFE and b3=&amp;hFF then</SourceLine>
+   <SourceLine>// UTF-32, big-endian</SourceLine>
+   <SourceLine>outWrongOrder = not isBigEndian</SourceLine>
+   <SourceLine>#if RBVersion &lt; 2012.02</SourceLine>
+   <SourceLine>return Encodings.UCS4</SourceLine>
+   <SourceLine>#else</SourceLine>
+   <SourceLine>return Encodings.UTF32</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine>elseif b0=&amp;hFF and b1=&amp;hFE and b2=0 and b3=0 and s.LenB &gt;= 4 then</SourceLine>
+   <SourceLine>// UTF-32, little-endian</SourceLine>
+   <SourceLine>outWrongOrder = isBigEndian</SourceLine>
+   <SourceLine>#if RBVersion &lt; 2012.02</SourceLine>
+   <SourceLine>return Encodings.UCS4</SourceLine>
+   <SourceLine>#else</SourceLine>
+   <SourceLine>return Encodings.UTF32</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine>elseif b0=&amp;hFE and b1=&amp;hFF then</SourceLine>
+   <SourceLine>// UTF-16, big-endian</SourceLine>
+   <SourceLine>outWrongOrder = not isBigEndian</SourceLine>
+   <SourceLine>return Encodings.UTF16</SourceLine>
+   <SourceLine>elseif b0=&amp;hFF and b1=&amp;hFE then</SourceLine>
+   <SourceLine>// UTF-16, little-endian</SourceLine>
+   <SourceLine>outWrongOrder = isBigEndian</SourceLine>
+   <SourceLine>return Encodings.UTF16</SourceLine>
+   <SourceLine>elseif b0=&amp;hEF and b1=&amp;hBB and b1=&amp;hBF then</SourceLine>
+   <SourceLine>// UTF-8 (ah, a sensible encoding where endianness doesn't matter!)</SourceLine>
+   <SourceLine>return Encodings.UTF8</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// no BOM; see if it's entirely ASCII.</SourceLine>
+   <SourceLine>Dim m As MemoryBlock = s</SourceLine>
+   <SourceLine>Dim i, maxi As Integer = s.LenB - 1</SourceLine>
+   <SourceLine>for i = 0 to maxi</SourceLine>
+   <SourceLine>if m.Byte(i) &gt; 127 then exit</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>if i &gt; maxi then return Encodings.ASCII</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Not ASCII; check for a high incidence of nulls every other byte,</SourceLine>
+   <SourceLine>// which suggests UTF-16 (at least in Roman text).</SourceLine>
+   <SourceLine>Dim nulls(1) As Integer  // null count in even (0) and odd (1) bytes</SourceLine>
+   <SourceLine>for i = 0 to maxi</SourceLine>
+   <SourceLine>if m.Byte(i) = 0 then</SourceLine>
+   <SourceLine>nulls(i mod 2) = nulls(i mod 2) + 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>if nulls(0) &gt; nulls(1)*2 and nulls(0) &gt; maxi\2 then</SourceLine>
+   <SourceLine>// UTF-16, big-endian</SourceLine>
+   <SourceLine>outWrongOrder = not isBigEndian</SourceLine>
+   <SourceLine>return Encodings.UTF16</SourceLine>
+   <SourceLine>elseif nulls(1) &gt; nulls(0)*2 and nulls(1) &gt; maxi\2 then</SourceLine>
+   <SourceLine>// UTF-16, little-endian</SourceLine>
+   <SourceLine>outWrongOrder = isBigEndian</SourceLine>
+   <SourceLine>return Encodings.UTF16</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// it's not ASCII; check for illegal UTF-8 characters.</SourceLine>
+   <SourceLine>// See Table 3.1B, "Legal UTF-8 Byte Sequences",</SourceLine>
+   <SourceLine>// at &lt;http://unicode.org/versions/corrigendum1.html&gt;</SourceLine>
+   <SourceLine>Dim b As Byte</SourceLine>
+   <SourceLine>for i = 0 to maxi</SourceLine>
+   <SourceLine>select case m.Byte(i)</SourceLine>
+   <SourceLine>case &amp;h00 to &amp;h7F</SourceLine>
+   <SourceLine>// single-byte character; just continue</SourceLine>
+   <SourceLine>case &amp;hC2 to &amp;hDF</SourceLine>
+   <SourceLine>// one additional byte</SourceLine>
+   <SourceLine>if i+1 &gt; maxi then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>i = i+1</SourceLine>
+   <SourceLine>case &amp;hE0</SourceLine>
+   <SourceLine>// two additional bytes</SourceLine>
+   <SourceLine>if i+2 &gt; maxi then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>if b &lt; &amp;hA0 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>i = i+2</SourceLine>
+   <SourceLine>case &amp;hE1 to &amp;hEF</SourceLine>
+   <SourceLine>// two additional bytes</SourceLine>
+   <SourceLine>if i+2 &gt; maxi then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>i = i+2</SourceLine>
+   <SourceLine>case &amp;hF0</SourceLine>
+   <SourceLine>// three additional bytes</SourceLine>
+   <SourceLine>if i+3 &gt; maxi then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>if b &lt; &amp;h90 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+3)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>i = i+3</SourceLine>
+   <SourceLine>case &amp;hF1 to &amp;hF3</SourceLine>
+   <SourceLine>// three additional bytes</SourceLine>
+   <SourceLine>if i+3 &gt; maxi then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+3)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>i = i+3</SourceLine>
+   <SourceLine>case &amp;hF4</SourceLine>
+   <SourceLine>// three additional bytes</SourceLine>
+   <SourceLine>if i+3 &gt; maxi then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;h8F then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>b = m.Byte(i+3)</SourceLine>
+   <SourceLine>if b &lt; &amp;h80 or b &gt; &amp;hBF then exit for</SourceLine>
+   <SourceLine>i = i+3</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>exit for</SourceLine>
+   <SourceLine>end select</SourceLine>
+   <SourceLine>next i</SourceLine>
+   <SourceLine>if i &gt; maxi then return Encodings.UTF8  // no illegal UTF-8 sequences, so that's probably what it is</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If not valid UTF-8, then let's just guess the system default.</SourceLine>
+   <SourceLine>return Encodings.SystemDefault</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>s As String, ByRef outWrongOrder As Boolean</ItemParams>
+  <ItemResult>TextEncoding</ItemResult>
  </Method>
  <ViewBehavior>
   <ViewProperty>

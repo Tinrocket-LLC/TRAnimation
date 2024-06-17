@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="832534527">
  <ObjName>TRAnimationScreenImageSprite</ObjName>
- <ObjContainerID>126197759</ObjContainerID>
+ <ObjContainerID>252375039</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationImageSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -200,6 +200,17 @@
   <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>IgnoreBoundsTest</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>IsAnimatingOverride</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>

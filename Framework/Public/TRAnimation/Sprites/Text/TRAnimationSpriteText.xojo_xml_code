@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="892450815">
  <ObjName>TRAnimationSpriteText</ObjName>
- <ObjContainerID>1108951039</ObjContainerID>
+ <ObjContainerID>324769791</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>TRAnimationSprite</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -60,16 +60,19 @@
    <SourceLine>Me.LastMaxTextWidth = maxTextW</SourceLine>
    <SourceLine>Me.LastMaxTextHeight = yStep * ss.Count</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.LastTextOffset.X = 0</SourceLine>
+   <SourceLine>Me.RenderBufferOffset.X = 0</SourceLine>
    <SourceLine>Select Case Me.TextAlignment</SourceLine>
    <SourceLine>Case Alignment.Center</SourceLine>
-   <SourceLine>Me.LastTextOffset.X = Me.LastMaxTextWidth / 2 </SourceLine>
+   <SourceLine>Me.RenderBufferOffset.X = Me.LastMaxTextWidth / 2 </SourceLine>
    <SourceLine>Case Alignment.Right</SourceLine>
-   <SourceLine>Me.LastTextOffset.X = Me.LastMaxTextWidth</SourceLine>
+   <SourceLine>Me.RenderBufferOffset.X = Me.LastMaxTextWidth</SourceLine>
    <SourceLine>End</SourceLine>
-   <SourceLine>Me.LastTextOffset.Y = Me.LastFontAscent</SourceLine>
+   <SourceLine>Me.RenderBufferOffset.Y = Me.LastFontAscent</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>g.RestoreState</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Me.LastMaxTextWidth = 0</SourceLine>
+   <SourceLine>// Leave height alone</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -162,69 +165,6 @@
   <ItemResult>TRAnimationSprite</ItemResult>
  </Method>
  <Method>
-  <ItemName>Constructor</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>251234303</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Constructor()</SourceLine>
-   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
-   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Super.Constructor</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Me.LastTextOffset = New TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
-  <ItemName>ToPicture</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>112343039</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function ToPicture(toPicture as Picture = nil, screenScale as Double, core as TRAnimationCanvasCore) As Picture</SourceLine>
-   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
-   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>toPicture = Super.ToPicture(toPicture, screenScale, core)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim g As Graphics = toPicture.Graphics</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>'g.DrawingColor = Color.Red</SourceLine>
-   <SourceLine>'g.FillRectangle(0, 0, g.Width, g.Height)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>g.SaveState</SourceLine>
-   <SourceLine>g.Scale(screenScale, screenScale)</SourceLine>
-   <SourceLine>g.Translate(Me.LastTextOffset.X, Me.LastTextOffset.Y)</SourceLine>
-   <SourceLine>Me.NextFrameOverride(g, core, New TRAffineTransform, 0.0)</SourceLine>
-   <SourceLine>g.RestoreState</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Return toPicture</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>toPicture as Picture = nil, screenScale as Double, core as TRAnimationCanvasCore</ItemParams>
-  <ItemResult>Picture</ItemResult>
- </Method>
- <Method>
   <ItemName>LocalBoundsOverride</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -237,7 +177,7 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim r As Rect = New Rect(-Me.LastTextOffset.X, --Me.LastTextOffset.X, Me.LastMaxTextWidth, Me.LastMaxTextHeight)</SourceLine>
+   <SourceLine>Dim r As Rect = New Rect(-Me.RenderBufferOffset.X, -Me.RenderBufferOffset.Y, Me.LastMaxTextWidth, Me.LastMaxTextHeight)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return New TRAnimationBounds(r)</SourceLine>
    <SourceLine></SourceLine>
@@ -249,6 +189,32 @@
   <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>TRAnimationBounds</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ComputeTextMetrics</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1947623423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ComputeTextMetrics()</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As New Picture(1, 1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.NextFrameOverride(p.Graphics, Nil, Nil, 0.0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Property>
   <ItemName>Text</ItemName>
@@ -482,22 +448,18 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
- <Property>
-  <ItemName>LastTextOffset</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>492036095</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>LastTextOffset As TRVector2D</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>LastTextOffset As TRVector2D</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
  <ViewBehavior>
+  <ViewProperty>
+   <ObjName>IgnoreBoundsTest</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RenderBuffer</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
   <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>

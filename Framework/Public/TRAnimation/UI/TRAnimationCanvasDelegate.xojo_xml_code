@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="417519615">
  <ObjName>TRAnimationCanvasDelegate</ObjName>
- <ObjContainerID>501213183</ObjContainerID>
+ <ObjContainerID>548347903</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>1</IsInterface>
@@ -68,7 +68,7 @@
   <PartID>1377662975</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = nil)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -76,7 +76,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -86,7 +86,7 @@
   <PartID>646674431</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -94,7 +94,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -104,7 +104,7 @@
   <PartID>1521784831</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -112,7 +112,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>

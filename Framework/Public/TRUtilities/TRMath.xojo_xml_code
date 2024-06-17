@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2022r3" FormatVersion="2" MinIDEVersion="20190300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1610956799">
  <ObjName>TRMath</ObjName>
- <ObjContainerID>1365530623</ObjContainerID>
+ <ObjContainerID>914573311</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -136,14 +136,13 @@
    <SourceLine>ElseIf scaleMode = TRMath.Scale.AspectFit Then</SourceLine>
    <SourceLine>scale = Min(destinationRect.Width / sourceRect.Width, destinationRect.Height / sourceRect.Height)</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>// No scale; center</SourceLine>
+   <SourceLine>// No scale</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Center</SourceLine>
    <SourceLine>r.Width = r.Width * scale</SourceLine>
    <SourceLine>r.Height = r.Height * scale</SourceLine>
-   <SourceLine>r.Left = -r.Width / 2</SourceLine>
-   <SourceLine>r.Top = -r.Height / 2</SourceLine>
+   <SourceLine>r.Left = r.Left * scale</SourceLine>
+   <SourceLine>r.Top = r.Top * scale</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return r</SourceLine>
    <SourceLine></SourceLine>
@@ -331,6 +330,35 @@
   <ItemParams>s1 as Size, s2 as Size, precision as Integer = 0</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
+ <Method>
+  <ItemName>LimitPrecision</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1698246655</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LimitPrecision(value as Double, places as Integer) As Double</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks False</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking False</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking False</SourceLine>
+   <SourceLine>#Pragma BoundsChecking False</SourceLine>
+   <SourceLine>Dim power As Double = 10</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For i As Integer = 2 To places</SourceLine>
+   <SourceLine>power = power * 10</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Round(value * power) / power</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>value as Double, places as Integer</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -393,7 +421,37 @@
   <PartID>468215807</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>2</ItemType>
-  <ItemDef>0.01745329251</ItemDef>
+  <ItemDef>0.017453292519943</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kPi</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1144006655</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>3.141592653589793</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kRadiansToDegrees</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1847832575</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>57.295779513082325</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kDegreesToRadians</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1179174911</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>2</ItemType>
+  <ItemDef>0.017453292519943</ItemDef>
   <ItemFlags>0</ItemFlags>
  </Constant>
  <Enumeration>

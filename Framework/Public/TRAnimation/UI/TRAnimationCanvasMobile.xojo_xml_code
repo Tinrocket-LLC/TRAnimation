@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r3" FormatVersion="2" MinIDEVersion="20140300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20190300">
 <block type="Module" ID="43339775">
  <ObjName>TRAnimationCanvasMobile</ObjName>
- <ObjContainerID>501213183</ObjContainerID>
+ <ObjContainerID>548347903</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>MobileCanvas</Superclass>
  <Interfaces> TRAnimationCanvasDelegate</Interfaces>
@@ -56,10 +56,15 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim p As TRVector2D = New TRVector2D(position.X, position.Y)</SourceLine>
+   <SourceLine>Dim p As TRVector2D = New TRVector2D(position)</SourceLine>
    <SourceLine>p = Me.Core.Camera.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Core.HandleEvent_PointerDown(New TRVector2D(position), p)</SourceLine>
+   <SourceLine>Dim eventData(-1) As Variant</SourceLine>
+   <SourceLine>For Each e As Variant In pointerInfo</SourceLine>
+   <SourceLine>eventData.Add(e)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Core.HandleEvent_PointerDown(New TRVector2D(position), p, eventData)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Only call .Start in a real pointer event; dont' call in the method version of PointerDown because that's used by the animation system, and calling .Start will break things</SourceLine>
    <SourceLine>Me.Core.Start</SourceLine>
@@ -80,10 +85,15 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim p As TRVector2D = New TRVector2D(position.X, position.Y)</SourceLine>
+   <SourceLine>Dim p As TRVector2D = New TRVector2D(position)</SourceLine>
    <SourceLine>p = Me.Core.Camera.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Core.HandleEvent_PointerDrag(New TRVector2D(position), p)</SourceLine>
+   <SourceLine>Dim eventData(-1) As Variant</SourceLine>
+   <SourceLine>For Each e As Variant In pointerInfo</SourceLine>
+   <SourceLine>eventData.Add(e)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Core.HandleEvent_PointerDrag(New TRVector2D(position), p, eventData)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -101,10 +111,15 @@
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim p As TRVector2D = New TRVector2D(position.X, position.Y)</SourceLine>
+   <SourceLine>Dim p As TRVector2D = New TRVector2D(position)</SourceLine>
    <SourceLine>p = Me.Core.Camera.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Me.Core.HandleEvent_PointerUp(New TRVector2D(position), p)</SourceLine>
+   <SourceLine>Dim eventData(-1) As Variant</SourceLine>
+   <SourceLine>For Each e As Variant In pointerInfo</SourceLine>
+   <SourceLine>eventData.Add(e)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Core.HandleEvent_PointerUp(New TRVector2D(position), p, eventData)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -206,14 +221,19 @@
   <PartID>30674943</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = nil)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount)</SourceLine>
+   <SourceLine>Dim pointerInfo(-1) As PointerEvent</SourceLine>
+   <SourceLine>For Each e As PointerEvent In eventData</SourceLine>
+   <SourceLine>pointerInfo.Add(e)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount, pointerInfo)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -221,7 +241,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -231,14 +251,19 @@
   <PartID>617197567</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerDown(screenPosition, worldPosition)</SourceLine>
+   <SourceLine>Dim pointerInfo(-1) As PointerEvent</SourceLine>
+   <SourceLine>For Each e As PointerEvent In eventData</SourceLine>
+   <SourceLine>pointerInfo.Add(e)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerDown(screenPosition, worldPosition, pointerInfo)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -246,7 +271,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -256,14 +281,19 @@
   <PartID>1102827519</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D)</SourceLine>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil)</SourceLine>
    <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
    <SourceLine>#Pragma BackgroundTasks True</SourceLine>
    <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>RaiseEvent PointerDrag(screenPosition, worldPosition)</SourceLine>
+   <SourceLine>Dim pointerInfo(-1) As PointerEvent</SourceLine>
+   <SourceLine>For Each e As PointerEvent In eventData</SourceLine>
+   <SourceLine>pointerInfo.Add(e)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerDrag(screenPosition, worldPosition, pointerInfo)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -271,7 +301,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -448,7 +478,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition As TRVector2D, worldPosition As TRVector2D, pointerInfo() As PointerEvent</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
@@ -456,7 +486,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
+  <ItemParams>screenPosition As TRVector2D, worldPosition As TRVector2D, tapCount As Integer, pointerInfo() As PointerEvent</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
@@ -472,7 +502,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemParams>screenPosition As TRVector2D, worldPosition As TRVector2D, pointerInfo() As PointerEvent</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
