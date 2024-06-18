@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r3.1" FormatVersion="2" MinIDEVersion="20140300">
+<block type="Module" ID="1865582591">
+ <ObjName>TRAnimationImageSpriteSK</ObjName>
+ <ObjContainerID>964315135</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>TRAnimationSpriteSK</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility>(TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit)) or  (TargetIOS and (Target64Bit)) or  (TargetAndroid and (Target64Bit))</Compatibility>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>239224831</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(sprite as TRAnimationSprite)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.Constructor(sprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.MakeGeometry</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.LastSize = New TRVector2D</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>118896639</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub NextFrame(core as TRAnimationCanvasCore, g as Graphics, currentWorldTransform as TRAffineTransform, scaleFactor as Double, drawCount as Integer)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s As TRAnimationImageSprite = TRAnimationImageSprite(Me.Sprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If s.Sprite &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>If s.Sprite &lt;&gt; Me.LastSprite Or s.Sprite.Width &lt;&gt; Me.LastSize.X Or s.Sprite.Height &lt;&gt; Me.LastSize.Y Then</SourceLine>
+   <SourceLine>Me.LastSize.Set(s.Sprite.Width, s.Sprite.Height)</SourceLine>
+   <SourceLine>Me.LastSprite = s.Sprite</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim plane As SCNPlaneMBS = Me.Plane</SourceLine>
+   <SourceLine>plane.width = Me.LastSize.X</SourceLine>
+   <SourceLine>plane.height = Me.LastSize.Y</SourceLine>
+   <SourceLine>plane.firstMaterial.diffuse.contents = s.Sprite</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'Me.Node.pivot = SCNMatrix4MBS.Translation(s.Center.X, s.Center.Y, 0)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.NextFrame(core, g, currentWorldTransform, scaleFactor, drawCount)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If s IsA TRAnimationTintedImageSprite Then</SourceLine>
+   <SourceLine>Dim c As Color = TRAnimationTintedImageSprite(s).TintColor</SourceLine>
+   <SourceLine>Me.Node.Geometry.firstMaterial.multiply.contents = NSColorMBS.colorWithRGB(c.Red / 255.0, c.Green / 255.0, c.Blue / 255.0, 1.0 - c.Alpha / 255.0)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ElseIf s.Sprite = Nil Then</SourceLine>
+   <SourceLine>// "Invisible"</SourceLine>
+   <SourceLine>plane.width = 0</SourceLine>
+   <SourceLine>plane.height = 0</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>core as TRAnimationCanvasCore, g as Graphics, currentWorldTransform as TRAffineTransform, scaleFactor as Double, drawCount as Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Property>
+  <ItemName>LastSize</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>95045631</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastSize As TRVector2D</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastSize As TRVector2D</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>LastSprite</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1447639039</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastSprite As Picture</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastSprite As Picture</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

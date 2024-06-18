@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
+<block type="Module" ID="1975062527">
+ <ObjName>TRAnimationCanvasMobileSceneKit</ObjName>
+ <ObjContainerID>1094367231</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>SCNIOSControlMBS</Superclass>
+ <Interfaces>TRAnimationCanvasDelegate</Interfaces>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility>API2Only and ( (TargetIOS and (Target64Bit)) )</Compatibility>
+ <HookInstance>
+  <ItemName>Opening</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>320178175</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Opening()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SharedSceneKit = New TRAnimationCanvasSharedSceneKit(Me, Me.View)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent Opening</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core.Refresh</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>Closing</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2137436159</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Closing()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core.Stop</SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core = Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>touchesBegan</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>445011967</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function touchesBegan(e as NSEventMBS, touches() as NSTouchMBS) As boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If touches.Count = 0 Then Return False</SourceLine>
+   <SourceLine>Dim touch As NSTouchMBS = touches(0)</SourceLine>
+   <SourceLine>Dim location As NSPointMBS = touch.locationInView(Me.View)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As TRVector2D = New TRVector2D(location.X, location.Y)</SourceLine>
+   <SourceLine>p = Me.SharedSceneKit.Core.Camera.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core.HandleEvent_PointerDown(New TRVector2D(location.X, location.Y), p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Only call .Start in a real pointer event; dont' call in the method version of PointerDown because that's used by the animation system, and calling .Start will break things</SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core.Start</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>touchesMoved</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>703662079</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function touchesMoved(e as NSEventMBS, touches() as NSTouchMBS) As boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If touches.Count = 0 Then Return False</SourceLine>
+   <SourceLine>Dim touch As NSTouchMBS = touches(0)</SourceLine>
+   <SourceLine>Dim location As NSPointMBS = touch.locationInView(Me.View)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As TRVector2D = New TRVector2D(location.X, location.Y)</SourceLine>
+   <SourceLine>p = Me.SharedSceneKit.Core.Camera.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core.HandleEvent_PointerDrag(New TRVector2D(location.X, location.Y), p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>touchesEnded</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1518266367</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function touchesEnded(e as NSEventMBS, touches() as NSTouchMBS) As boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If touches.Count = 0 Then Return False</SourceLine>
+   <SourceLine>Dim touch As NSTouchMBS = touches(0)</SourceLine>
+   <SourceLine>Dim location As NSPointMBS = touch.locationInView(Me.View)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As TRVector2D = New TRVector2D(location.X, location.Y)</SourceLine>
+   <SourceLine>p = Me.SharedSceneKit.Core.Camera.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core.HandleEvent_PointerUp(New TRVector2D(location.X, location.Y), p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>touchesCancelled</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>544100351</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function touchesCancelled(e as NSEventMBS, touches() as NSTouchMBS) As boolean</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If touches.Count = 0 Then Return False</SourceLine>
+   <SourceLine>Dim touch As NSTouchMBS = touches(0)</SourceLine>
+   <SourceLine>Dim location As NSPointMBS = touch.locationInView(Me.View)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As TRVector2D = New TRVector2D(location.X, location.Y)</SourceLine>
+   <SourceLine>p = Me.SharedSceneKit.Core.Camera.CurrentWorldTransform.Inverse.ApplyAffineTransform(p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SharedSceneKit.Core.HandleEvent_PointerUp(New TRVector2D(location.X, location.Y), p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_BackgroundColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1940602879</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_BackgroundColor() As Color</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.BackgroundColor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_GetCore</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1765349375</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_GetCore() As TRAnimationCanvasCore</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAnimationCanvasCore</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Height</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>245041151</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_Height() As Double</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_NextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1315854335</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_NextFrame(g as Graphics, elapsedTime as Double)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>g as Graphics, elapsedTime as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_PointerDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>590153727</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerDown(screenPosition, worldPosition)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_PointerDrag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1899487231</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerDrag(screenPosition, worldPosition)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_PointerUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>603113471</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = Ni)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent PointerUp(screenPosition, worldPosition, tapCount)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = Ni</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_SpriteEvent</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1666068479</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_SpriteEvent(sprite as TRAnimationSprite, eventData as Variant)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent SpriteEvent(sprite, eventData)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite, eventData as Variant</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Refresh</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>624089087</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Refresh()</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_ScaleFactor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1679468543</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_ScaleFactor() As Double</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Static screenScale As Double = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If screenScale = 0 Then</SourceLine>
+   <SourceLine>Declare Function NSClassFromString Lib "Foundation" (className As CFStringRef) As Ptr</SourceLine>
+   <SourceLine>Declare Function mainScreen Lib "UIKit.framework" Selector "mainScreen" (clsRef As ptr) As ptr</SourceLine>
+   <SourceLine>Declare Function scale Lib "UIKit.framework" Selector "scale" (objRef As ptr) As Double</SourceLine>
+   <SourceLine>Dim clsRef As ptr = NSClassFromString("UIScreen")</SourceLine>
+   <SourceLine>Dim mainScreenRef As ptr = mainScreen(clsRef)</SourceLine>
+   <SourceLine>screenScale = scale(mainScreenRef)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return screenScale</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_SetCore</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>311025663</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_SetCore(core as TRAnimationCanvasCore)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Width</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>11579391</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_Width() As Double</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.Width</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Hook>
+  <ItemName>Opening</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>SpriteEvent</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>sprite as TRAnimationSprite, eventData as Variant</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>PointerDown</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>PointerDrag</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>PointerUp</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Property>
+  <ItemName>BackgroundColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1211639807</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>BackgroundColor As Color = Color.White</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>BackgroundColor As Color = Color.White</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>SharedSceneKit</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>621156351</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>SharedSceneKit As TRAnimationCanvasSharedSceneKit</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>SharedSceneKit As TRAnimationCanvasSharedSceneKit</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Width</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>300</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <EditorType>Integer</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Height</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>300</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <EditorType>Integer</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Visible</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>UI Control</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Enabled</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>UI Control</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>String</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <EditorType>Integer</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>String</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>BackgroundColor</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>Color.White</PropertyValue>
+   <ItemType>Color</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

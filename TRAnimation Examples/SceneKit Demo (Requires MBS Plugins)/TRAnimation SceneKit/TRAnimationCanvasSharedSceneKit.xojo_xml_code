@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
+<block type="Module" ID="644837375">
+ <ObjName>TRAnimationCanvasSharedSceneKit</ObjName>
+ <ObjContainerID>1094367231</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Interfaces>TRAnimationCanvasDelegate,TRAnimationCanvasRendererDelegate</Interfaces>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility>( TargetConsole and ( Target32Bit or Target64Bit ) ) or ( TargetWeb and ( Target32Bit or Target64Bit ) ) or ( TargetDesktop and ( Target32Bit or Target64Bit ) ) or ( TargetIOS and ( Target64Bit ) ) or ( TargetAndroid and ( Target64Bit ) )</Compatibility>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>50714623</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(uc as TRAnimationCanvasDelegate, view as SCNViewMBS)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Core = New TRAnimationCanvasCore(Me)</SourceLine>
+   <SourceLine>Me.UniversalCanvas = uc</SourceLine>
+   <SourceLine>Me.View = view</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SpritePool = New Dictionary</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.View.Scene = New SCNSceneMBS</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim camera As New SCNCameraMBS</SourceLine>
+   <SourceLine>camera.UsesOrthographicProjection = True</SourceLine>
+   <SourceLine>camera.AutomaticallyAdjustsZRange = True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.CameraNode = New SCNNodeMBS</SourceLine>
+   <SourceLine>Me.CameraNode.Camera = camera</SourceLine>
+   <SourceLine>Me.View.scene.rootNode.addChildNode(Me.CameraNode)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'Dim ambientlight As New SCNNodeMBS</SourceLine>
+   <SourceLine>'ambientlight.light = New SCNLightMBS</SourceLine>
+   <SourceLine>'ambientlight.Light.Type = SCNLightMBS.SCNLightTypeAmbient</SourceLine>
+   <SourceLine>'ambientlight.light.Color = NSColorMBS.colorWithWhite(1, 1)</SourceLine>
+   <SourceLine>'ambientlight.light.Intensity = 100</SourceLine>
+   <SourceLine>'Me.View.Scene.rootNode.addChildNode(ambientlight)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'Me.View.scene.rootNode.Light = Nil</SourceLine>
+   <SourceLine>'Dim nodes(-1) As SCNNodeMBS = Me.View.scene.rootNode.childNodes</SourceLine>
+   <SourceLine>'For Each n As SCNNodeMBS In nodes</SourceLine>
+   <SourceLine>'n.Light = Nil</SourceLine>
+   <SourceLine>'Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.View.autoenablesDefaultLighting = False </SourceLine>
+   <SourceLine>Me.View.scene.rootNode.removeAllActions</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.View.allowsCameraControl = False</SourceLine>
+   <SourceLine>Me.View.scene.paused = True</SourceLine>
+   <SourceLine>Me.View.rendersContinuously = False</SourceLine>
+   <SourceLine>'Me.View.drawableResizesAsynchronously = False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>uc as TRAnimationCanvasDelegate, view as SCNViewMBS</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_BackgroundColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1905113087</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_BackgroundColor() As Color</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.UniversalCanvas.TRAnimationCanvasDelegate_BackgroundColor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_GetCore</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>83089407</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_GetCore() As TRAnimationCanvasCore</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.Core</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>TRAnimationCanvasCore</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Height</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>573620223</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_Height() As Double</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.UniversalCanvas.TRAnimationCanvasDelegate_Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_NextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>521043967</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_NextFrame(g as Graphics, elapsedTime as Double)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>g as Graphics, elapsedTime as Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_PointerDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1955491839</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDown(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_PointerDrag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>785778687</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerDrag(screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, eventData() as Variant = Nil</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_PointerUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>347308031</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_PointerUp(screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = Nil)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>screenPosition as TRVector2D, worldPosition as TRVector2D, tapCount as Integer, eventData() as Variant = Nil</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Raise_SpriteEvent</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1276968959</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Raise_SpriteEvent(sprite as TRAnimationSprite, eventData as Variant)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite, eventData as Variant</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Refresh</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1194483711</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_Refresh()</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As New Picture(32, 32) // Dummy buffer</SourceLine>
+   <SourceLine>Me.Core.HandleEvent_Paint(p.Graphics)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_ScaleFactor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>740300799</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_ScaleFactor() As Double</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.UniversalCanvas.TRAnimationCanvasDelegate_ScaleFactor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_SetCore</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>596365311</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasDelegate_SetCore(core as TRAnimationCanvasCore)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.Core = core</SourceLine>
+   <SourceLine>Me.Core.RenderDelegate = Me</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasDelegate_Width</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>895803391</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TRAnimationCanvasDelegate_Width() As Double</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Me.UniversalCanvas.TRAnimationCanvasDelegate_Width</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasRendererDelegate_FrameIsReadyToDisplay</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>793710591</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasRendererDelegate_FrameIsReadyToDisplay(core as TRAnimationCanvasCore)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasRendererDelegate interface.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasRendererDelegate_Hide</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1150392319</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasRendererDelegate_Hide(sprite as TRAnimationSprite)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasRendererDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As TRAnimationSpriteSK</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.SpritePool.HasKey(sprite) Then</SourceLine>
+   <SourceLine>p = Me.SpritePool.Value(sprite)</SourceLine>
+   <SourceLine>p.Node.Hidden = True</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasRendererDelegate_NextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>153448447</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasRendererDelegate_NextFrame(sprite as TRAnimationSprite, core as TRAnimationCanvasCore, g as Graphics, currentWorldTransform as TRAffineTransform)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasRendererDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.DrawCounter = Me.DrawCounter + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim p As TRAnimationSpriteSK</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not Me.SpritePool.HasKey(sprite) Then</SourceLine>
+   <SourceLine>// Create new sprite proxy</SourceLine>
+   <SourceLine>If sprite IsA TRAnimationImageSprite Then</SourceLine>
+   <SourceLine>p = New TRAnimationImageSpriteSK(sprite)</SourceLine>
+   <SourceLine>ElseIf sprite IsA TRAnimationSpriteText Then</SourceLine>
+   <SourceLine>p = New TRAnimationSpriteTextSK(sprite)</SourceLine>
+   <SourceLine>ElseIf sprite IsA TRAnimationPathSprite Then</SourceLine>
+   <SourceLine>p = New TRAnimationPathSpriteSK(sprite)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p = Nil Then Return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SpritePool.Value(sprite) = p</SourceLine>
+   <SourceLine>Me.View.Scene.rootNode.addChildNode(p.Node)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p = Nil And Me.SpritePool.HasKey(sprite) Then</SourceLine>
+   <SourceLine>p = Me.SpritePool.Value(sprite)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim scaleFactor As Double = Me.Core.ScaleFactor</SourceLine>
+   <SourceLine>p.NextFrame(core, g, currentWorldTransform, scaleFactor, Me.DrawCounter)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite, core as TRAnimationCanvasCore, g as Graphics, currentWorldTransform as TRAffineTransform</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasRendererDelegate_PrepareNextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>876081151</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasRendererDelegate_PrepareNextFrame(camera as TRAnimationCameraSprite, core as TRAnimationCanvasCore)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasRendererDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.View.stop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim w As Double = Me.UniversalCanvas.TRAnimationCanvasDelegate_Width</SourceLine>
+   <SourceLine>Dim h As Double = Me.UniversalCanvas.TRAnimationCanvasDelegate_Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If w &lt; h Then</SourceLine>
+   <SourceLine>Me.CameraNode.camera.orthographicScale = Max(w * 0.5, h * 0.5)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Me.CameraNode.camera.orthographicScale = Min(w * 0.5, h * 0.5)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim t As TRAffineTransform = camera.CurrentWorldTransform</SourceLine>
+   <SourceLine>Dim cT As TRVector2D = t.Position</SourceLine>
+   <SourceLine>Dim cS As TRVector2D = t.Scale</SourceLine>
+   <SourceLine>cS.X = 1.0 / cS.X</SourceLine>
+   <SourceLine>cS.Y = 1.0 / cS.Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.CameraNode.Position = New SCNVector3MBS((w / 2 - cT.X) * cS.X, (-h / 2 + cT.Y) * cS.Y, 10)</SourceLine>
+   <SourceLine>Me.CameraNode.Scale = New SCNVector3MBS(cS.X, cS.Y, 1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim bgc As Color = Me.UniversalCanvas.TRAnimationCanvasDelegate_BackgroundColor</SourceLine>
+   <SourceLine>Me.View.backgroundColor = New NSColorMBS(bgc.Red / 255.0, bgc.Green / 255.0, bgc.Blue / 255.0, 1.0 - (bgc.Alpha / 255.0))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.DrawCounter = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Static lastFrameSeconds As Double = System.Microseconds / 1000000</SourceLine>
+   <SourceLine>Dim currentFrameSeconds As Double = System.Microseconds / 1000000</SourceLine>
+   <SourceLine>Dim fps As Double = 1.0 / (currentFrameSeconds - lastFrameSeconds)</SourceLine>
+   <SourceLine>System.DebugLog(Str(fps))</SourceLine>
+   <SourceLine>lastFrameSeconds = currentFrameSeconds</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>camera as TRAnimationCameraSprite, core as TRAnimationCanvasCore</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TRAnimationCanvasRendererDelegate_RemoveFromScene</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>777947135</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TRAnimationCanvasRendererDelegate_RemoveFromScene(sprite as TRAnimationSprite)</SourceLine>
+   <SourceLine>// Part of the TRAnimationCanvasRendererDelegate interface.</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Me.SpritePool.HasKey(sprite) Then</SourceLine>
+   <SourceLine>Dim p As TRAnimationSpriteSK = Me.SpritePool.Value(sprite)</SourceLine>
+   <SourceLine>p.Node.removeFromParentNode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.SpritePool.Remove(sprite)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Property>
+  <ItemName>CameraNode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1889970175</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>CameraNode As SCNNodeMBS</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>CameraNode As SCNNodeMBS</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Core</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1269424127</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Core As TRAnimationCanvasCore</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Core As TRAnimationCanvasCore</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>SpritePool</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1667196927</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>SpritePool As Dictionary</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>SpritePool As Dictionary</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>UniversalCanvas</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2057445375</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>UniversalCanvas As TRAnimationCanvasDelegate</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>UniversalCanvas As TRAnimationCanvasDelegate</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>View</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>943615999</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>View As SCNViewMBS</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>View As SCNViewMBS</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>DrawCounter</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>218636287</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DrawCounter As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DrawCounter As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DrawCounter</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

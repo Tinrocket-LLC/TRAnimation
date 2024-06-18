@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2023r3.1" FormatVersion="2" MinIDEVersion="20140300">
+<block type="Module" ID="2027755519">
+ <ObjName>TRAnimationSpriteTextSK</ObjName>
+ <ObjContainerID>964315135</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>TRAnimationSpriteSK</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility>(TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit)) or  (TargetIOS and (Target64Bit)) or  (TargetAndroid and (Target64Bit))</Compatibility>
+ <Method>
+  <ItemName>NextFrame</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1765003263</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub NextFrame(core as TRAnimationCanvasCore, g as Graphics, currentWorldTransform as TRAffineTransform, scaleFactor as Double, drawCount as Integer)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s As TRAnimationSpriteText = TRAnimationSpriteText(Me.Sprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// We're doing bare minimum checking to see if the text sprite changed; we want to avoid redrawing the buffer</SourceLine>
+   <SourceLine>If s.Text &lt;&gt; Me.LastText Or s.TextColor &lt;&gt; Me.LastTextColor Then</SourceLine>
+   <SourceLine>Dim p As Picture = s.ToPicture(s.RenderBuffer, scaleFactor, core) // Render buffer will keep being reused and will automaticall grow (but not shrink)</SourceLine>
+   <SourceLine>s.RenderBuffer = p</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim plane As SCNPlaneMBS = Me.Plane</SourceLine>
+   <SourceLine>plane.width = p.Width / scaleFactor</SourceLine>
+   <SourceLine>plane.height = p.Height / scaleFactor</SourceLine>
+   <SourceLine>plane.firstMaterial.diffuse.contents = p</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Must move half of plane height and width to orient to upper left corner, then add offsets</SourceLine>
+   <SourceLine>Me.Node.pivot = SCNMatrix4MBS.Translation(-plane.width / 2 + s.RenderBufferOffset.X, plane.height / 2 - s.RenderBufferOffset.Y, 0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.LastText = s.Text</SourceLine>
+   <SourceLine>Me.LastTextColor = s.TextColor</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.NextFrame(core, g, currentWorldTransform, scaleFactor, drawCount)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>core as TRAnimationCanvasCore, g as Graphics, currentWorldTransform as TRAffineTransform, scaleFactor as Double, drawCount as Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1611384831</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(sprite as TRAnimationSprite)</SourceLine>
+   <SourceLine>#Pragma BackgroundTasks True</SourceLine>
+   <SourceLine>#Pragma StackOverflowChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma NilObjectChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine>#Pragma BoundsChecking TRAnimation.kSafeMode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.Constructor(sprite)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Me.MakeGeometry</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sprite as TRAnimationSprite</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Property>
+  <ItemName>LastText</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>160921599</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastText As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastText As String</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>LastTextColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1857804287</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastTextColor As Color</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastTextColor As Color</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>
