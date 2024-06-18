@@ -1,5 +1,11 @@
 # TRAnimation
 
+2024-06-19, Version 1.4
+* New: TRAnimationCanvasRendererDelegate for bridging TRAnimation with other renderers (e.g., SceneKit); Demo project coming soon
+* Better support for multi-touch events
+* Changes, fixes, and refinements necessary for Photo Tape, TRAnimation's first production usage
+
+
 2023-10-26, Version 1.3
 * New: Framework changes for alternate renderer support (SceneKit is currently in private testing)
 * New: Early support for rendering sprites to pictures
